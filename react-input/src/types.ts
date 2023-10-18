@@ -30,12 +30,14 @@ export type Decimal = BaseInput & {
   type: "decimal";
   maxValue?: number;
   minValue?: number;
+  separator?: string;
 };
 
 export type Integer = BaseInput & {
   type: "integer";
   maxValue?: number;
   minValue?: number;
+  separator?: string;
 };
 
 export type Date = BaseInput & {

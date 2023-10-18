@@ -45,6 +45,7 @@ const Input = memo(
             {...baseInput}
             maxValue={_.maxValue}
             minValue={_.minValue}
+            separator={_.separator}
             type="integer"
           />
         );
@@ -54,6 +55,7 @@ const Input = memo(
             {...baseInput}
             maxValue={_.maxValue}
             minValue={_.minValue}
+            separator={_.separator}
             type="integer"
           />
         );

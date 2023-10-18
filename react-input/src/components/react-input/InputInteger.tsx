@@ -2,13 +2,16 @@ import React from "react";
 import { Integer } from "../../types";
 import { vMinValue } from "../../utils/validations/vMinValue";
 import { vMaxValue } from "../../utils/validations/vMaxValue";
+import { vInteger } from "../../utils/validations/vInteger";
+import { separate } from "../../utils/validations/Separate";
 
 const InputInteger = React.memo((_: Integer) => {
   const [isValid, setIsValid] = React.useState<boolean>(true);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (_.onChange) return _.onChange;
-
+    vInteger({ event: e });
+    if(_.separator) separate({event:e , seperator: _.separator})
     setIsValid(checkValidation(e));
   };
 
@@ -24,7 +27,7 @@ const InputInteger = React.memo((_: Integer) => {
       <input
         {..._.register(_.name)}
         className={`${isValid ? "" : "input-not-valid"}`}
-        type="number"
+        type="text"
         title={_.title}
         placeholder={_.placeholder}
         onChange={(e) => onChange(e)}
