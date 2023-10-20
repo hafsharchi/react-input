@@ -1,6 +1,9 @@
+import { GroupBase, OptionsOrGroups } from "react-select";
+
 export type ValidationPatterns = "email" | "website" | string;
 
 export type BaseInput = Validation & {
+  id: string;
   title: string;
   type: Type;
   name: string;
@@ -10,6 +13,7 @@ export type BaseInput = Validation & {
   onChange?: () => any;
   onBlur?: () => any;
   placeholder?: string;
+  required?: boolean;
 };
 
 export type Validation = {
@@ -48,8 +52,8 @@ export type Date = BaseInput & {
 
 export type Select = BaseInput & {
   type: "select";
-  maxValue?: number;
-  minValue?: number;
+  options: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined;
+  multiple?: boolean;
 };
 
 export type Textarea = BaseInput & {

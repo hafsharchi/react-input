@@ -1,25 +1,25 @@
 import React from "react";
-import { Integer } from "../../types";
+import { Decimal } from "../../types";
 import { vMinValue } from "../../utils/validations/vMinValue";
 import { vMaxValue } from "../../utils/validations/vMaxValue";
-import { vInteger } from "../../utils/validations/vInteger";
 import { separate } from "../../utils/validations/Separate";
+import { vDecimal } from "../../utils/validations/vDecimal";
 
-const InputInteger = React.memo((_: Integer) => {
+const InputDecimal = React.memo((_: Decimal) => {
   const [isValid, setIsValid] = React.useState<boolean>(true);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (_.onChange) return _.onChange;
-    vInteger({ event: e });
+    vDecimal({ event: e });
     if (_.separator) separate({ event: e, seperator: _.separator });
 
-    if (_.validationOn == "submit-blur-change" || !isValid) setIsValid(checkValidation(e));
+    if (_.validationOn == "submit-blur-change" || !isValid)
+      setIsValid(checkValidation(e));
   };
 
   const onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("blur");
-    if (_.onChange) return _.onChange;
-    vInteger({ event: e });
+    if (_.onBlur) return _.onBlur;
+    vDecimal({ event: e });
     if (_.separator) separate({ event: e, seperator: _.separator });
 
     if (
@@ -52,4 +52,4 @@ const InputInteger = React.memo((_: Integer) => {
   );
 });
 
-export default InputInteger;
+export default InputDecimal;

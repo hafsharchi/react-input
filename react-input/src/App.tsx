@@ -12,25 +12,25 @@ const App = () => {
       <div onClick={update}>Hello</div>
 
       <Input
-        validationOn="submit-blur-change"
+      id="12"
+
+        validationOn="submit-blur"
         placeholder="vgh"
         register={register}
         name="name"
-        type="text"
+        type="decimal"
+        maxValue={3.2}
         title="3"
-        maxLength={4}
-        minLength={2}
       />
       <Input
-        validationOn="submit-blur-change"
+      id="1"
+        validationOn="submit-blur"
         placeholder="vgh"
         register={register}
         name="name3"
-        type="integer"
+        type="select"
         title="3"
-        maxValue={400}
-        minValue={200}
-        separator=","
+        options={[{label:'s3', value:2}]}      
       />
 
       <div>APP RENDER: {renderCont++}</div>

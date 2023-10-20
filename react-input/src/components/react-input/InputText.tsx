@@ -11,7 +11,7 @@ const InputText = React.memo((_: Text) => {
 
     if (_.maxLength) vMaxLength({ event: e, maxLength: _.maxLength });
 
-    setIsValid(checkValidation(e));
+    if (_.validationOn == "submit-blur-change" || !isValid) setIsValid(checkValidation(e));
   };
 
   const onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,16 +19,20 @@ const InputText = React.memo((_: Text) => {
 
     if (_.maxLength) vMaxLength({ event: e, maxLength: _.maxLength });
 
-    setIsValid(checkValidation(e));
+    if (
+      _.validationOn == "submit-blur-change" ||
+      _.validationOn == "submit-blur" ||
+      !isValid
+    )
+      setIsValid(checkValidation(e));
   };
 
   const checkValidation = (e: React.ChangeEvent<HTMLInputElement>): boolean => {
     if (_.minLength && !vMinLength({ event: e, minLength: _.minLength }))
       return false;
-    
+
     return true;
   };
-
 
   return (
     <>

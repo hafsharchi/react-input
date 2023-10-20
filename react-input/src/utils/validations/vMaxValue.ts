@@ -8,7 +8,7 @@ type VMaxValue = {
 export const vMaxValue = ({ event, maxValue }: VMaxValue) => {
   const { value } = event.target as HTMLInputElement;
 
-  if (parseInt(value) > maxValue) {
+  if (parseFloat(value) > maxValue) {
     return false;
   }
   return true;

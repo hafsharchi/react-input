@@ -11,10 +11,13 @@ import {
 } from "../../types";
 import InputText from "./InputText";
 import InputInteger from "./InputInteger";
+import InputDecimal from "./InputDecimal";
+import InputSelect from "./InputSelect";
 
 const Input = memo(
   (_: Text | Decimal | Integer | Date | Select | Textarea | File) => {
     var baseInput: BaseInput = {
+      id: _.id,
       type: _.type,
       name: _.name,
       register: _.register,
@@ -26,6 +29,7 @@ const Input = memo(
       placeholder: _?.placeholder,
       validationOn: _.validationOn,
       validationPattern: _.validationPattern,
+      required: _?.required
     };
 
     switch (_.type) {
@@ -41,12 +45,12 @@ const Input = memo(
 
       case "decimal":
         return (
-          <InputInteger
+          <InputDecimal
             {...baseInput}
             maxValue={_.maxValue}
             minValue={_.minValue}
             separator={_.separator}
-            type="integer"
+            type="decimal"
           />
         );
       case "integer":
@@ -66,7 +70,7 @@ const Input = memo(
         return <InputText {...baseInput} type="text" />;
 
       case "select":
-        return <InputText {...baseInput} type="text" />;
+        return <InputSelect {...baseInput} type="select" options={_.options} />;
 
       case "textarea":
         return <InputText {...baseInput} type="text" />;

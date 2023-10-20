@@ -8,7 +8,7 @@ type VMinValue = {
 export const vMinValue = ({ event, minValue }: VMinValue) => {
   const { value } = event.target as HTMLInputElement;
 
-  if (parseInt(value) < minValue) {
+  if (parseFloat(value) < minValue) {
     return false;
   }
   return true;
