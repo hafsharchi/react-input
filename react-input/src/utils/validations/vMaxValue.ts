@@ -1,14 +1,10 @@
 type VMaxValue = {
-  event:
-    | React.ChangeEvent<HTMLInputElement>
-    | React.FocusEvent<HTMLInputElement, Element>;
+  currentValue: string;
   maxValue: number;
 };
 
-export const vMaxValue = ({ event, maxValue }: VMaxValue) => {
-  const { value } = event.target as HTMLInputElement;
-
-  if (parseFloat(value) > maxValue) {
+export const vMaxValue = ({ currentValue, maxValue }: VMaxValue) => {
+  if (parseFloat(currentValue) > maxValue) {
     return false;
   }
   return true;

@@ -21,6 +21,11 @@ const InputInteger = memo(
           inputRef.current.value = newValue;
         }
       },
+      checkValidation: () => {
+        if (inputRef.current) {
+          setIsValid(checkValidation(inputRef.current.value ?? ""));
+        }
+      },
     }));
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +34,7 @@ const InputInteger = memo(
       if (_.separator) separate({ event: e, seperator: _.separator });
 
       if (_.validationOn == "submit-blur-change" || !isValid)
-        setIsValid(checkValidation(e));
+        setIsValid(checkValidation(e.target?.value ?? ""));
     };
 
     const onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,16 +47,22 @@ const InputInteger = memo(
         _.validationOn == "submit-blur" ||
         !isValid
       )
-        setIsValid(checkValidation(e));
+        setIsValid(checkValidation(e.target?.value ?? ""));
     };
 
-    const checkValidation = (
-      e: React.ChangeEvent<HTMLInputElement>
-    ): boolean => {
-      if (_.minValue && !vMinValue({ event: e, minValue: _.minValue }))
+    const checkValidation = (currentValue: string): boolean => {
+      if (
+        _.minValue &&
+        !vMinValue({ currentValue: currentValue, minValue: _.minValue })
+      )
         return false;
-      if (_.maxValue && !vMaxValue({ event: e, maxValue: _.maxValue }))
+
+      if (
+        _.maxValue &&
+        !vMaxValue({ currentValue: currentValue, maxValue: _.maxValue })
+      )
         return false;
+
       return true;
     };
 
