@@ -13,6 +13,7 @@ import InputText from "./InputText";
 import InputInteger from "./InputInteger";
 import InputDecimal from "./InputDecimal";
 import InputSelect from "./InputSelect";
+import InputDate from "./InputDate";
 
 const Input = memo(
   (_: Text | Decimal | Integer | Date | Select | Textarea | File) => {
@@ -29,7 +30,8 @@ const Input = memo(
       placeholder: _?.placeholder,
       validationOn: _.validationOn,
       validationPattern: _.validationPattern,
-      required: _?.required
+      required: _?.required,
+      ..._.register(_.name, _.type),
     };
 
     switch (_.type) {
@@ -63,8 +65,8 @@ const Input = memo(
             type="integer"
           />
         );
-      case "date":
-        return <InputText {...baseInput} type="text" />;
+      case "calendar":
+        return <InputDate locale={_.locale} {...baseInput} type="calendar" />;
 
       case "file":
         return <InputText {...baseInput} type="text" />;

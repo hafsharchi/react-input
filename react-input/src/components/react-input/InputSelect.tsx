@@ -21,7 +21,7 @@ const InputSelect = React.memo((_: Select) => {
   return (
     <>
       <ReactSelect
-        {..._.register(_.name)}
+        {..._.register(_.name, _.type)}
         isDisabled={_.disabled}
         id={_.id}
         placeholder="جستجو..."

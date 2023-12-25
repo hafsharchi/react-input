@@ -45,9 +45,8 @@ export type Integer = BaseInput & {
 };
 
 export type Date = BaseInput & {
-  type: "date";
-  maxValue?: number;
-  minValue?: number;
+  type: "calendar";
+  locale: "persian" | "english" | "arabic";
 };
 
 export type Select = BaseInput & {
@@ -72,7 +71,7 @@ export type Type =
   | "text"
   | "integer"
   | "decimal"
-  | "date"
+  | "calendar"
   | "select"
   | "textarea"
   | "file";

@@ -2,6 +2,7 @@ import React from "react";
 import { Text } from "../../types";
 import { vMaxLength } from "../../utils/validations/vMaxLength";
 import { vMinLength } from "../../utils/validations/vMinLength";
+import { vRequired } from "../../utils/validations/vRequired";
 
 const InputText = React.memo((_: Text) => {
   const [isValid, setIsValid] = React.useState<boolean>(true);
@@ -11,20 +12,25 @@ const InputText = React.memo((_: Text) => {
 
     if (_.maxLength) vMaxLength({ event: e, maxLength: _.maxLength });
 
-    if (_.validationOn == "submit-blur-change" || !isValid) setIsValid(checkValidation(e));
+    if (_.validationOn == "submit-blur-change" || !isValid)
+      setIsValid(checkValidation(e));
   };
 
   const onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let validation: boolean = true;
     if (_.onBlur) _.onBlur();
 
     if (_.maxLength) vMaxLength({ event: e, maxLength: _.maxLength });
 
+    if (_.required) validation = validation && vRequired({ event: e });
     if (
       _.validationOn == "submit-blur-change" ||
       _.validationOn == "submit-blur" ||
       !isValid
     )
-      setIsValid(checkValidation(e));
+      validation = validation && checkValidation(e);
+
+    setIsValid(validation);
   };
 
   const checkValidation = (e: React.ChangeEvent<HTMLInputElement>): boolean => {
@@ -37,7 +43,7 @@ const InputText = React.memo((_: Text) => {
   return (
     <>
       <input
-        {..._.register(_.name)}
+        {..._.register(_.name, _.type)}
         className={`${isValid ? "" : "input-not-valid"}`}
         type="text"
         title={_.title}

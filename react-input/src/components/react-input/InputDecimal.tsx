@@ -2,7 +2,7 @@ import React from "react";
 import { Decimal } from "../../types";
 import { vMinValue } from "../../utils/validations/vMinValue";
 import { vMaxValue } from "../../utils/validations/vMaxValue";
-import { separate } from "../../utils/validations/Separate";
+import { separate } from "../../utils/Separate";
 import { vDecimal } from "../../utils/validations/vDecimal";
 
 const InputDecimal = React.memo((_: Decimal) => {
@@ -40,7 +40,8 @@ const InputDecimal = React.memo((_: Decimal) => {
   return (
     <>
       <input
-        {..._.register(_.name)}
+      data-test={checkValidation}
+        {..._.register(_.name, _.type)}
         className={`${isValid ? "" : "input-not-valid"}`}
         type="text"
         title={_.title}
