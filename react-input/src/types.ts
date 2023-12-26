@@ -14,7 +14,11 @@ export type BaseInput = Validation & {
   onBlur?: () => any;
   placeholder?: string;
   required?: boolean;
-  validationComponent?:React.FC<validationComponentProps> 
+  className?: string;
+  wrapperClassname?: string;
+  titleClassName?: string;
+  customValidations?: CustomValidations;
+  validationComponent?: React.FC<ValidationComponentProps>;
 };
 
 export type Validation = {
@@ -77,20 +81,29 @@ export type Type =
   | "textarea"
   | "file";
 
-export type ErrorTypes = undefined | {
-  minValue: string;
-  maxValue: string;
-  minLength: string;
-  maxLength: string;
-  email: string;
-  phoneNumber: string;
-  etc: string;
-};
+export type ErrorTypes =
+  | undefined
+  | {
+      minValue: string;
+      maxValue: string;
+      minLength: string;
+      maxLength: string;
+      email: string;
+      phoneNumber: string;
+      etc: string;
+    };
 
 export interface ReactInputContextProps {
   validationErrors: ErrorTypes;
 }
 
-export type validationComponentProps = {
+export type ValidationComponentProps = {
   errors?: Array<string>;
 };
+
+export type CustomValidation = {
+  func: (value: string | number) => boolean;
+  error?: string;
+};
+
+export type CustomValidations = Array<CustomValidation>;

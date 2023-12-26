@@ -1,7 +1,10 @@
-import { validationComponentProps } from "./types";
+import { ValidationComponentProps } from "./types";
 
-const ValidationComponent = (_: validationComponentProps) => {
-  return <div className="absolute">{_.errors}</div>;
+const ValidationComponent = (_: ValidationComponentProps) => {
+  if (_.errors)
+    return _.errors.map((err: string, index: number) => (
+      <div className="color-red" key={index}>{err}</div>
+    ));
 };
 
 export default ValidationComponent;

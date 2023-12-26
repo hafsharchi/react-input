@@ -84,7 +84,9 @@ input.input-not-valid {
   left: 0;
 }
 
-.absolute{
+.absolute {
   position: absolute;
+}
+.color-red {
   color: red;
 }

@@ -1,12 +1,33 @@
 import "./App.css";
 import ValidationComponent from "./ValidationComponent";
 import Input from "./components/react-input";
+import { CustomValidations } from "./types";
 import useInput from "./useInput";
 let renderCont = 0;
 
 const App = () => {
   const { register, update, handleSubmit } = useInput();
 
+  const customValidation: CustomValidations = [
+    {
+      func: (value: string | number) => {
+        if (value == 278) {
+          return false;
+        }
+        return true;
+      },
+      error: "278 is reserved",
+    },
+    {
+      func: (value: string | number) => {
+        if (value == 500) {
+          return false;
+        }
+        return true;
+      },
+      error: "500 is so easy",
+    },
+  ];
   return (
     <>
       <div onClick={update}>Hello</div>
@@ -34,6 +55,7 @@ const App = () => {
         validationOn="submit-blur"
         placeholder="the test is here"
         validationComponent={ValidationComponent}
+        customValidations={customValidation}
       />
 
       {/* <Input

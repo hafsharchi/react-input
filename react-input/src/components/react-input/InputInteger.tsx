@@ -6,12 +6,13 @@ import {
   useState,
   useContext,
 } from "react";
-import { Integer, ReactInputContextProps } from "../../types";
+import { CustomValidation, Integer, ReactInputContextProps } from "../../types";
 import { vMinValue } from "../../utils/validations/vMinValue";
 import { vMaxValue } from "../../utils/validations/vMaxValue";
 import { vInteger } from "../../utils/validations/vInteger";
 import { separate } from "../../utils/Separate";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { vCustomValidation } from "../../utils/validations/vCustomValidation";
 
 const InputInteger = memo(
   forwardRef((_: Integer, ref: any) => {
@@ -65,6 +66,18 @@ const InputInteger = memo(
 
     const checkValidation = (currentValue: string): boolean => {
       var res = true;
+
+      _.customValidations?.forEach((customValidation: CustomValidation) => {
+        if (
+          !vCustomValidation({
+            currentValue: currentValue,
+            setErrors: setErrors,
+            customValidation: customValidation,
+          })
+        )
+          res = false;
+      });
+
       if (
         _.minValue &&
         !vMinValue({
@@ -73,9 +86,8 @@ const InputInteger = memo(
           setErrors: setErrors,
           error: customized?.validationErrors?.minValue ?? undefined,
         })
-      ) {
+      )
         res = false;
-      }
 
       if (
         _.maxValue &&
@@ -85,31 +97,26 @@ const InputInteger = memo(
           setErrors: setErrors,
           error: customized?.validationErrors?.maxValue ?? undefined,
         })
-      ) {
+      )
         res = false;
-      }
 
       return res;
     };
 
     return (
       <>
-        <div className="relative">
+        <div className={_.wrapperClassname}>
+          <div className={_.titleClassName}>{_.title}</div>
           <input
-            defaultValue={1}
             ref={inputRef}
-            className={`${isValid ? "" : "input-not-valid"}`}
+            className={`${isValid ? "" : "input-not-valid"} ${_.className}`}
             type="text"
             title={_.title}
             placeholder={_.placeholder}
             onChange={(e) => onChange(e)}
             onBlur={(e) => onBlur(e)}
           />
-          {_.validationComponent
-            ? _.validationComponent({ errors: errors })
-            : errors?.map((err: string, index: number) => (
-                <div key={index}>{err}</div>
-              ))}
+          {_.validationComponent && _.validationComponent({ errors: errors })}
         </div>
       </>
     );
