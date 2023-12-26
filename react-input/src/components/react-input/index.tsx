@@ -30,6 +30,7 @@ const Input = memo(
       placeholder: _?.placeholder,
       validationOn: _.validationOn,
       validationPattern: _.validationPattern,
+      validationComponent: _?.validationComponent,
       required: _?.required,
       ..._.register(_.name, _.type),
     };

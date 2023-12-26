@@ -1,14 +1,27 @@
-import { forwardRef, useImperativeHandle, useRef, memo, useState } from "react";
-import { Integer } from "../../types";
+import {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  memo,
+  useState,
+  useContext,
+} from "react";
+import { Integer, ReactInputContextProps } from "../../types";
 import { vMinValue } from "../../utils/validations/vMinValue";
 import { vMaxValue } from "../../utils/validations/vMaxValue";
 import { vInteger } from "../../utils/validations/vInteger";
 import { separate } from "../../utils/Separate";
+import { ReactInputContext } from "../../contexts/ReactInputContext";
 
 const InputInteger = memo(
   forwardRef((_: Integer, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const [errors, setErrors] = useState<Array<string>>([]);
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -51,33 +64,53 @@ const InputInteger = memo(
     };
 
     const checkValidation = (currentValue: string): boolean => {
+      var res = true;
       if (
         _.minValue &&
-        !vMinValue({ currentValue: currentValue, minValue: _.minValue })
-      )
-        return false;
+        !vMinValue({
+          currentValue: currentValue,
+          minValue: _.minValue,
+          setErrors: setErrors,
+          error: customized?.validationErrors?.minValue ?? undefined,
+        })
+      ) {
+        res = false;
+      }
 
       if (
         _.maxValue &&
-        !vMaxValue({ currentValue: currentValue, maxValue: _.maxValue })
-      )
-        return false;
+        !vMaxValue({
+          currentValue: currentValue,
+          maxValue: _.maxValue,
+          setErrors: setErrors,
+          error: customized?.validationErrors?.maxValue ?? undefined,
+        })
+      ) {
+        res = false;
+      }
 
-      return true;
+      return res;
     };
 
     return (
       <>
-        <input
-          defaultValue={1}
-          ref={inputRef}
-          className={`${isValid ? "" : "input-not-valid"}`}
-          type="text"
-          title={_.title}
-          placeholder={_.placeholder}
-          onChange={(e) => onChange(e)}
-          onBlur={(e) => onBlur(e)}
-        />
+        <div className="relative">
+          <input
+            defaultValue={1}
+            ref={inputRef}
+            className={`${isValid ? "" : "input-not-valid"}`}
+            type="text"
+            title={_.title}
+            placeholder={_.placeholder}
+            onChange={(e) => onChange(e)}
+            onBlur={(e) => onBlur(e)}
+          />
+          {_.validationComponent
+            ? _.validationComponent({ errors: errors })
+            : errors?.map((err: string, index: number) => (
+                <div key={index}>{err}</div>
+              ))}
+        </div>
       </>
     );
   })

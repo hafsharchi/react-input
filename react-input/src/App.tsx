@@ -1,4 +1,5 @@
 import "./App.css";
+import ValidationComponent from "./ValidationComponent";
 import Input from "./components/react-input";
 import useInput from "./useInput";
 let renderCont = 0;
@@ -32,6 +33,7 @@ const App = () => {
         title="Integer Input"
         validationOn="submit-blur"
         placeholder="the test is here"
+        validationComponent={ValidationComponent}
       />
 
       {/* <Input

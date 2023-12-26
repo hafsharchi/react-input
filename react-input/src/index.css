@@ -68,12 +68,23 @@ button:focus-visible {
   }
 }
 
-input{
+input {
   transition: all 0.5s;
   outline: none;
   padding: 1rem;
   box-shadow: 0px 0px 30px 1px #99bbff50;
 }
-input.input-not-valid{
+input.input-not-valid {
   box-shadow: 0px 0px 30px 1px #ff333350;
+}
+
+.relative {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.absolute{
+  position: absolute;
+  color: red;
 }

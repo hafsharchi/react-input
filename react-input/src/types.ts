@@ -14,6 +14,7 @@ export type BaseInput = Validation & {
   onBlur?: () => any;
   placeholder?: string;
   required?: boolean;
+  validationComponent?:React.FC<validationComponentProps> 
 };
 
 export type Validation = {
@@ -75,3 +76,21 @@ export type Type =
   | "select"
   | "textarea"
   | "file";
+
+export type ErrorTypes = undefined | {
+  minValue: string;
+  maxValue: string;
+  minLength: string;
+  maxLength: string;
+  email: string;
+  phoneNumber: string;
+  etc: string;
+};
+
+export interface ReactInputContextProps {
+  validationErrors: ErrorTypes;
+}
+
+export type validationComponentProps = {
+  errors?: Array<string>;
+};
