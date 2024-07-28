@@ -1,61 +1,125 @@
-import React from "react";
-import { Decimal } from "../../types";
+import React, {
+  forwardRef,
+  memo,
+  useContext,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import { CustomValidation, Decimal, ReactInputContextProps } from "../../types";
 import { vMinValue } from "../../utils/validations/vMinValue";
 import { vMaxValue } from "../../utils/validations/vMaxValue";
 import { separate } from "../../utils/Separate";
 import { vDecimal } from "../../utils/validations/vDecimal";
+import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { vCustomValidation } from "../../utils/validations/vCustomValidation";
 
-const InputDecimal = React.memo((_: Decimal) => {
-  const [isValid, setIsValid] = React.useState<boolean>(true);
+const InputDecimal = memo(
+  forwardRef((_: Decimal, ref: any) => {
+    const [isValid, setIsValid] = useState<boolean>(true);
+    const inputRef = useRef<HTMLInputElement>(null);
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (_.onChange) _.onChange();
-    vDecimal({ event: e });
-    if (_.separator) separate({ event: e, seperator: _.separator });
+    const [errors, setErrors] = useState<Array<string>>([]);
 
-    if (_.validationOn == "submit-blur-change" || !isValid)
-      setIsValid(checkValidation(e.target?.value ?? ""));
-  };
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
-  const onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (_.onBlur) _.onBlur();
+    useImperativeHandle(ref, () => ({
+      getValue: () => {
+        if (inputRef.current) {
+          return inputRef.current?.value;
+        }
+      },
+      updateValue: (newValue: string) => {
+        if (inputRef.current) {
+          inputRef.current.value = newValue;
+        }
+      },
+      checkValidation: () => {
+        if (inputRef.current) {
+          setIsValid(checkValidation(inputRef.current.value ?? ""));
+        }
+      },
+    }));
 
-    if (
-      _.validationOn == "submit-blur-change" ||
-      _.validationOn == "submit-blur" ||
-      !isValid
-    )
-      setIsValid(checkValidation(e.target?.value ?? ""));
-  };
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (_.onChange) _.onChange();
+      vDecimal({ event: e });
+      if (_.separator) separate({ event: e, seperator: _.separator });
 
-  const checkValidation = (currentValue: string): boolean => {
-    if (
-      _.minValue &&
-      !vMinValue({ currentValue: currentValue, minValue: _.minValue })
-    )
-      return false;
+      if (_.validationOn == "submit-blur-change" || !isValid)
+        setIsValid(checkValidation(e.target?.value ?? ""));
+    };
 
-    if (
-      _.maxValue &&
-      !vMaxValue({ currentValue: currentValue, maxValue: _.maxValue })
-    )
-      return false;
+    const onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (_.onBlur) _.onBlur();
 
-    return true;
-  };
-  return (
-    <>
-      <input
-        {..._.register(_.name, _.type)}
-        className={`${isValid ? "" : "input-not-valid"}`}
-        type="text"
-        title={_.title}
-        placeholder={_.placeholder}
-        onChange={(e) => onChange(e)}
-        onBlur={(e) => onBlur(e)}
-      />
-    </>
-  );
-});
+      if (
+        _.validationOn == "submit-blur-change" ||
+        _.validationOn == "submit-blur" ||
+        !isValid
+      )
+        setIsValid(checkValidation(e.target?.value ?? ""));
+    };
+
+    const checkValidation = (currentValue: string): boolean => {
+      var res = true;
+
+      _.customValidations?.forEach((customValidation: CustomValidation) => {
+        if (
+          !vCustomValidation({
+            currentValue: currentValue,
+            setErrors: setErrors,
+            customValidation: customValidation,
+          })
+        )
+          res = false;
+      });
+      if (
+        _.minValue &&
+        !vMinValue({
+          currentValue: currentValue,
+          minValue: _.minValue,
+          setErrors: setErrors,
+          error: customized?.validationErrors?.minValue ?? undefined,
+        })
+      )
+        res = false;
+
+      if (
+        _.maxValue &&
+        !vMaxValue({
+          currentValue: currentValue,
+          maxValue: _.maxValue,
+          setErrors: setErrors,
+          error: customized?.validationErrors?.maxValue ?? undefined,
+        })
+      )
+        res = false;
+
+      return res;
+    };
+    return (
+      <>
+        <div className={_.wrapperClassname}>
+          <div className={_.titleClassName}>{_.title}</div>
+          <input
+            ref={inputRef}
+            className={`${
+              isValid ? "" : `${_.notValidClassname ?? "input-not-valid"}`
+            } ${_.className}`}
+            type="text"
+            title={_.title}
+            placeholder={_.placeholder}
+            onChange={(e) => onChange(e)}
+            onBlur={(e) => onBlur(e)}
+          />
+          {_.validationComponent && _.validationComponent({ errors: errors })}
+        </div>
+      </>
+    );
+  })
+);
 
 export default InputDecimal;

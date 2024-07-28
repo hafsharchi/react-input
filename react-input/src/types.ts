@@ -10,8 +10,8 @@ export type BaseInput = Validation & {
   register: any;
   loading?: boolean;
   disabled?: boolean;
-  onChange?: () => any;
-  onBlur?: () => any;
+  onChange?: (e?: any) => any;
+  onBlur?: (e?: any) => any;
   placeholder?: string;
   required?: boolean;
   className?: string;
@@ -19,6 +19,7 @@ export type BaseInput = Validation & {
   titleClassName?: string;
   customValidations?: CustomValidations;
   validationComponent?: React.FC<ValidationComponentProps>;
+  notValidClassname?: string;
 };
 
 export type Validation = {

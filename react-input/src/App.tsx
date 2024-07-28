@@ -6,7 +6,7 @@ import useInput from "./useInput";
 let renderCont = 0;
 
 const App = () => {
-  const { register, update, handleSubmit } = useInput();
+  const { register, update, submit } = useInput();
 
   const customValidation: CustomValidations = [
     {
@@ -28,9 +28,12 @@ const App = () => {
       error: "500 is so easy",
     },
   ];
+
+
+  const onSubmit = () => submit((data:any) => {console.log(data.main)})
   return (
     <>
-      <div onClick={update}>Hello</div>
+      <div onClick={()=>{update("main",2232)}}>Hello</div>
 
       {/* <Input
         id="12"
@@ -44,18 +47,52 @@ const App = () => {
         separator=","
       /> */}
 
-      <Input
-        type="integer"
+      {/* <Input
+        type="text"
         name="intTest"
         id="26"
+        register={register}
+        // minValue={2}
+        // maxValue={500}
+        title="QMA"
+        validationOn="submit-blur-change"
+        placeholder="the test is here"
+        validationComponent={ValidationComponent}
+        customValidations={customValidation}
+        // onChange={(e:any) => {
+        //   console.log(e.target.value);
+        // }}
+        required
+      /> */}
+
+      <Input
+        type="integer"
+        name="main"
+        id="16"
         register={register}
         minValue={2}
         maxValue={500}
         title="Integer Input"
-        validationOn="submit-blur"
+        validationOn="submit-blur-change"
         placeholder="the test is here"
         validationComponent={ValidationComponent}
         customValidations={customValidation}
+        required
+      />
+
+      <Input
+        type="text"
+        name="mainw"
+        id="163"
+        register={register}
+        maxLength={10}
+        minLength={2}
+        title="In51ut"
+        validationOn="submit-blur-change"
+        placeholder="the test is here"
+        validationComponent={ValidationComponent}
+        customValidations={customValidation}
+        required
       />
 
       {/* <Input
@@ -79,9 +116,11 @@ const App = () => {
         title="3"
       /> */}
 
-      <div>APP RENDER: {renderCont++}</div>
+      <div>APP RENDER: {++renderCont}</div>
 
-      <div onClick={handleSubmit}>click here to SUBMIT</div>
+      <div onClick={onSubmit}>
+        click here to SUBMIT
+      </div>
     </>
   );
 };

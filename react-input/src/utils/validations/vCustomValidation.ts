@@ -16,8 +16,6 @@ export const vCustomValidation = ({
   setErrors,
   customValidation,
 }: VCustomValidation) => {
-  console.log("er");
-  console.log(customValidation?.error);
   if (!customValidation.func(currentValue)) {
     addToStateArrayByValue<string>(
       setErrors,

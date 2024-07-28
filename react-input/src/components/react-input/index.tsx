@@ -35,6 +35,7 @@ const Input = memo(
       required: _?.required,
       wrapperClassname: _.wrapperClassname,
       className: _.className,
+      notValidClassname: _.notValidClassname,
       titleClassName: _.titleClassName,
       ..._.register(_.name, _.type),
     };

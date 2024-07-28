@@ -33,6 +33,7 @@ const InputInteger = memo(
       updateValue: (newValue: string) => {
         if (inputRef.current) {
           inputRef.current.value = newValue;
+          checkValidation(newValue);
         }
       },
       checkValidation: () => {
@@ -43,7 +44,7 @@ const InputInteger = memo(
     }));
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (_.onChange) return _.onChange;
+      if (_.onChange) _.onChange(e);
       vInteger({ event: e });
       if (_.separator) separate({ event: e, seperator: _.separator });
 
@@ -52,8 +53,9 @@ const InputInteger = memo(
     };
 
     const onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (_.onChange) return _.onChange;
+      if (_.onBlur) _.onBlur(e);
       vInteger({ event: e });
+      
       if (_.separator) separate({ event: e, seperator: _.separator });
 
       if (
@@ -109,7 +111,9 @@ const InputInteger = memo(
           <div className={_.titleClassName}>{_.title}</div>
           <input
             ref={inputRef}
-            className={`${isValid ? "" : "input-not-valid"} ${_.className}`}
+            className={`${
+              isValid ? "" : `${_.notValidClassname ?? "input-not-valid"}`
+            } ${_.className}`}
             type="text"
             title={_.title}
             placeholder={_.placeholder}

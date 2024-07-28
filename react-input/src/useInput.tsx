@@ -22,53 +22,39 @@ const useInput = () => {
     return { ...input };
   };
 
-  const update = () => {
-    inputs.map((item, index) => {
-      switch (item.type) {
-        case "calendar":
-          item.ref.current.children[0].value = "1402/03/03";
-          break;
-        case "integer":
-        case "decimal":
-          item.ref.current.value = index;
-          item.ref.current._valueTracker.setValue();
-          item.ref.current.dispatchEvent(new Event("input", { bubbles: true }));
-          break;
-      }
-    });
-    console.log(inputs);
+  const update = (inputName: string, newValue: any) => {
+    var input: any = inputs.find((input: any) => input.name == inputName);
+    input.ref.current.updateValue(newValue);
   };
 
-  const handleSubmit = () => {
-    // var res = inputs.map((input) => {
-    //   var a:Function = input.ref.current.getAttribute("data-test");
-    //   a();
-    //   // input.ref.current.focus();
-    //   switch (input.type) {
-    //     case "calendar":
-    //       return {
-    //         [input.name]: input.ref.current.children[0].value,
-    //       };
-    //     default:
-    //       return {
-    //         [input.name]: input.ref.current.value,
-    //       };
-    //   }
-    // });
+  const get = (inputName?: any) => {
+    if (inputName) {
+      var input = inputs.find((input) => {
+        input.name == inputName;
+      });
+      return input?.ref.current.getValue() ?? "";
+    } else {
+      var res = inputs.map((input) => {
+        return {
+          [input.name]: input.ref.current.getValue(),
+        };
+      });
 
-    // var resultObject = res.reduce((acc: any, cur: any) => {
-    //   var key = Object.keys(cur)[0];
-    //   acc[key] = cur[key];
-    //   return acc;
-    // }, {});
-    console.log("----------");
-    console.log(inputs[0].ref.current.getValue());
-    console.log("__________");
+      var resultObject = res.reduce((acc: any, cur: any) => {
+        var key = Object.keys(cur)[0];
+        acc[key] = cur[key];
+        return acc;
+      }, {});
 
-    console.log(inputs);
+      return resultObject;
+    }
   };
 
-  return { register, inputs, update, handleSubmit };
+  const submit = (func: (data: any) => any) => {
+    func(get());
+  };
+
+  return { register, inputs, update, get, submit };
 };
 
 export default useInput;
