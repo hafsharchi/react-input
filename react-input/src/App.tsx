@@ -1,6 +1,7 @@
 import "./App.css";
 import ValidationComponent from "./ValidationComponent";
 import Input from "./components/react-input";
+// import Input from "./components/react-input";
 import { CustomValidations } from "./types";
 import useInput from "./useInput";
 let renderCont = 0;
@@ -64,8 +65,9 @@ const App = () => {
         // }}
         required
       /> */}
+        <Input id='1' name='sdsa' type='text' register={register} title='ds' validationOn='submit-blur'/>
 
-      <Input
+      {/* <Input
         type="integer"
         name="main"
         id="16"
@@ -77,7 +79,7 @@ const App = () => {
         placeholder="the test is here"
         validationComponent={ValidationComponent}
         customValidations={customValidation}
-        required
+        required 
       />
 
       <Input
@@ -93,7 +95,7 @@ const App = () => {
         validationComponent={ValidationComponent}
         customValidations={customValidation}
         required
-      />
+      /> */}
 
       {/* <Input
         id="1"
