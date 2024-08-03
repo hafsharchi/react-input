@@ -1,4 +1,4 @@
-export default function updateField(
+export function updateField(
   setValue: React.Dispatch<React.SetStateAction<Record<string, any>>>,
   name: string,
   newValue: string

@@ -1,4 +1,4 @@
-import { GroupBase, OptionsOrGroups } from "react-select";
+// import { GroupBase, OptionsOrGroups } from "react-select";
 
 export type ValidationPatterns = "email" | "website" | string;
 
@@ -15,11 +15,15 @@ export type BaseInput = Validation & {
   placeholder?: string;
   required?: boolean;
   className?: string;
-  wrapperClassname?: string;
+  wrapperClassName?: string;
   titleClassName?: string;
   customValidations?: CustomValidations;
   validationComponent?: React.FC<ValidationComponentProps>;
-  notValidClassname?: string;
+  notValidClassName?: string;
+  before?: any;
+  after?: any;
+  beforeClassName?: string;
+  afterClassName?: string;
 };
 
 export type Validation = {
@@ -52,12 +56,19 @@ export type Integer = BaseInput & {
 
 export type Date = BaseInput & {
   type: "calendar";
-  locale: "persian" | "english" | "arabic";
+  locale: "persian" | "english";
+  range?: boolean;
+  maxDate?: string;
+  minDate?: string;
+  onlyMonth?: boolean;
+  separator?: string;
+  format?: string;
+  dateSeparator?: string;
 };
 
 export type Select = BaseInput & {
   type: "select";
-  options: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined;
+  // options: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined;
   multiple?: boolean;
 };
 
@@ -91,6 +102,7 @@ export type ErrorTypes =
       maxLength: string;
       email: string;
       phoneNumber: string;
+      required: string;
       etc: string;
     };
 

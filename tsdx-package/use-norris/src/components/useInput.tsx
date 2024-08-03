@@ -1,5 +1,6 @@
 import React from "react";
 import { Type } from "./types";
+import { useRef } from 'react';
 
 type Input = {
   type: Type;
@@ -7,15 +8,15 @@ type Input = {
   ref: React.MutableRefObject<any>;
 };
 
-const useInput = () => {
+export const useInput = () => {
   var inputs: Array<Input> = [];
 
-  const register = (name: string, type: Type) => {
+  const useRegister = (name: string, type: Type) => {
     inputs = inputs.filter((input) => input.name !== name);
     var input: Input = {
       type: type,
       name: name,
-      ref: React.useRef<any>(),
+      ref: useRef<any>(),
     };
     inputs.push(input);
 
@@ -30,7 +31,7 @@ const useInput = () => {
   const get = (inputName?: any) => {
     if (inputName) {
       var input = inputs.find((input) => {
-        input.name == inputName;
+        return input.name == inputName;
       });
       return input?.ref.current.getValue() ?? "";
     } else {
@@ -39,22 +40,22 @@ const useInput = () => {
           [input.name]: input.ref.current.getValue(),
         };
       });
-
+  
       var resultObject = res.reduce((acc: any, cur: any) => {
         var key = Object.keys(cur)[0];
         acc[key] = cur[key];
         return acc;
       }, {});
-
+  
       return resultObject;
     }
   };
+  
 
   const submit = (func: (data: any) => any) => {
     func(get());
   };
 
-  return { register, inputs, update, get, submit };
+  return { useRegister, inputs, update, get, submit };
 };
 
-export default useInput;

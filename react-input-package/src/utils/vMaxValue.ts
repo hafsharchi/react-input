@@ -1,5 +1,5 @@
-import { VALIDATION_ERROR } from "../../constants/validatonErrors";
-import { addToStateArrayByValue, removeFromStateArrayByValue } from "../StateArray";
+import { VALIDATION_ERROR } from "../constants/validatonErrors";
+import { addToStateArrayByValue, removeFromStateArrayByValue } from "./StateArray";
 
 type VMaxValue = {
   currentValue: string;

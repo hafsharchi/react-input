@@ -15,11 +15,15 @@ export type BaseInput = Validation & {
   placeholder?: string;
   required?: boolean;
   className?: string;
-  wrapperClassname?: string;
+  wrapperClassName?: string;
   titleClassName?: string;
   customValidations?: CustomValidations;
   validationComponent?: React.FC<ValidationComponentProps>;
-  notValidClassname?: string;
+  notValidClassName?: string;
+  before?: any;
+  after?: any;
+  beforeClassName?: string;
+  afterClassName?: string;
 };
 
 export type Validation = {
@@ -91,6 +95,7 @@ export type ErrorTypes =
       maxLength: string;
       email: string;
       phoneNumber: string;
+      required: string;
       etc: string;
     };
 

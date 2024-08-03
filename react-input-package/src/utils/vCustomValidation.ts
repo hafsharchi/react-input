@@ -1,9 +1,9 @@
-import { VALIDATION_ERROR } from "../../constants/validatonErrors";
-import { CustomValidation } from "../../types";
+import { CustomValidation } from "../components/types";
+import { VALIDATION_ERROR } from "../constants/validatonErrors";
 import {
   addToStateArrayByValue,
   removeFromStateArrayByValue,
-} from "../StateArray";
+} from "./StateArray";
 
 type VCustomValidation = {
   currentValue: string;

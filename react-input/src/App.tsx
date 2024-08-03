@@ -1,40 +1,47 @@
 import "./App.css";
 import ValidationComponent from "./ValidationComponent";
-import Input from "./components/react-input";
+import { Input } from "./components";
+import { useInput } from "./components/useInput";
 // import Input from "./components/react-input";
-import { CustomValidations } from "./types";
-import useInput from "./useInput";
 let renderCont = 0;
 
 const App = () => {
-  const { register, update, submit } = useInput();
+  const { useRegister, update, submit } = useInput();
 
-  const customValidation: CustomValidations = [
-    {
-      func: (value: string | number) => {
-        if (value == 278) {
-          return false;
-        }
-        return true;
-      },
-      error: "278 is reserved",
-    },
-    {
-      func: (value: string | number) => {
-        if (value == 500) {
-          return false;
-        }
-        return true;
-      },
-      error: "500 is so easy",
-    },
-  ];
+  // const customValidation: CustomValidations = [
+  //   {
+  //     func: (value: string | number) => {
+  //       if (value == 278) {
+  //         return false;
+  //       }
+  //       return true;
+  //     },
+  //     error: "278 is reserved",
+  //   },
+  //   {
+  //     func: (value: string | number) => {
+  //       if (value == 500) {
+  //         return false;
+  //       }
+  //       return true;
+  //     },
+  //     error: "500 is so easy",
+  //   },
+  // ];
 
-
-  const onSubmit = () => submit((data:any) => {console.log(data.main)})
+  const onSubmit = () =>
+    submit((data: any) => {
+      console.log(data);
+    });
   return (
-    <>
-      <div onClick={()=>{update("main",2232)}}>Hello</div>
+    <div dir="rtl">
+      <div
+        onClick={() => {
+          update("main", 30000.84848);
+        }}
+      >
+        Hello
+      </div>
 
       {/* <Input
         id="12"
@@ -65,7 +72,20 @@ const App = () => {
         // }}
         required
       /> */}
-        <Input id='1' name='sdsa' type='text' register={register} title='ds' validationOn='submit-blur'/>
+      <Input
+        locale="persian"
+        className="dada"
+        range
+        id="1"
+        name="main"
+        type="calendar"
+        register={useRegister}
+        title="ds"
+        validationOn="submit-blur-change"
+        required
+        validationComponent={ValidationComponent}
+        dateSeparator=" تا "
+      />
 
       {/* <Input
         type="integer"
@@ -120,10 +140,8 @@ const App = () => {
 
       <div>APP RENDER: {++renderCont}</div>
 
-      <div onClick={onSubmit}>
-        click here to SUBMIT
-      </div>
-    </>
+      <div onClick={onSubmit}>click here to SUBMIT</div>
+    </div>
   );
 };
 

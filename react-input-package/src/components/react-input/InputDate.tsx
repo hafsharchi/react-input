@@ -6,7 +6,7 @@ import { useRef } from 'react';
 // import persian_fa from "react-date-object/locales/persian_fa";
 import useOnClickOutside from "../useOutside";
 
-const InputDate = memo((_: Date) => {
+export const InputDate = memo((_: Date) => {
   const datePickerRef = useRef<any>();
   const [isValid, setIsValid] = useState<boolean>(true);
 
@@ -38,4 +38,3 @@ const InputDate = memo((_: Date) => {
   );
 });
 
-export default InputDate;

@@ -6,13 +6,14 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { CustomValidation, ReactInputContextProps, Text } from "../../types";
-import { vMaxLength } from "../../utils/validations/vMaxLength";
-import { vMinLength } from "../../utils/validations/vMinLength";
+import { CustomValidation, ReactInputContextProps, Text } from "../types";
+import { vMaxLength } from "../../utils/vMaxLength";
+import { vMinLength } from "../../utils/vMinLength";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
-import { vCustomValidation } from "../../utils/validations/vCustomValidation";
+import { vCustomValidation } from "../../utils/vCustomValidation";
+import { vRequired } from "../../utils";
 
-const InputText = memo(
+export const InputText = memo(
   forwardRef((_: Text, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -32,42 +33,49 @@ const InputText = memo(
       updateValue: (newValue: string) => {
         if (inputRef.current) {
           inputRef.current.value = newValue;
-          checkValidation(newValue);
+          onChange();
         }
       },
       checkValidation: () => {
         if (inputRef.current) {
           setIsValid(checkValidation(inputRef.current.value ?? ""));
+          return checkValidation(inputRef.current.value ?? "");
         }
       },
     }));
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
 
-      if (_.maxLength) vMaxLength({ event: e, maxLength: _.maxLength });
+      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
 
       if (_.validationOn == "submit-blur-change" || !isValid)
-        setIsValid(checkValidation(e.target?.value ?? ""));
+        setIsValid(checkValidation(inputRef.current?.value ?? ""));
     };
 
-    const onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onBlur) _.onBlur(e);
 
-      if (_.maxLength) vMaxLength({ event: e, maxLength: _.maxLength });
+      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
 
       if (
         _.validationOn == "submit-blur-change" ||
         _.validationOn == "submit-blur" ||
         !isValid
       )
-
-      setIsValid(checkValidation(e.target?.value ?? ""));
+        setIsValid(checkValidation(inputRef.current?.value ?? ""));
     };
 
     const checkValidation = (currentValue: string): boolean => {
       var res = true;
-
+      if (
+        !vRequired({
+          currentValue: currentValue,
+          setErrors: setErrors,
+          error: customized?.validationErrors?.required,
+        })
+      )
+        res = false;
       _.customValidations?.forEach((customValidation: CustomValidation) => {
         if (
           !vCustomValidation({
@@ -88,30 +96,33 @@ const InputText = memo(
         })
       )
         res = false;
-
       return res;
     };
 
     return (
       <>
-        <div className={_.wrapperClassname}>
+        <div className={_.wrapperClassName}>
           <div className={_.titleClassName}>{_.title}</div>
-          <input
-            ref={inputRef}
-            className={`${
-              isValid ? "" : `${_.notValidClassname ?? "input-not-valid"}`
-            } ${_.className}`}
-            type="text"
-            title={_.title}
-            placeholder={_.placeholder}
-            onChange={(e) => onChange(e)}
-            onBlur={(e) => onBlur(e)}
-          />
+          <div className="flex items-center">
+            {_.before && <div className={_.beforeClassName}>{_.before}</div>}
+            <input
+              ref={inputRef}
+              className={`${
+                isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
+              } ${_.className}`}
+              type="text"
+              title={_.title}
+              placeholder={_.placeholder}
+              onChange={(e) => onChange(e)}
+              onBlur={(e) => onBlur(e)}
+              disabled={_.disabled}
+            />
+            {_.after && <div className={_.afterClassName ?? ""}>{_.after}</div>}
+          </div>
+
           {_.validationComponent && _.validationComponent({ errors: errors })}
         </div>
       </>
     );
   })
 );
-
-export default InputText;

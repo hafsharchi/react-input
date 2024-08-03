@@ -1,5 +1,5 @@
-import { VALIDATION_ERROR } from "../../constants/validatonErrors";
-import { addToStateArrayByValue, removeFromStateArrayByValue } from "../StateArray";
+import { VALIDATION_ERROR } from "../constants/validatonErrors";
+import { addToStateArrayByValue, removeFromStateArrayByValue } from "./StateArray";
 
 type VMinLength = {
   currentValue: string;
@@ -9,7 +9,8 @@ type VMinLength = {
 };
 
 export const vMinLength = ({ currentValue, minLength,setErrors, error }: VMinLength) => {
-  if (currentValue.length < minLength) {
+  var value = currentValue + "";
+  if (value.length < minLength) {
     addToStateArrayByValue<string>(
       setErrors,
       error ?? VALIDATION_ERROR.MIN_LENGTH

@@ -1,6 +1,5 @@
 import { createContext, ReactNode } from 'react';
-import { ErrorTypes, ReactInputContextProps } from '../types';
-
+import { ErrorTypes, ReactInputContextProps } from '../components/types';
 
 
 export const ReactInputContext = createContext<ReactInputContextProps | undefined>(undefined);
@@ -17,6 +16,7 @@ export const ReactInputProvider = ({ children }: ReactInputProviderProps) => {
     maxLength: "Longer than the maximum length",
     email: "Not a valid email",
     phoneNumber: "Not a valid phone number",
+    required: "This field cannot be empty", 
     etc: "not valid",
   }
 

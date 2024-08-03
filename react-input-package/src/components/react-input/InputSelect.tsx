@@ -3,7 +3,7 @@ import { Select } from "../types";
 
 // import ReactSelect, { GroupBase, OptionsOrGroups } from "react-select";
 
-const InputSelect = memo((_: Select) => {
+export const InputSelect = memo((_: Select) => {
   // const [value, setValue] = React.useState<
   //   OptionsOrGroups<unknown, GroupBase<unknown>> | undefined
   // >();
@@ -35,5 +35,3 @@ const InputSelect = memo((_: Select) => {
     </>
   );
 });
-
-export default InputSelect;

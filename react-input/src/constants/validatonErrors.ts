@@ -6,5 +6,6 @@ export const VALIDATION_ERROR = {
     MAX_LENGTH: "Longer than the maximum length",
     EMAIL: "Not a valid email",
     PHONE_NUMBER: "Not a valid phone number",
+    REQUIRED: "You have to fill this field",
     DEFAULT: "not valid",
   }
