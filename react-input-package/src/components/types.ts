@@ -56,7 +56,15 @@ export type Integer = BaseInput & {
 
 export type Date = BaseInput & {
   type: "calendar";
-  locale: "persian" | "english" | "arabic";
+  locale: "persian" | "english";
+  range?: boolean;
+  maxDate?: string;
+  minDate?: string;
+  onlyMonth?: boolean;
+  separator?: string;
+  format?: string;
+  dateSeparator?: string;
+  class?: string;
 };
 
 export type Select = BaseInput & {

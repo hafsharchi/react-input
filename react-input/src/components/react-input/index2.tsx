@@ -81,6 +81,7 @@ export const Input = memo(
             range={_.range}
             dateSeparator={_.dateSeparator}
             format={_.format}
+            class={_.class}
             {...baseInput}
             type="calendar"
           />

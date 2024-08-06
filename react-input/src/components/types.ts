@@ -64,6 +64,7 @@ export type Date = BaseInput & {
   separator?: string;
   format?: string;
   dateSeparator?: string;
+  class?: string;
 };
 
 export type Select = BaseInput & {

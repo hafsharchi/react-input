@@ -1,5 +1,4 @@
-import React, { memo } from "react";
-
+import React,{ memo } from "react";
 import {
   BaseInput,
   Date,
@@ -15,7 +14,6 @@ import { InputDecimal } from "./InputDecimal";
 import { InputInteger } from "./InputInteger";
 import { InputSelect } from "./InputSelect";
 import { InputDate } from "./InputDate";
-
 
 export const Input = memo(
   (_: Text | Decimal | Integer | Date | Select | Textarea | File) => {
@@ -74,14 +72,27 @@ export const Input = memo(
           />
         );
       case "calendar":
-        return <InputDate locale={_.locale} {...baseInput} type="calendar" />;
+        return (
+          <InputDate
+            locale={_.locale}
+            minDate={_.minDate}
+            maxDate={_.maxDate}
+            onlyMonth={_.onlyMonth}
+            range={_.range}
+            dateSeparator={_.dateSeparator}
+            format={_.format}
+            class={_.class}
+            {...baseInput}
+            type="calendar"
+          />
+        );
 
       case "file":
         return <InputText {...baseInput} type="text" />;
 
       case "select":
         return <InputSelect {...baseInput} type="select" />;
-        // return <InputSelect {...baseInput} type="select" options={_.options} />;
+      // return <InputSelect {...baseInput} type="select" options={_.options} />;
 
       case "textarea":
         return <InputText {...baseInput} type="text" />;

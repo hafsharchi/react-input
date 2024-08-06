@@ -37,7 +37,7 @@ const App = () => {
     <div dir="rtl">
       <div
         onClick={() => {
-          update("main", 30000.84848);
+          update("main","");
         }}
       >
         Hello
@@ -75,7 +75,7 @@ const App = () => {
       <Input
         locale="persian"
         className="dada"
-        range
+        // range
         id="1"
         name="main"
         type="calendar"

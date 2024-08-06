@@ -1,7 +1,6 @@
 import React, {
   forwardRef,
   memo,
-  useCallback,
   useContext,
   useEffect,
   useImperativeHandle,
@@ -13,7 +12,6 @@ import { ReactInputContext } from "../../contexts/ReactInputContext";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import useOnClickOutside from "../useOutside";
 import { vRequired } from "../../utils";
 
 export const InputDate = memo(
@@ -23,11 +21,10 @@ export const InputDate = memo(
 
     const inputRef = useRef<any>();
 
-    const handleDatePickerClose = useCallback(
-      () => inputRef.current.closeCalendar(),
-      [inputRef]
-    );
-    useOnClickOutside(inputRef, handleDatePickerClose);
+    // const handleDatePickerClose = useCallback(() => {
+      // inputRef.current.closeCalendar();
+    // }, [inputRef]);
+    // useOnClickOutside(inputRef, handleDatePickerClose);
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
@@ -39,23 +36,21 @@ export const InputDate = memo(
       getValue: () => {
         return `${value}`;
       },
-      updateValue: (newValue: string) => {
+      updateValue: (newValue: any) => {
         setValue(newValue);
       },
       checkValidation: () => {
-        if (inputRef.current) {
-          return checkValidation(value);
-        }
+        return checkValidation(value);
       },
     }));
 
     const onChange = (e?: any) => {
       setValue(e);
+      setIsValid(checkValidation(e));
     };
 
     useEffect(() => {
       if (_.onChange) _.onChange(value);
-      setIsValid(checkValidation(value));
     }, [value]);
 
     const checkValidation = (currentValue: string): boolean => {
@@ -92,6 +87,7 @@ export const InputDate = memo(
               onlyMonthPicker={_.onlyMonth}
               editable={false}
               range={_.range}
+              className={_.class}
               rangeHover
               dateSeparator={_.dateSeparator}
             />
