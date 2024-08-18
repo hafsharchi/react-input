@@ -28,8 +28,7 @@ export const InputInteger = memo(
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current) {
-          return inputRef.current?.value;
-          // .replace(_.separator,"")
+          return inputRef.current?.value.replace(_.separator ?? "","");
         }
       },
       updateValue: (newValue: string) => {
@@ -121,7 +120,7 @@ export const InputInteger = memo(
       <>
         <div className={_.wrapperClassName}>
           <div className={_.titleClassName}>{_.title}</div>
-          <div className="flex items-center">
+          <div className="flex items-center w-full">
             {_.before && <div className={_.beforeClassName}>{_.before}</div>}
             <input
               ref={inputRef}
@@ -134,6 +133,7 @@ export const InputInteger = memo(
               onChange={(e) => onChange(e)}
               onBlur={(e) => onBlur(e)}
               disabled={_.disabled}
+              defaultValue={_.defaultValue}
             />
             {_.after && <div className={_.afterClassName ?? ""}>{_.after}</div>}
           </div>

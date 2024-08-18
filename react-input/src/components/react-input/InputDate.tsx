@@ -17,16 +17,11 @@ import { vRequired } from "../../utils";
 export const InputDate = memo(
   forwardRef((_: Date, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
-    const [value, setValue] = useState<any>();
+    const [value, setValue] = useState<any>(_?.defaultValue);
 
     const inputRef = useRef<any>();
 
-    // const handleDatePickerClose = useCallback(() => {
-      // inputRef.current.closeCalendar();
-    // }, [inputRef]);
-    // useOnClickOutside(inputRef, handleDatePickerClose);
-
-    const [errors, setErrors] = useState<Array<string>>([]);
+    const [errors, setErrors] = React.useState<Array<string>>([]);
 
     const customized: ReactInputContextProps | undefined = useContext(
       ReactInputContext
@@ -67,10 +62,10 @@ export const InputDate = memo(
     };
 
     return (
-      <>
+      
         <div className={_.wrapperClassName}>
           <div className={_.titleClassName}>{_.title}</div>
-          <div className="flex items-center">
+          <div className="flex items-center w-full">
             {_.before && <div className={_.beforeClassName}>{_.before}</div>}
             <DatePicker
               ref={inputRef}
@@ -79,7 +74,7 @@ export const InputDate = memo(
               calendar={persian}
               locale={_?.locale == "persian" ? persian_fa : undefined}
               onOpenPickNewDate={false}
-              inputClass={`${_.className} ${isValid ? "" : "input-not-valid"}`}
+              inputClass={`${_.className} ${_.fullWidth && 'w-full'} ${isValid ? "" : "input-not-valid"}`}
               minDate={_.minDate ?? undefined}
               maxDate={_.maxDate ?? undefined}
               onChange={(e: any) => onChange(e)}
@@ -88,15 +83,17 @@ export const InputDate = memo(
               editable={false}
               range={_.range}
               className={_.class}
+              containerClassName={`${_.fullWidth && 'w-full'} flex`}
               rangeHover
               dateSeparator={_.dateSeparator}
+              arrow={false}
             />
             {_.after && <div className={_.afterClassName ?? ""}>{_.after}</div>}
           </div>
 
           {_.validationComponent && _.validationComponent({ errors: errors })}
         </div>
-      </>
+      
     );
   })
 );

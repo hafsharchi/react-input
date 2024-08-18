@@ -33,10 +33,15 @@ export const Input = memo(
       validationComponent: _?.validationComponent,
       customValidations: _.customValidations,
       required: _?.required,
-      wrapperClassName: _.wrapperClassName,
-      className: _.className,
-      notValidClassName: _.notValidClassName,
-      titleClassName: _.titleClassName,
+      wrapperClassName: _?.wrapperClassName,
+      className: _?.className,
+      notValidClassName: _?.notValidClassName,
+      titleClassName: _?.titleClassName,
+      before: _?.before,
+      after: _?.after,
+      beforeClassName: _?.beforeClassName,
+      afterClassName: _?.afterClassName,
+      defaultValue: _?.defaultValue,
       ..._.register(_.name, _.type),
     };
 
@@ -74,14 +79,15 @@ export const Input = memo(
       case "calendar":
         return (
           <InputDate
-            locale={_.locale}
-            minDate={_.minDate}
-            maxDate={_.maxDate}
-            onlyMonth={_.onlyMonth}
-            range={_.range}
-            dateSeparator={_.dateSeparator}
-            format={_.format}
-            class={_.class}
+            locale={_?.locale}
+            minDate={_?.minDate}
+            maxDate={_?.maxDate}
+            onlyMonth={_?.onlyMonth}
+            range={_?.range}
+            dateSeparator={_?.dateSeparator}
+            format={_?.format}
+            class={_?.class}
+            fullWidth={_?.fullWidth}
             {...baseInput}
             type="calendar"
           />
@@ -91,8 +97,17 @@ export const Input = memo(
         return <InputText {...baseInput} type="text" />;
 
       case "select":
-        return <InputSelect {...baseInput} type="select" />;
-      // return <InputSelect {...baseInput} type="select" options={_.options} />;
+        return (
+          <InputSelect
+            {...baseInput}
+            type="select"
+            options={_.options}
+            classNamePrefix={_.classNamePrefix}
+            multiple={_?.multiple}
+            fullWidth={_?.fullWidth}
+
+          />
+        );
 
       case "textarea":
         return <InputText {...baseInput} type="text" />;

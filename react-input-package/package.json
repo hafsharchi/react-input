@@ -1,6 +1,6 @@
 {
   "name": "ha-dd-react-input",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "A react input library",
   "scripts": {
     "rollup": "rollup -c"
@@ -19,7 +19,9 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tslib": "^2.6.0",
     "typescript": "^5.1.6",
-    "react-multi-date-picker": "^4.3.5"
+    "react-multi-date-picker": "^4.3.5",
+    "react-select": "^5.7.7"
+
   },
   "peerDependencies": {
     "react": "^18.0.0"

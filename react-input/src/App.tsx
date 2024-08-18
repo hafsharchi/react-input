@@ -34,10 +34,10 @@ const App = () => {
       console.log(data);
     });
   return (
-    <div dir="rtl">
+    <div dir="rtl" className="bg-red">
       <div
         onClick={() => {
-          update("main","");
+          update("main",[{ label: "b", value: "3" },{ label: "a", value: "2" }]);
         }}
       >
         Hello
@@ -63,7 +63,7 @@ const App = () => {
         // minValue={2}
         // maxValue={500}
         title="QMA"
-        validationOn="submit-blur-change"
+        validationOn="spubmit-blur-change"
         placeholder="the test is here"
         validationComponent={ValidationComponent}
         customValidations={customValidation}
@@ -72,19 +72,59 @@ const App = () => {
         // }}
         required
       /> */}
-      <Input
+      {/* <Input
         locale="persian"
         className="dada"
         // range
+        // before={<><div>سلام</div></>}
         id="1"
-        name="main"
+        name="maind"
         type="calendar"
         register={useRegister}
         title="ds"
         validationOn="submit-blur-change"
         required
+        fullWidth
+        wrapperClassName=" bg-blue w-600"
+        class=""
         validationComponent={ValidationComponent}
         dateSeparator=" تا "
+        range
+      /> */}
+
+      {/* <Input
+        className="dada"
+        id="1"
+        name="main"
+        type="decimal"
+        register={useRegister}
+        title="ds"
+        validationOn="submit-blur-change"
+        required
+
+        wrapperClassName=" bg-blue w-600"
+        validationComponent={ValidationComponent}
+        defaultValue={4848.5}
+      /> */}
+
+      <Input
+        options={[
+          { label: "a", value: "2" },
+          { label: "b", value: "3" },
+        ]}
+        fullWidth
+        multiple
+        className="w-full"
+        defaultValue={{ label: "a", value: "2" }}
+        id="1"
+        name="main"
+        type="select"
+        register={useRegister}
+        title="ds"
+        validationOn="submit-blur-change"
+        required
+        wrapperClassName=" bg-blue w-600 w-full"
+        validationComponent={ValidationComponent}
       />
 
       {/* <Input

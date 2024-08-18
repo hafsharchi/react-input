@@ -103,9 +103,10 @@ export const InputText = memo(
       <>
         <div className={_.wrapperClassName}>
           <div className={_.titleClassName}>{_.title}</div>
-          <div className="flex items-center">
+          <div className="flex items-center w-full">
             {_.before && <div className={_.beforeClassName}>{_.before}</div>}
             <input
+              defaultValue={_.defaultValue}
               ref={inputRef}
               className={`${
                 isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
