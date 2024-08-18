@@ -5,6 +5,9 @@
   left: 0;
 }
 
+html{
+  background-color: #333;
+}
 .absolute {
   position: absolute;
 }
@@ -45,4 +48,30 @@
 
 .w-600{
   width: 400px;
+}
+
+
+
+
+
+.hello__control{
+  border: 0px !important;
+  outline: none !important;
+  background-color: aqua !important;
+  border-radius: 10px !important;
+}
+
+.hello__indicator-separator{
+  opacity: 0;
+}
+
+.hello__dropdown-indicator{
+  color: red !important;
+}
+
+
+
+.hello__value-container{
+  /* background-color: beige; */
+  margin-top: 10px;
 }

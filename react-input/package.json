@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@hafsharchi/react-input-package": "^0.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-multi-date-picker": "^4.3.5",

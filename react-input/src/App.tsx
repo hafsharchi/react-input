@@ -73,23 +73,16 @@ const App = () => {
         required
       /> */}
       {/* <Input
-        locale="persian"
         className="dada"
-        // range
-        // before={<><div>سلام</div></>}
         id="1"
         name="maind"
-        type="calendar"
+        type="integer"
         register={useRegister}
         title="ds"
         validationOn="submit-blur-change"
         required
-        fullWidth
         wrapperClassName=" bg-blue w-600"
-        class=""
         validationComponent={ValidationComponent}
-        dateSeparator=" تا "
-        range
       /> */}
 
       {/* <Input
@@ -113,9 +106,8 @@ const App = () => {
           { label: "b", value: "3" },
         ]}
         fullWidth
-        multiple
         className="w-full"
-        defaultValue={{ label: "a", value: "2" }}
+        // defaultValue={{ label: "a", value: "2" }}
         id="1"
         name="main"
         type="select"
@@ -125,6 +117,8 @@ const App = () => {
         required
         wrapperClassName=" bg-blue w-600 w-full"
         validationComponent={ValidationComponent}
+        classNamePrefix="hello"
+        // multiple
       />
 
       {/* <Input
