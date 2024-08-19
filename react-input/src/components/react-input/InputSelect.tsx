@@ -101,7 +101,7 @@ export const InputSelect = memo(
           <div className="flex items-center w-full">
             {_.before && <div className={_.beforeClassName}>{_.before}</div>}
             <ReactSelect
-              menuIsOpen
+              menuPortalTarget={document.querySelector("body")}
               ref={inputRef}
               isDisabled={_.disabled}
               id={_.id}
