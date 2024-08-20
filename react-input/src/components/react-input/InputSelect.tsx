@@ -18,6 +18,7 @@ export const InputSelect = memo(
     const [value, setValue] = React.useState<
       OptionsOrGroups<unknown, GroupBase<unknown>> | undefined
     >(_?.defaultValue);
+    const [inputValue, setInputValue] = React.useState<string>();
 
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<any>(null);
@@ -27,6 +28,10 @@ export const InputSelect = memo(
     const customized: ReactInputContextProps | undefined = useContext(
       ReactInputContext
     );
+
+    useEffect(() => {
+      console.log(inputValue);
+    }, [inputValue]);
 
     const [hasChanged, setHasChanged] = useState<boolean>(false);
 
@@ -96,29 +101,33 @@ export const InputSelect = memo(
     };
     return (
       <>
-        <div className={_.wrapperClassName}>
+        <div
+          className={`${_.wrapperClassName} ${
+            value && value?.length > 0 || inputValue ? "value" : ""
+          } `}
+        >
+          <ReactSelect
+            unstyled
+            onInputChange={(e : any) => setInputValue(e)}
+            menuPortalTarget={_.portal}
+            ref={inputRef}
+            isDisabled={_.disabled}
+            noOptionsMessage={() => _.noOptionsMessage}
+            id={_.id}
+            placeholder={_.placeholder}
+            defaultValue={_?.defaultValue}
+            classNamePrefix={_?.classNamePrefix}
+            className={`${
+              isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
+            } ${_.fullWidth && "w-full"}`}
+            options={_.options}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+            isMulti={_.multiple}
+            menuIsOpen
+          />
           <div className={_.titleClassName}>{_.title}</div>
-          <div className="flex items-center w-full">
-            {_.before && <div className={_.beforeClassName}>{_.before}</div>}
-            <ReactSelect
-              menuPortalTarget={document.querySelector("body")}
-              ref={inputRef}
-              isDisabled={_.disabled}
-              id={_.id}
-              placeholder={_.placeholder}
-              defaultValue={_?.defaultValue}
-              classNamePrefix={_?.classNamePrefix}
-              className={`${
-                isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-              } ${_.fullWidth && "w-full"}`}
-              options={_.options}
-              value={value}
-              onChange={onChange}
-              onBlur={onBlur}
-              isMulti={_.multiple}
-            />
-            {_.after && <div className={_.afterClassName ?? ""}>{_.after}</div>}
-          </div>
 
           {_.validationComponent && _.validationComponent({ errors: errors })}
         </div>

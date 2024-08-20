@@ -68,15 +68,18 @@ export type Date = BaseInput & {
   format?: string;
   dateSeparator?: string;
   class?: string;
-  fullWidth?: boolean
+  fullWidth?: boolean;
+  portal?: any;
 };
 
 export type Select = BaseInput & {
   type: "select";
   options: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined;
   multiple?: boolean;
-  classNamePrefix?:string;
+  classNamePrefix?: string;
   fullWidth?: boolean;
+  noOptionsMessage?: any;
+  portal?: any;
 };
 
 export type Textarea = BaseInput & {
