@@ -101,15 +101,17 @@ export const InputSelect = memo(
           <div className="flex items-center w-full">
             {_.before && <div className={_.beforeClassName}>{_.before}</div>}
             <ReactSelect
+              menuPortalTarget={_.portal}
               ref={inputRef}
               isDisabled={_.disabled}
+              noOptionsMessage={() => _.noOptionsMessage}
               id={_.id}
               placeholder={_.placeholder}
               defaultValue={_?.defaultValue}
               classNamePrefix={_?.classNamePrefix}
               className={`${
                 isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-              } ${_.fullWidth && 'w-full'}`}
+              } ${_.fullWidth && "w-full"}`}
               options={_.options}
               value={value}
               onChange={onChange}

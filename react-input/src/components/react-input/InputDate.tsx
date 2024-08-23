@@ -62,38 +62,39 @@ export const InputDate = memo(
     };
 
     return (
-      
-        <div className={_.wrapperClassName}>
-          <div className={_.titleClassName}>{_.title}</div>
-          <div className="flex items-center w-full">
-            {_.before && <div className={_.beforeClassName}>{_.before}</div>}
-            <DatePicker
-              ref={inputRef}
-              disabled={_.disabled == true ? true : false}
-              value={value}
-              calendar={persian}
-              locale={_?.locale == "persian" ? persian_fa : undefined}
-              onOpenPickNewDate={false}
-              inputClass={`${_.className} ${_.fullWidth && 'w-full'} ${isValid ? "" : "input-not-valid"}`}
-              minDate={_.minDate ?? undefined}
-              maxDate={_.maxDate ?? undefined}
-              onChange={(e: any) => onChange(e)}
-              format={_.format}
-              onlyMonthPicker={_.onlyMonth}
-              editable={false}
-              range={_.range}
-              className={_.class}
-              containerClassName={`${_.fullWidth && 'w-full'} flex`}
-              rangeHover
-              dateSeparator={_.dateSeparator}
-              arrow={false}
-            />
-            {_.after && <div className={_.afterClassName ?? ""}>{_.after}</div>}
-          </div>
-
-          {_.validationComponent && _.validationComponent({ errors: errors })}
+      <div className={_.wrapperClassName}>
+        <div className={_.titleClassName}>{_.title}</div>
+        <div className="flex items-center w-full">
+          {_.before && <div className={_.beforeClassName}>{_.before}</div>}
+          <DatePicker
+            portal={_.portal != undefined && _.portal != false}
+            ref={inputRef}
+            disabled={_.disabled == true ? true : false}
+            value={value}
+            calendar={persian}
+            locale={_?.locale == "persian" ? persian_fa : undefined}
+            onOpenPickNewDate={false}
+            inputClass={`${_.className} ${_.fullWidth && "w-full"} ${
+              isValid ? "" : "input-not-valid"
+            }`}
+            minDate={_.minDate ?? undefined}
+            maxDate={_.maxDate ?? undefined}
+            onChange={(e: any) => onChange(e)}
+            format={_.format}
+            onlyMonthPicker={_.onlyMonth}
+            editable={false}
+            range={_.range}
+            className={_.class}
+            containerClassName={`${_.fullWidth && "w-full"} flex`}
+            rangeHover
+            dateSeparator={_.dateSeparator}
+            arrow={false}
+          />
+          {_.after && <div className={_.afterClassName ?? ""}>{_.after}</div>}
         </div>
-      
+
+        {_.validationComponent && _.validationComponent({ errors: errors })}
+      </div>
     );
   })
 );

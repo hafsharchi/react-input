@@ -102,25 +102,20 @@ export const InputText = memo(
     return (
       <>
         <div className={_.wrapperClassName}>
+          <input
+            defaultValue={_.defaultValue}
+            ref={inputRef}
+            className={`${
+              isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
+            } ${_.className}`}
+            type="text"
+            title={_.title}
+            placeholder={_.placeholder}
+            onChange={(e) => onChange(e)}
+            onBlur={(e) => onBlur(e)}
+            disabled={_.disabled}
+          />
           <div className={_.titleClassName}>{_.title}</div>
-          <div className="flex items-center w-full">
-            {_.before && <div className={_.beforeClassName}>{_.before}</div>}
-            <input
-              defaultValue={_.defaultValue}
-              ref={inputRef}
-              className={`${
-                isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-              } ${_.className}`}
-              type="text"
-              title={_.title}
-              placeholder={_.placeholder}
-              onChange={(e) => onChange(e)}
-              onBlur={(e) => onBlur(e)}
-              disabled={_.disabled}
-            />
-            {_.after && <div className={_.afterClassName ?? ""}>{_.after}</div>}
-          </div>
-
           {_.validationComponent && _.validationComponent({ errors: errors })}
         </div>
       </>

@@ -1,4 +1,4 @@
-import React,{ memo } from "react";
+import React, { memo } from "react";
 import {
   BaseInput,
   Date,
@@ -90,6 +90,7 @@ export const Input = memo(
             fullWidth={_?.fullWidth}
             {...baseInput}
             type="calendar"
+            portal={_?.portal}
           />
         );
 
@@ -105,7 +106,8 @@ export const Input = memo(
             classNamePrefix={_.classNamePrefix}
             multiple={_?.multiple}
             fullWidth={_?.fullWidth}
-
+            portal={_?.portal}
+            noOptionsMessage={_?.noOptionsMessage}
           />
         );
 

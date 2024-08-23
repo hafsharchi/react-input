@@ -54,7 +54,7 @@ export const useInput = () => {
   const submit = (func: (data: any) => any) => {
     var res: boolean = true;
     inputs.map((input) => {
-      res = res && input.ref.current.checkValidation();
+      res = input.ref.current.checkValidation() && res;
     });
     if (!res) return false;
     func(get());
