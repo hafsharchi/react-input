@@ -117,6 +117,7 @@ export const InputDecimal = memo(
     return (
       <>
         <div className={_.wrapperClassName}>
+          {_.before && <div className={_.beforeClassName}>{_.before}</div>}
           <input
             defaultValue={_.defaultValue}
             ref={inputRef}
@@ -135,6 +136,7 @@ export const InputDecimal = memo(
             <div className={_.loadingClassName}>{_.loadingObject}</div>
           )}
           {_.validationComponent && _.validationComponent({ errors: errors })}
+          {_.after && <div className={_.afterClassName}>{_.after}</div>}
         </div>
       </>
     );
