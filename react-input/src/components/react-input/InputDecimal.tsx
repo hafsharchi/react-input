@@ -28,9 +28,10 @@ export const InputDecimal = memo(
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
-        if (inputRef.current) {
-          return inputRef.current?.value.replace(_.separator ?? "","");
+        if (inputRef.current && inputRef.current.value) {
+          return inputRef.current?.value.replace(_.separator ?? "", "") ?? "";
         }
+        return "";
       },
       updateValue: (newValue: string) => {
         if (inputRef.current) {
@@ -70,6 +71,7 @@ export const InputDecimal = memo(
       var res = true;
 
       if (
+        _.required &&
         !vRequired({
           currentValue: currentValue,
           setErrors: setErrors,
@@ -115,25 +117,23 @@ export const InputDecimal = memo(
     return (
       <>
         <div className={_.wrapperClassName}>
+          <input
+            defaultValue={_.defaultValue}
+            ref={inputRef}
+            className={`${
+              isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
+            } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
+            type="text"
+            title={_.title}
+            placeholder={_?.placeholder ?? ""}
+            onChange={(e) => onChange(e)}
+            onBlur={(e) => onBlur(e)}
+            disabled={_.disabled}
+          />
           <div className={_.titleClassName}>{_.title}</div>
-          <div className="flex items-center w-full">
-            {_.before && <div className={_.beforeClassName}>{_.before}</div>}
-            <input
-              ref={inputRef}
-              className={`${
-                isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-              } ${_.className}`}
-              type="text"
-              title={_.title}
-              placeholder={_.placeholder}
-              onChange={(e) => onChange(e)}
-              onBlur={(e) => onBlur(e)}
-              disabled={_.disabled}
-              defaultValue={_.defaultValue}
-            />
-            {_.after && <div className={_.afterClassName ?? ""}>{_.after}</div>}
-          </div>
-
+          {_.loading && (
+            <div className={_.loadingClassName}>{_.loadingObject}</div>
+          )}
           {_.validationComponent && _.validationComponent({ errors: errors })}
         </div>
       </>

@@ -37,9 +37,10 @@ export const InputSelect = memo(
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
-        if (inputRef.current) {
+        if (inputRef.current && value && value?.length > 0) {
           return value;
         }
+        return "";
       },
       updateValue: (
         newValue: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined
@@ -78,6 +79,7 @@ export const InputSelect = memo(
       var res = true;
 
       if (
+        _.required &&
         !vRequired({
           currentValue: currentValue,
           setErrors: setErrors,
@@ -103,12 +105,13 @@ export const InputSelect = memo(
       <>
         <div
           className={`${_.wrapperClassName} ${
-            value && value?.length > 0 || inputValue ? "value" : ""
+            (value && value?.length > 0) || inputValue ? "value" : ""
           } `}
         >
+          {_.before && <div className={_.beforeClassName}>{_.before}</div>}
           <ReactSelect
-            unstyled
-            onInputChange={(e : any) => setInputValue(e)}
+            unstyled={_.unstyled}
+            onInputChange={(e: any) => setInputValue(e)}
             menuPortalTarget={_.portal}
             ref={inputRef}
             isDisabled={_.disabled}
@@ -117,7 +120,7 @@ export const InputSelect = memo(
             placeholder={_.placeholder}
             defaultValue={_?.defaultValue}
             classNamePrefix={_?.classNamePrefix}
-            className={`${
+            className={`${_.disabled ? _.disabledClassName : ""} ${
               isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
             } ${_.fullWidth && "w-full"}`}
             options={_.options}
@@ -125,11 +128,14 @@ export const InputSelect = memo(
             onChange={onChange}
             onBlur={onBlur}
             isMulti={_.multiple}
-            menuIsOpen
+            menuIsOpen={_.menuIsOpen}
           />
           <div className={_.titleClassName}>{_.title}</div>
-
+          {_.loading && (
+            <div className={_.loadingClassName}>{_.loadingObject}</div>
+          )}
           {_.validationComponent && _.validationComponent({ errors: errors })}
+          {_.after && <div className={_.afterClassName}>{_.after}</div>}
         </div>
       </>
     );

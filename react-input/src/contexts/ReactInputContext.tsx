@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode } from "react";
+import React, { createContext, ReactNode, useState } from "react";
 import { ErrorTypes, ReactInputContextProps } from "../components/types";
 
 export const ReactInputContext = createContext<
@@ -7,22 +7,24 @@ export const ReactInputContext = createContext<
 
 interface ReactInputProviderProps {
   children: ReactNode;
+  errors: ErrorTypes;
 }
 
-export const ReactInputProvider = ({ children }: ReactInputProviderProps) => {
-  const validationErrors: ErrorTypes = {
-    minValue: "Less than the minimum value",
-    maxValue: "More than the maximum value",
-    minLength: "Shorter than minimum length",
-    maxLength: "Longer than the maximum length",
-    email: "Not a valid email",
-    phoneNumber: "Not a valid phone number",
-    required: "This field cannot be empty",
-    etc: "not valid",
-  };
+export const ReactInputProvider = ({ children, errors }: ReactInputProviderProps) => {
+  const [validationErrors, setValidationErrors] = useState<ErrorTypes>({
+    minValue: errors?.minValue ?? "Less than the minimum value",
+    maxValue: errors?.maxValue ?? "More than the maximum value",
+    minLength: errors?.minLength ?? "Shorter than minimum length",
+    maxLength: errors?.maxLength ?? "Longer than the maximum length",
+    email: errors?.email ?? "Not a valid email",
+    phoneNumber: errors?.phoneNumber ?? "Not a valid phone number",
+    required: errors?.required ?? "This field cannot be empty",
+    etc: errors?.etc ?? "not valid",
+  });
 
   const contextValue: ReactInputContextProps = {
     validationErrors,
+    setValidationErrors
   };
 
   return (

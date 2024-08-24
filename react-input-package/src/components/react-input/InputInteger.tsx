@@ -119,25 +119,23 @@ export const InputInteger = memo(
     return (
       <>
         <div className={_.wrapperClassName}>
+          <input
+            defaultValue={_.defaultValue}
+            ref={inputRef}
+            className={`${
+              isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
+            } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
+            type="text"
+            title={_.title}
+            placeholder={_?.placeholder ?? ""}
+            onChange={(e) => onChange(e)}
+            onBlur={(e) => onBlur(e)}
+            disabled={_.disabled}
+          />
           <div className={_.titleClassName}>{_.title}</div>
-          <div className="flex items-center w-full">
-            {_.before && <div className={_.beforeClassName}>{_.before}</div>}
-            <input
-              ref={inputRef}
-              className={`${
-                isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-              } ${_.className}`}
-              type="text"
-              title={_.title}
-              placeholder={_.placeholder}
-              onChange={(e) => onChange(e)}
-              onBlur={(e) => onBlur(e)}
-              disabled={_.disabled}
-              defaultValue={_.defaultValue}
-            />
-            {_.after && <div className={_.afterClassName ?? ""}>{_.after}</div>}
-          </div>
-
+          {_.loading && (
+            <div className={_.loadingClassName}>{_.loadingObject}</div>
+          )}
           {_.validationComponent && _.validationComponent({ errors: errors })}
         </div>
       </>

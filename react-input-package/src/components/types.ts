@@ -27,6 +27,9 @@ export type BaseInput = Validation & {
   beforeClassName?: string;
   afterClassName?: string;
   defaultValue?: any;
+  loadingClassName?: string;
+  loadingObject?: any;
+  disabledClassName?: string;
 };
 
 export type Validation = {
@@ -80,6 +83,8 @@ export type Select = BaseInput & {
   fullWidth?: boolean;
   noOptionsMessage?: any;
   portal?: any;
+  menuIsOpen?: boolean;
+  unstyled?: boolean;
 };
 
 export type Textarea = BaseInput & {

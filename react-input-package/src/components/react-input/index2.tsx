@@ -42,6 +42,9 @@ export const Input = memo(
       beforeClassName: _?.beforeClassName,
       afterClassName: _?.afterClassName,
       defaultValue: _?.defaultValue,
+      loadingClassName: _?.loadingClassName,
+      disabledClassName: _?.disabledClassName,
+      loadingObject: _?.loadingObject,
       ..._.register(_.name, _.type),
     };
 
@@ -108,6 +111,8 @@ export const Input = memo(
             fullWidth={_?.fullWidth}
             portal={_?.portal}
             noOptionsMessage={_?.noOptionsMessage}
+            unstyled={_?.unstyled}
+            menuIsOpen={_?.menuIsOpen}
           />
         );
 

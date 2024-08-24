@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import {
   BaseInput,
-  Date,
+  Calendar,
   Decimal,
   File,
   Integer,
@@ -16,7 +16,7 @@ import { InputSelect } from "./InputSelect";
 import { InputDate } from "./InputDate";
 
 export const Input = memo(
-  (_: Text | Decimal | Integer | Date | Select | Textarea | File) => {
+  (_: Text | Decimal | Integer | Calendar | Select | Textarea | File) => {
     var baseInput: BaseInput = {
       id: _.id,
       type: _.type,
@@ -42,6 +42,9 @@ export const Input = memo(
       beforeClassName: _?.beforeClassName,
       afterClassName: _?.afterClassName,
       defaultValue: _?.defaultValue,
+      loadingClassName: _?.loadingClassName,
+      disabledClassName: _?.disabledClassName,
+      loadingObject: _?.loadingObject,
       ..._.register(_.name, _.type),
     };
 
@@ -84,6 +87,7 @@ export const Input = memo(
             maxDate={_?.maxDate}
             onlyMonth={_?.onlyMonth}
             range={_?.range}
+            separator={_?.separator}
             dateSeparator={_?.dateSeparator}
             format={_?.format}
             class={_?.class}
@@ -108,6 +112,8 @@ export const Input = memo(
             fullWidth={_?.fullWidth}
             portal={_?.portal}
             noOptionsMessage={_?.noOptionsMessage}
+            unstyled={_?.unstyled}
+            menuIsOpen={_?.menuIsOpen}
           />
         );
 

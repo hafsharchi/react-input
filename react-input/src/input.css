@@ -1,0 +1,243 @@
+.container {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+html {
+  background-color: #333;
+  color: antiquewhite;
+}
+/** ---------- Input Styles ---------- **/
+.wrapper,
+.date-container {
+  position: relative;
+}
+
+.wrapper > input,
+.date-container > input {
+  position: relative;
+  direction: ltr;
+  text-align: end;
+  border: none;
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100% !important;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-radius: var(--input-border-radius) !important;
+  outline: none;
+  font-size: 13px;
+  height: var(--input-height);
+  display: flex;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 12px;
+  transition: all 0.1s ease;
+  caret-color: skyblue;
+  color: white !important;
+  background: gray !important;
+}
+
+.wrapper > input:hover,
+.date-container > input:hover {
+  background: #777 !important;
+}
+
+.wrapper > input:focus,
+.date-container > input:focus {
+  background: #666 !important;
+  box-shadow: 0 0 0 1px greenyellow;
+}
+
+.wrapper .title {
+  pointer-events: none;
+  padding-left: 12px;
+  padding-right: 12px;
+  cursor: text;
+  z-index: 10;
+  text-align: right !important;
+  position: absolute;
+  right: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  top: 21px;
+  line-height: 100%;
+  transform: translateY(-50%);
+  color: pink !important;
+  font-size: 13px;
+  transition: top 0.2s ease, color 0.2s ease, font-size 0.2s ease;
+}
+
+/* ---------- ---------- ---------- */
+/* ---------- Move Title ---------- */
+.wrapper > input:focus + .title,
+.wrapper > input.dirty + .title,
+.wrapper > input:not(:placeholder-shown) + .title {
+  top: 9px;
+  font-size: 9px;
+}
+/* ---------- ---------- ---------- */
+
+/** ---------- Select Styles ---------- **/
+.select {
+  position: relative;
+  border: none !important;
+  -webkit-appearance: none !important;
+  -ms-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  width: 100% !important;
+  padding-left: var(--input-padding-x);
+  padding-right: var(--input-padding-x);
+  border-radius: var(--input-border-radius) !important;
+  outline: none !important;
+  font-size: 13px;
+  display: flex;
+  transition: background-size 0.1s ease;
+}
+
+/* ---------- Select's Input ---------- */
+.filter__control {
+  border-radius: var(--input-border-radius);
+  background-color: var(--input-coler);
+  padding-left: 12px;
+  padding-right: 12px;
+  height: var(--input-height);
+}
+
+.select:focus-within {
+  box-shadow: 0 0 0 10px lemonchiffon;
+}
+
+.filter__value-container {
+  padding-top: 12px;
+}
+/* ---------- Handle title movement both on select and calendar types ---------- */
+.value > .title {
+  top: 9px;
+  font-size: 9px;
+}
+/* ---------- ------------- ---------- */
+/* ---------- Select's Menu ---------- */
+.filter__menu {
+  background-color: var(--input-coler);
+  padding: 8px;
+  display: flex;
+  gap: 50px;
+  border-radius: var(--input-border-radius);
+  margin-top: 10px;
+}
+
+.filter__menu-list {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  max-height: 370px;
+}
+
+.filter__option {
+  background-color: aqua;
+  width: 100%;
+}
+/* ---------- -------------- ---------- */
+
+/** ---------- Loading Styles ---------- **/
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--input-height);
+  text-align: center;
+  align-content: center;
+  border-radius: var(--input-border-radius);
+  overflow: hidden;
+}
+
+.loading:after {
+  content: "";
+  top: 0;
+  transform: translateX(100%);
+  width: 100%;
+  height: var(--input-height);
+  position: absolute;
+  z-index: 1;
+  animation: slide 1.5s infinite ease-in-out;
+  background: -moz-linear-gradient(
+    left,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(128, 186, 232, 0) 99%,
+    rgba(125, 185, 232, 0) 100%
+  ); /* FF3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(0%, rgba(255, 255, 255, 0)),
+    color-stop(50%, rgba(255, 255, 255, 0.4)),
+    color-stop(99%, rgba(128, 186, 232, 0)),
+    color-stop(100%, rgba(125, 185, 232, 0))
+  ); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(
+    left,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(128, 186, 232, 0) 99%,
+    rgba(125, 185, 232, 0) 100%
+  ); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(
+    left,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(128, 186, 232, 0) 99%,
+    rgba(125, 185, 232, 0) 100%
+  ); /* Opera 11.10+ */
+  background: -ms-linear-gradient(
+    left,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(128, 186, 232, 0) 99%,
+    rgba(125, 185, 232, 0) 100%
+  ); /* IE10+ */
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(128, 186, 232, 0) 99%,
+    rgba(125, 185, 232, 0) 100%
+  ); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 */
+}
+@keyframes slide {
+  0% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.af {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  align-content: center;
+  width: 40px;
+  text-align: center;
+  padding-top: 3px;
+  box-sizing: border-box;
+  border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
+  background-color: #666;
+
+}

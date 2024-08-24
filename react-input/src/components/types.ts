@@ -27,6 +27,9 @@ export type BaseInput = Validation & {
   beforeClassName?: string;
   afterClassName?: string;
   defaultValue?: any;
+  loadingClassName?: string;
+  loadingObject?: any;
+  disabledClassName?: string;
 };
 
 export type Validation = {
@@ -57,7 +60,7 @@ export type Integer = BaseInput & {
   separator?: string;
 };
 
-export type Date = BaseInput & {
+export type Calendar = BaseInput & {
   type: "calendar";
   locale: "persian" | "english";
   range?: boolean;
@@ -80,6 +83,8 @@ export type Select = BaseInput & {
   fullWidth?: boolean;
   noOptionsMessage?: any;
   portal?: any;
+  menuIsOpen?: boolean;
+  unstyled?: boolean;
 };
 
 export type Textarea = BaseInput & {
@@ -118,6 +123,7 @@ export type ErrorTypes =
 
 export interface ReactInputContextProps {
   validationErrors: ErrorTypes;
+  setValidationErrors: React.Dispatch<React.SetStateAction<ErrorTypes>>;
 }
 
 export type ValidationComponentProps = {

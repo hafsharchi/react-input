@@ -1,17 +1,19 @@
-.relative {
-  position: relative;
-  top: 0;
-  left: 0;
+:root {
+  --input-height: 45px;
+  --input-coler: #555;
+  --input-coler-focus: #666;
+  --input-coler-hover: #777;
+  --input-font-size: 12px;
+  --input-border-radius: 12px;
+  --input-padding-x: 10px;
 }
 
-html {
-  background-color: #333;
+.relative {
+  position: relative;
 }
+
 .absolute {
   position: absolute;
-}
-.color-red {
-  color: red;
 }
 
 .flex {
@@ -22,209 +24,7 @@ html {
   align-items: center;
 }
 
-.dada {
-  outline: none;
-  border: 0;
-  border-radius: 16px;
-  border: 0;
-  padding: 6px;
-  /* color: red; */
-  /* border-radius: 100px; */
-  /* padding: 15px; */
-}
-
 .w-full {
   width: 100%;
 }
 
-.bg-red {
-  background-color: red;
-}
-
-.bg-blue {
-  background-color: #33333399;
-}
-
-.w-600 {
-  width: 400px;
-}
-
-.hello__control {
-  border: 0px !important;
-  outline: none !important;
-  background-color: aqua !important;
-  border-radius: 10px !important;
-}
-
-.hello__indicator-separator {
-  opacity: 0;
-}
-
-.hello__dropdown-indicator {
-  color: red !important;
-}
-
-.hello__value-container {
-  /* background-color: beige; */
-  margin-top: 10px;
-}
-
-.overflow-h {
-  overflow: hidden !important;
-  background-color: chartreuse;
-}
-
-.h96 {
-  height: 150px;
-}
-
-.container {
-  width: 100%;
-}
-
-.wrapper {
-  position: relative;
-}
-
-.wrapper > input {
-  position: relative;
-  direction: ltr;
-  text-align: end;
-  border: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  width: 100% !important;
-  padding-left: 6px;
-  padding-right: 6px;
-  border-radius: 6px !important;
-  outline: none;
-  font-size: 13px;
-  height: 42px;
-  display: flex;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 12px;
-  transition: all 0.1s ease;
-  caret-color: skyblue;
-  color: white !important;
-  background: gray !important;
-}
-
-.wrapper > input:hover {
-  background: #777 !important;
-}
-
-.wrapper > input:focus {
-  background: #666 !important;
-  box-shadow: 0 0 0 1px greenyellow;
-}
-
-.wrapper .title {
-  pointer-events: none;
-  padding-left: 12px;
-  padding-right: 12px;
-  cursor: text;
-  z-index: 10;
-  text-align: right !important;
-  position: absolute;
-  right: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  top: 21px;
-  line-height: 100%;
-  transform: translateY(-50%);
-  color: pink !important;
-  font-size: 13px;
-  transition: top 0.2s ease, color 0.2s ease, font-size 0.2s ease;
-}
-
-.wrapper > input.dirty + .title {
-  top: 9px;
-  font-size: 9px;
-}
-
-.wrapper > input:focus + .title {
-  top: 9px;
-  font-size: 9px;
-}
-
-.wrapper > input:not(:placeholder-shown) + .placeholder {
-  top: 9px;
-  font-size: 9px;
-}
-
-.select-inner {
-  position: relative;
-  border: none !important;
-  -webkit-appearance: none !important;
-  -ms-appearance: none !important;
-  -moz-appearance: none !important;
-  appearance: none !important;
-  width: 100% !important;
-  background: var(--chakra-colors-secondary-light-100);
-  padding-left: var(--field-padding);
-  padding-right: var(--field-padding);
-  border-radius: 6px !important;
-  outline: none !important;
-  font-size: 13px;
-  height: 42px;
-  display: flex;
-  transition: background-size 0.1s ease;
-}
-
-.filter__control {
-  background-color: aliceblue;
-  padding-left: 12px;
-  padding-right: 12px;
-}
-.select-inner div:nth-of-type(1) {
-  width: 100%;
-  text-align: right;
-}
-
-.select-inner:focus-within {
-  box-shadow: 0 0 0 1px var(--chakra-colors-primary-light-default) !important;
-}
-
-.dark .select-inner:focus-within {
-  box-shadow: 0 0 0 1px var(--chakra-colors-primary-dark-default) !important;
-}
-
-.filter__value-container {
-  padding-top: 12px;
-}
-
-.value > .title {
-  top: 9px;
-  font-size: 9px;
-}
-
-
-.filter__menu{
-  background-color: wheat;
-  padding: 8px;
-  display: flex;
-  gap: 50px;
-  border-radius: 16px;
-  margin-top: 10px;
-}
-
-
-.filter__menu-list {
-  width: 100%;
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-  max-height: 370px;
-}
-
-.filter__option{
-  background-color: aqua;
-  width: 100%;
-}
