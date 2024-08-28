@@ -86,7 +86,6 @@ export const InputDate = memo(
         } `}
       >
         {_.before && <div className={_.beforeClassName}>{_.before}</div>}
-
         <DatePicker
           portal={_.portal != undefined && _.portal != false}
           ref={inputRef}
