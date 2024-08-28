@@ -27,7 +27,7 @@ export const InputText = memo(
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current) {
-          return inputRef.current?.value;
+          return inputRef.current?.value ?? "";
         }
       },
       updateValue: (newValue: string) => {
@@ -69,6 +69,7 @@ export const InputText = memo(
     const checkValidation = (currentValue: string): boolean => {
       var res = true;
       if (
+        _.required &&
         !vRequired({
           currentValue: currentValue,
           setErrors: setErrors,
@@ -76,6 +77,7 @@ export const InputText = memo(
         })
       )
         res = false;
+
       _.customValidations?.forEach((customValidation: CustomValidation) => {
         if (
           !vCustomValidation({
@@ -102,6 +104,7 @@ export const InputText = memo(
     return (
       <>
         <div className={_.wrapperClassName}>
+          {_.before && <div className={_.beforeClassName}>{_.before}</div>}
           <input
             defaultValue={_.defaultValue}
             ref={inputRef}
@@ -120,6 +123,7 @@ export const InputText = memo(
             <div className={_.loadingClassName}>{_.loadingObject}</div>
           )}
           {_.validationComponent && _.validationComponent({ errors: errors })}
+          {_.after && <div className={_.afterClassName}>{_.after}</div>}
         </div>
       </>
     );

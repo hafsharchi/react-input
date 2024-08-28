@@ -1,36 +1,75 @@
 import React, {
   forwardRef,
+  memo,
+  useContext,
   useImperativeHandle,
   useRef,
-  memo,
   useState,
-  useContext,
 } from "react";
-import { CustomValidation, Integer, ReactInputContextProps } from "../types";
-import { vMinValue } from "../../utils/vMinValue";
-import { vMaxValue } from "../../utils/vMaxValue";
-import { vInteger } from "../../utils/vInteger";
-import { separate } from "../../utils/Separate";
+import { CustomValidation, Password, ReactInputContextProps } from "../types";
+import { vMaxLength } from "../../utils/vMaxLength";
+import { vMinLength } from "../../utils/vMinLength";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
 
-export const InputInteger = memo(
-  forwardRef((_: Integer, ref: any) => {
+export const InputPassword = memo(
+  forwardRef((_: Password, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const showIcon = _.showIcon ?? (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="lucide lucide-eye"
+      >
+        <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0" />
+        <circle cx="12" cy="12" r="3" />
+      </svg>
+    );
+    const hideIcon = _.hideIcon ?? (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="lucide lucide-eye-off"
+      >
+        <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49" />
+        <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242" />
+        <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143" />
+        <path d="m2 2 20 20" />
+      </svg>
+    );
+
     const [errors, setErrors] = useState<Array<string>>([]);
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+
+    const togglePassword = () => {
+      setShowPassword((prev: boolean) => !prev);
+    };
     const customized: ReactInputContextProps | undefined = useContext(
       ReactInputContext
     );
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
-        if (inputRef.current && inputRef.current.value) {
-          return inputRef.current?.value.replace(_.separator ?? "", "") ?? "";
+        if (inputRef.current) {
+          return inputRef.current?.value ?? "";
         }
-        return "";
       },
       updateValue: (newValue: string) => {
         if (inputRef.current) {
@@ -48,30 +87,28 @@ export const InputInteger = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
-      vInteger({ ref: inputRef });
-      if (_.separator) separate({ ref: inputRef, seperator: _.separator });
+
+      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
 
       if (_.validationOn == "submit-blur-change" || !isValid)
-        setIsValid(checkValidation(inputRef?.current?.value ?? ""));
+        setIsValid(checkValidation(inputRef.current?.value ?? ""));
     };
 
     const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onBlur) _.onBlur(e);
-      vInteger({ ref: inputRef });
 
-      if (_.separator) separate({ ref: inputRef, seperator: _.separator });
+      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
 
       if (
         _.validationOn == "submit-blur-change" ||
         _.validationOn == "submit-blur" ||
         !isValid
       )
-        setIsValid(checkValidation(inputRef?.current?.value ?? ""));
+        setIsValid(checkValidation(inputRef.current?.value ?? ""));
     };
 
     const checkValidation = (currentValue: string): boolean => {
       var res = true;
-
       if (
         _.required &&
         !vRequired({
@@ -85,49 +122,37 @@ export const InputInteger = memo(
       _.customValidations?.forEach((customValidation: CustomValidation) => {
         if (
           !vCustomValidation({
-            currentValue: currentValue.replace(_.separator ?? "", ""),
+            currentValue: currentValue,
             setErrors: setErrors,
             customValidation: customValidation,
           })
         )
           res = false;
       });
-
       if (
-        _.minValue &&
-        !vMinValue({
-          currentValue: currentValue.replace(_.separator ?? "", ""),
-          minValue: _.minValue,
+        _.minLength &&
+        !vMinLength({
+          currentValue: currentValue,
+          minLength: _.minLength,
           setErrors: setErrors,
-          error: customized?.validationErrors?.minValue ?? undefined,
+          error: customized?.validationErrors?.minLength ?? undefined,
         })
       )
         res = false;
-
-      if (
-        _.maxValue &&
-        !vMaxValue({
-          currentValue: currentValue.replace(_.separator ?? "", ""),
-          maxValue: _.maxValue,
-          setErrors: setErrors,
-          error: customized?.validationErrors?.maxValue ?? undefined,
-        })
-      )
-        res = false;
-
       return res;
     };
 
     return (
       <>
         <div className={_.wrapperClassName}>
+          {_.before && <div className={_.beforeClassName}>{_.before}</div>}
           <input
             defaultValue={_.defaultValue}
             ref={inputRef}
             className={`${
               isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
             } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
-            type="text"
+            type={showPassword ? "text" : "password"}
             title={_.title}
             placeholder={_?.placeholder ?? ""}
             onChange={(e) => onChange(e)}
@@ -135,10 +160,17 @@ export const InputInteger = memo(
             disabled={_.disabled}
           />
           <div className={_.titleClassName}>{_.title}</div>
+          <div
+            className={`toggle-password-visibility ${_.togglePasswordVisibilityClassName}`}
+            onClick={togglePassword}
+          >
+            {showPassword ? hideIcon : showIcon}
+          </div>
           {_.loading && (
             <div className={_.loadingClassName}>{_.loadingObject}</div>
           )}
           {_.validationComponent && _.validationComponent({ errors: errors })}
+          {_.after && <div className={_.afterClassName}>{_.after}</div>}
         </div>
       </>
     );

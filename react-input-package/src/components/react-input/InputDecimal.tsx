@@ -28,9 +28,10 @@ export const InputDecimal = memo(
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
-        if (inputRef.current) {
-          return inputRef.current?.value.replace(_.separator ?? "","");
+        if (inputRef.current && inputRef.current.value) {
+          return inputRef.current?.value.replace(_.separator ?? "", "") ?? "";
         }
+        return "";
       },
       updateValue: (newValue: string) => {
         if (inputRef.current) {
@@ -70,6 +71,7 @@ export const InputDecimal = memo(
       var res = true;
 
       if (
+        _.required &&
         !vRequired({
           currentValue: currentValue,
           setErrors: setErrors,

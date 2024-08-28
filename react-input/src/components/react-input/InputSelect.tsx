@@ -37,7 +37,8 @@ export const InputSelect = memo(
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
-        if (inputRef.current && value && value?.length > 0) {
+        if (value) {
+          if (_.multiple && value.length <= 0) return "";
           return value;
         }
         return "";

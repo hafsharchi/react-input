@@ -33,7 +33,6 @@ const App = () => {
             { label: "a", value: "2" },
             { label: "b", value: "3" },
           ]}
-          multiple
           classNamePrefix="filter"
           unstyled
           placeholder=""
@@ -53,9 +52,24 @@ const App = () => {
         />
 
         <Input
-        after={'$'}
-        afterClassName="af"
+          after={"$"}
+          afterClassName="af"
           type="text"
+          placeholder=""
+          id="1"
+          name="mains"
+          validationOn="submit-blur-change"
+          register={useRegister}
+          title="عنوان"
+          className="wrapper"
+          validationComponent={ValidationComponent}
+          wrapperClassName="wrapper"
+          titleClassName="title"
+          loadingClassName="loading"
+        />
+
+        <Input
+          type="password"
           placeholder=""
           id="1"
           name="mains"

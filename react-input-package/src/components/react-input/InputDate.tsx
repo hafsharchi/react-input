@@ -7,7 +7,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Date, ReactInputContextProps } from "../types";
+import { Calendar, ReactInputContextProps } from "../types";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
@@ -15,7 +15,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import { vRequired } from "../../utils";
 
 export const InputDate = memo(
-  forwardRef((_: Date, ref: any) => {
+  forwardRef((_: Calendar, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const [value, setValue] = useState<any>(_?.defaultValue);
 
@@ -29,7 +29,24 @@ export const InputDate = memo(
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
-        return `${value}`;
+        if (value) {
+          var date: Date | string = new Date(value);
+          if (_.locale == "english") {
+            date = new Intl.DateTimeFormat("en-US", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            }).format(date);
+          } else {
+            date = new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            }).format(date);
+          }
+          return date;
+        }
+        return "";
       },
       updateValue: (newValue: any) => {
         setValue(newValue);
@@ -51,6 +68,7 @@ export const InputDate = memo(
     const checkValidation = (currentValue: string): boolean => {
       var res = true;
       if (
+        _.required &&
         !vRequired({
           currentValue: currentValue,
           setErrors: setErrors,
@@ -67,6 +85,8 @@ export const InputDate = memo(
           value && value != "" ? "value" : ""
         } `}
       >
+        {_.before && <div className={_.beforeClassName}>{_.before}</div>}
+
         <DatePicker
           portal={_.portal != undefined && _.portal != false}
           ref={inputRef}
@@ -75,9 +95,9 @@ export const InputDate = memo(
           calendar={persian}
           locale={_?.locale == "persian" ? persian_fa : undefined}
           onOpenPickNewDate={false}
-          inputClass={`${_.className} ${_.fullWidth && "w-full"} ${_.disabled?_.disabledClassName:''} ${
-            isValid ? "" : "input-not-valid"
-          }`}
+          inputClass={`${_.className} ${_.fullWidth && "w-full"} ${
+            _.disabled ? _.disabledClassName : ""
+          } ${isValid ? "" : "input-not-valid"}`}
           minDate={_.minDate ?? undefined}
           maxDate={_.maxDate ?? undefined}
           onChange={(e: any) => onChange(e)}
@@ -96,6 +116,7 @@ export const InputDate = memo(
           <div className={_.loadingClassName}>{_.loadingObject}</div>
         )}
         {_.validationComponent && _.validationComponent({ errors: errors })}
+        {_.after && <div className={_.afterClassName}>{_.after}</div>}
       </div>
     );
   })

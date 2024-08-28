@@ -52,6 +52,7 @@ export const useInput = () => {
   };
 
   const submit = (func: (data: any) => any) => {
+    console.log(get())
     var res: boolean = true;
     inputs.map((input) => {
       res = input.ref.current.checkValidation() && res;
