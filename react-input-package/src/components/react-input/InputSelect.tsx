@@ -19,25 +19,21 @@ export const InputSelect = memo(
       OptionsOrGroups<unknown, GroupBase<unknown>> | undefined
     >(_?.defaultValue);
     const [inputValue, setInputValue] = React.useState<string>();
-
     const [isValid, setIsValid] = useState<boolean>(true);
+
     const inputRef = useRef<any>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
-
-    useEffect(() => {
-      console.log(inputValue);
-    }, [inputValue]);
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
 
     const [hasChanged, setHasChanged] = useState<boolean>(false);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
-        if (inputRef.current && value && value?.length > 0) {
+        if (value) {
+          if (_.multiple && value.length <= 0) return "";
           return value;
         }
         return "";
@@ -76,6 +72,10 @@ export const InputSelect = memo(
     };
 
     const checkValidation = (currentValue: any): boolean => {
+      if (Array.isArray(currentValue) && currentValue.length === 0) {
+        currentValue = null;
+      }
+      
       var res = true;
 
       if (

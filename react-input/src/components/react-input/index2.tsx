@@ -27,6 +27,7 @@ export const Input = memo(
       name: _.name,
       register: _.register,
       title: _.title,
+      titleAfter: _.titleAfter,
       disabled: _?.disabled,
       loading: _?.loading,
       onBlur: _?.onBlur,
