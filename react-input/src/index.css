@@ -1,13 +1,3 @@
-:root {
-  --input-height: 45px;
-  --input-coler: #555;
-  --input-coler-focus: #666;
-  --input-coler-hover: #777;
-  --input-font-size: 12px;
-  --input-border-radius: 12px;
-  --input-padding-x: 10px;
-}
-
 .relative {
   position: relative;
 }
@@ -28,3 +18,15 @@
   width: 100%;
 }
 
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+    display: none;
+}
+
+.toggle-password-visibility{
+  position: absolute;
+  left: 12px;
+  top: 11px;
+  cursor: pointer;
+}

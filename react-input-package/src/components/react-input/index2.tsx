@@ -8,15 +8,19 @@ import {
   Select,
   Text,
   Textarea,
+  Password,
 } from "../types";
 import { InputText } from "./InputText";
 import { InputDecimal } from "./InputDecimal";
 import { InputInteger } from "./InputInteger";
 import { InputSelect } from "./InputSelect";
 import { InputDate } from "./InputDate";
+import { InputPassword } from "./InputPassword";
 
 export const Input = memo(
-  (_: Text | Decimal | Integer | Calendar | Select | Textarea | File) => {
+  (
+    _: Text | Decimal | Integer | Calendar | Select | Textarea | File | Password
+  ) => {
     var baseInput: BaseInput = {
       id: _.id,
       type: _.type,
@@ -29,7 +33,6 @@ export const Input = memo(
       onChange: _?.onChange,
       placeholder: _?.placeholder,
       validationOn: _.validationOn,
-      validationPattern: _.validationPattern,
       validationComponent: _?.validationComponent,
       customValidations: _.customValidations,
       required: _?.required,
@@ -114,6 +117,18 @@ export const Input = memo(
             noOptionsMessage={_?.noOptionsMessage}
             unstyled={_?.unstyled}
             menuIsOpen={_?.menuIsOpen}
+          />
+        );
+      case "password":
+        return (
+          <InputPassword
+            {...baseInput}
+            maxLength={_.maxLength}
+            minLength={_.minLength}
+            showIcon={_.showIcon}
+            hideIcon={_.hideIcon}
+            togglePasswordVisibilityClassName={_.togglePasswordVisibilityClassName}
+            type="password"
           />
         );
 

@@ -1,4 +1,4 @@
-import { ValidationComponentProps } from "./types";
+import { ValidationComponentProps } from "./components/types";
 
 const ValidationComponent = (_: ValidationComponentProps) => {
   if (_.errors)

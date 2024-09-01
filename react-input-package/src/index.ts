@@ -3,18 +3,20 @@ export {
   BaseInput,
   CustomValidation,
   CustomValidations,
+<<<<<<< HEAD
   Calendar,
+=======
+>>>>>>> b962333bfa0365d3be7d508205957c81565d04f3
   Decimal,
   ErrorTypes,
   File,
   Integer,
-  NoValidation,
   ReactInputContextProps,
   Select,
+  Password,
   Text,
   Textarea,
   Type,
-  Validation,
   ValidationComponentProps,
   ValidationPatterns,
 } from "./components/types";

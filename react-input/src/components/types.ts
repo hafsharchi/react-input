@@ -4,9 +4,10 @@ import { GroupBase, OptionsOrGroups } from "react-select";
 
 export type ValidationPatterns = "email" | "website" | string;
 
-export type BaseInput = Validation & {
-  id: string;
-  title: string;
+export type BaseInput = {
+  id?: string;
+  title?: string;
+  titleAfter?: boolean;
   type: Type;
   name: string;
   register: any;
@@ -21,6 +22,7 @@ export type BaseInput = Validation & {
   titleClassName?: string;
   customValidations?: CustomValidations;
   validationComponent?: React.FC<ValidationComponentProps>;
+  validationOn?: "submit-blur-change" | "submit-blur" | "submit";
   notValidClassName?: string;
   before?: any;
   after?: any;
@@ -29,19 +31,22 @@ export type BaseInput = Validation & {
   defaultValue?: any;
   loadingClassName?: string;
   loadingObject?: any;
+  componentStructure?: ComponentDescriptor;
   disabledClassName?: string;
+  wrapInside?: boolean;
 };
 
-export type Validation = {
-  validationPattern?: ValidationPatterns;
-  validationOn: "submit-blur-change" | "submit-blur" | "submit";
-};
-
-export type NoValidation = {
-  validation: false;
-};
 export type Text = BaseInput & {
   type: "text";
+  maxLength?: number;
+  minLength?: number;
+};
+
+export type Password = BaseInput & {
+  type: "password";
+  showIcon?: any;
+  hideIcon?: any;
+  togglePasswordVisibilityClassName?: string;
   maxLength?: number;
   minLength?: number;
 };
@@ -106,7 +111,8 @@ export type Type =
   | "calendar"
   | "select"
   | "textarea"
-  | "file";
+  | "file"
+  | "password";
 
 export type ErrorTypes =
   | undefined
@@ -136,3 +142,26 @@ export type CustomValidation = {
 };
 
 export type CustomValidations = Array<CustomValidation>;
+
+export type ComponentDescriptor =
+  | InputComponent
+  | {
+      type:
+        | "wrapper"
+        | "after"
+        | "before"
+        | "title"
+        | "validation"
+        | "loading"
+        | "other";
+      tag?: keyof JSX.IntrinsicElements;
+      props?: { [key: string]: any };
+      children?: ComponentDescriptor[];
+      content?: React.ReactNode;
+    };
+
+export type InputComponent = {
+  type: "input";
+  props?: { [key: string]: any };
+  content?: React.ReactNode;
+};
