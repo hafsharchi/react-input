@@ -27,9 +27,10 @@ export const InputInteger = memo(
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
-        if (inputRef.current) {
-          return inputRef.current?.value.replace(_.separator ?? "","");
+        if (inputRef.current && inputRef.current.value) {
+          return inputRef.current?.value.replace(_.separator ?? "", "") ?? "";
         }
+        return "";
       },
       updateValue: (newValue: string) => {
         if (inputRef.current) {
@@ -72,6 +73,7 @@ export const InputInteger = memo(
       var res = true;
 
       if (
+        _.required &&
         !vRequired({
           currentValue: currentValue,
           setErrors: setErrors,
@@ -119,6 +121,7 @@ export const InputInteger = memo(
     return (
       <>
         <div className={_.wrapperClassName}>
+          {_.before && <div className={_.beforeClassName}>{_.before}</div>}
           <input
             defaultValue={_.defaultValue}
             ref={inputRef}
@@ -137,6 +140,7 @@ export const InputInteger = memo(
             <div className={_.loadingClassName}>{_.loadingObject}</div>
           )}
           {_.validationComponent && _.validationComponent({ errors: errors })}
+          {_.after && <div className={_.afterClassName}>{_.after}</div>}
         </div>
       </>
     );

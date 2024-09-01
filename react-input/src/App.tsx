@@ -73,7 +73,7 @@ const App = () => {
           type="calendar"
           locale="persian"
           fullWidth
-          defaultValue={new Date()}
+          defaultValue={"1402/01/06"}
           separator="-"
           id="1"
           name="maidn"

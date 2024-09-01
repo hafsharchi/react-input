@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-router": "^1.50.0",
     "axios": "^1.7.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.3.29",
+    "framer-motion": "^11.3.31",
+    "ha-dd-react-input": "^0.0.10",
     "highlight.js": "^11.10.0",
     "lucide-react": "^0.433.0",
     "react": "^18.3.1",
@@ -25,6 +27,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@tanstack/router-devtools": "^1.50.0",
+    "@tanstack/router-plugin": "^1.49.3",
     "@types/node": "^22.5.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

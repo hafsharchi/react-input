@@ -60,7 +60,7 @@ export type Integer = BaseInput & {
   separator?: string;
 };
 
-export type Date = BaseInput & {
+export type Calendar = BaseInput & {
   type: "calendar";
   locale: "persian" | "english";
   range?: boolean;
@@ -123,6 +123,7 @@ export type ErrorTypes =
 
 export interface ReactInputContextProps {
   validationErrors: ErrorTypes;
+  setValidationErrors: React.Dispatch<React.SetStateAction<ErrorTypes>>;
 }
 
 export type ValidationComponentProps = {

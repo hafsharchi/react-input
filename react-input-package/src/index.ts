@@ -3,7 +3,7 @@ export {
   BaseInput,
   CustomValidation,
   CustomValidations,
-  Date,
+  Calendar,
   Decimal,
   ErrorTypes,
   File,

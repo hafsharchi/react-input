@@ -33,8 +33,8 @@ const CodeHighlighter = ({ language, code }: Props) => {
 export default CodeHighlighter;`;
   return (
     <div className="flex w-full p-6 gap-6 bg-slate-200 min-h-screen">
-      <div className="w-3/4 bg-white rounded-3xl flex p-6">
-          <LeftSide />
+      <div className="w-3/4 bg-white rounded-3xl flex p-6 gap-4">
+        <LeftSide />
         <CodeHighlighter
           language="javascript"
           className="text-xs rounded-2xl shrink-0 h-full w-[700px]"
@@ -42,7 +42,8 @@ export default CodeHighlighter;`;
         />
       </div>
       <div className="w-1/4 bg-white rounded-3xl p-6 font-gblack text-xl">
-      Quick start</div>
+        Quick start
+      </div>
     </div>
   );
 }

@@ -4,12 +4,12 @@ export {
   addToStateArrayByValue,
   removeFromStateArrayByValue,
 } from "./StateArray";
-export { updateField } from "./UpdateField";
+export { updateField } from "./updateField";
 export { vCustomValidation } from "./vCustomValidation";
 export { vDecimal } from "./vDecimal";
 export { vInteger } from "./vInteger";
 export { vMaxLength } from "./vMaxLength";
-export {vMaxValue} from "./vMaxValue";
-export {vMinValue} from "./vMinValue";
-export {vMinLength} from "./vMinLength";
-export {vRequired} from "./vRequired";
+export { vMaxValue } from "./vMaxValue";
+export { vMinValue } from "./vMinValue";
+export { vMinLength } from "./vMinLength";
+export { vRequired } from "./vRequired";

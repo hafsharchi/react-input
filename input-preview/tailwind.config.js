@@ -17,12 +17,16 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        'geist': ['Geist', 'sans-serif'],
+      },
       colors: {
-        border: "hsl(var(--border))",
+        border: "var(--border)",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        subtext: "var(--subtext)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -70,13 +74,6 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-      },
-      fontFamily: {
-        gblack:'GeistBlack',
-        gultrablack: 'GeistUltraBlack',
-        glight: 'GeistLight',
-        gthin: 'GeistThin'
-
       },
     },
   },
