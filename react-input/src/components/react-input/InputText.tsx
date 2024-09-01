@@ -6,12 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import {
-  ComponentDescriptor,
-  CustomValidation,
-  ReactInputContextProps,
-  Text,
-} from "../types";
+import { CustomValidation, ReactInputContextProps, Text } from "../types";
 import { vMaxLength } from "../../utils/vMaxLength";
 import { vMinLength } from "../../utils/vMinLength";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
@@ -31,8 +26,9 @@ export const InputText = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -128,7 +124,9 @@ export const InputText = memo(
         />
       );
     };
-    if (!_.componentStructure)
+    if (_.componentStructure == undefined) {
+      console.log("undef");
+
       return (
         <>
           <Wrapper className={_.wrapperClassName}>
@@ -145,18 +143,25 @@ export const InputText = memo(
           </Wrapper>
         </>
       );
-
+    }
+    console.log("def");
     return (
       <>
-        {renderComponent({
-           _.componentStructure,
-           InputElement,
-           _.validationComponent,
-           _.afterClassName,
-           _.beforeClassName,
-           _.loading
-        }
-         
+        {renderComponent(
+          _.componentStructure,
+          InputElement,
+          _.validationComponent,
+          _.title,
+          _.before,
+          _.after,
+          _.wrapperClassName,
+          _.beforeClassName,
+          _.loadingClassName,
+          _.titleClassName,
+          _.afterClassName,
+          _.loading,
+          _.loadingObject,
+          errors
         )}
       </>
     );

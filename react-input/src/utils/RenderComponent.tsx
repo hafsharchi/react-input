@@ -9,58 +9,44 @@ import Before from "../components/elements/Before";
 import After from "../components/elements/After";
 import Loading from "../components/elements/Loading";
 
-type Props = {
-  descriptor: ComponentDescriptor;
-  InputComponent: React.FC<any>;
-  ValidationComponent: React.FC<ValidationComponentProps>;
-  title?: React.ReactNode;
-  before?: React.ReactNode;
-  after?: React.ReactNode;
-  wrapperClassName?: string;
-  beforeClassName?: string;
-  loadingClassName?: string;
-  titleClassName?: string;
-  afterClassName?: string;
-  loading?: boolean;
-  loadingObject?: React.ReactNode;
-  errors: Array<string>;
-};
-export const renderComponent = ({
-  descriptor,
-  InputComponent,
-  ValidationComponent,
-  afterClassName,
-  beforeClassName,
-  loading,
-  loadingClassName,
-  loadingObject,
-  title,
-  before,
-  after,
-  titleClassName,
-  wrapperClassName,
-  errors,
-}: Props): React.ReactNode => {
+export const renderComponent = (
+  descriptor: ComponentDescriptor,
+  InputComponent: React.FC<any>,
+  ValidationComponent?: React.FC<ValidationComponentProps>,
+  title?: React.ReactNode,
+  before?: React.ReactNode,
+  after?: React.ReactNode,
+  wrapperClassName?: string,
+  beforeClassName?: string,
+  loadingClassName?: string,
+  titleClassName?: string,
+  afterClassName?: string,
+  loading?: boolean,
+  loadingObject?: React.ReactNode,
+  errors?: Array<string>
+): React.ReactNode => {
   switch (descriptor.type) {
     case "input":
       return <InputComponent />;
     case "wrapper":
       const wrapperChildren = descriptor.children
         ? descriptor.children.map((child) =>
-            renderComponent({
-              descriptor: child,
+            renderComponent(
+              child,
               InputComponent,
               ValidationComponent,
-              afterClassName,
-              beforeClassName,
-              loading,
-              loadingClassName,
-              loadingObject,
               title,
-              titleClassName,
+              before,
+              after,
               wrapperClassName,
-              errors,
-            })
+              beforeClassName,
+              loadingClassName,
+              titleClassName,
+              afterClassName,
+              loading,
+              loadingObject,
+              errors
+            )
           )
         : null;
       return (
@@ -71,20 +57,22 @@ export const renderComponent = ({
     case "other":
       const otherChildren = descriptor.children
         ? descriptor.children.map((child) =>
-            renderComponent({
-              descriptor: child,
+            renderComponent(
+              child,
               InputComponent,
               ValidationComponent,
-              afterClassName,
-              beforeClassName,
-              loading,
-              loadingClassName,
-              loadingObject,
               title,
-              titleClassName,
+              before,
+              after,
               wrapperClassName,
-              errors,
-            })
+              beforeClassName,
+              loadingClassName,
+              titleClassName,
+              afterClassName,
+              loading,
+              loadingObject,
+              errors
+            )
           )
         : null;
       return React.createElement(
@@ -119,9 +107,10 @@ export const renderComponent = ({
         />
       );
     case "validation":
-      return <ValidationComponent errors={errors} />;
+      if (ValidationComponent) return <ValidationComponent errors={errors} />;
+      break;
     default:
-        console.log("rendercomponent returns null")
+      console.log("render component returns null");
       return null;
   }
 };

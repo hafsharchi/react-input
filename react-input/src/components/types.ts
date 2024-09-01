@@ -1,5 +1,6 @@
 // import { GroupBase, OptionsOrGroups } from "react-select";
 
+import React from "react";
 import { GroupBase, OptionsOrGroups } from "react-select";
 
 export type ValidationPatterns = "email" | "website" | string;
@@ -30,7 +31,7 @@ export type BaseInput = {
   afterClassName?: string;
   defaultValue?: any;
   loadingClassName?: string;
-  loadingObject?: any;
+  loadingObject?: React.ReactNode;
   componentStructure?: ComponentDescriptor;
   disabledClassName?: string;
   wrapInside?: boolean;

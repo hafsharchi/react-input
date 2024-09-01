@@ -48,6 +48,7 @@ export const Input = memo(
       loadingClassName: _?.loadingClassName,
       disabledClassName: _?.disabledClassName,
       loadingObject: _?.loadingObject,
+      componentStructure: _?.componentStructure,
       ..._.register(_.name, _.type),
     };
 
