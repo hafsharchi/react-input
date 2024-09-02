@@ -107,7 +107,7 @@ export const renderComponent = (
         />
       );
     case "validation":
-      if (ValidationComponent) return <ValidationComponent errors={errors} />;
+      ValidationComponent && ValidationComponent({ errors: errors });
       break;
     default:
       console.log("render component returns null");

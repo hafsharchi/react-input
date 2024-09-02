@@ -19,5 +19,6 @@ export const vRequired = ({ currentValue, setErrors, error }: VRequired) => {
     return true;
   }
   addToStateArrayByValue<string>(setErrors, error ?? VALIDATION_ERROR.REQUIRED);
+
   return false;
 };

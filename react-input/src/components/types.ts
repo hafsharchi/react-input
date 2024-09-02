@@ -166,3 +166,8 @@ export type InputComponent = {
   props?: { [key: string]: any };
   content?: React.ReactNode;
 };
+
+
+export type ErrorState = {
+  [key: string]: string[];
+};

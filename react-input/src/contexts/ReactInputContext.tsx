@@ -22,6 +22,8 @@ export const ReactInputProvider = ({ children, errors }: ReactInputProviderProps
     etc: errors?.etc ?? "not valid",
   });
 
+  const [error,setError] = useState<ErrorTypes>();
+
   const contextValue: ReactInputContextProps = {
     validationErrors,
     setValidationErrors

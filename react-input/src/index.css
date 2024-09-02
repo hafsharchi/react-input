@@ -18,15 +18,36 @@
   width: 100%;
 }
 
-input[type=password]::-ms-reveal,
-input[type=password]::-ms-clear
-{
-    display: none;
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
 }
 
-.toggle-password-visibility{
+.toggle-password-visibility {
   position: absolute;
   left: 12px;
   top: 11px;
   cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.inside-wrapper {
+  width: 100%;
+  -webkit-box-shadow: 60px 0px 119px -39px rgba(75, 82, 163, 1);
+  -moz-box-shadow: 60px 0px 119px -39px rgba(75, 82, 163, 1);
+  box-shadow: 60px 0px 119px -39px rgba(75, 82, 163, 1);
+}
+
+.loading {
+  background-color: orangered;
+  width: 100%;
+}
+input {
+  width: 100%;
+  box-sizing: border-box;
 }

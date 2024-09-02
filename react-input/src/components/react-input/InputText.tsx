@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   memo,
   useContext,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -106,15 +107,14 @@ export const InputText = memo(
         res = false;
       return res;
     };
-
-    const InputElement = () => {
-      return (
+    return (
+      <>
         <input
           defaultValue={_.defaultValue}
           ref={inputRef}
           className={`${
             isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-          } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
+          }${_.disabled ? _.disabledClassName : ""}${_.className}`}
           type="text"
           title={_.title}
           placeholder={_?.placeholder ?? ""}
@@ -122,47 +122,6 @@ export const InputText = memo(
           onBlur={(e) => onBlur(e)}
           disabled={_.disabled}
         />
-      );
-    };
-    if (_.componentStructure == undefined) {
-      console.log("undef");
-
-      return (
-        <>
-          <Wrapper className={_.wrapperClassName}>
-            <Before className={_.beforeClassName} before={_.before} />
-            <InputElement />
-            <Title title={_.title} className={_.titleClassName} />
-            <Loading
-              className={_.loadingClassName}
-              isLoading={_.loading}
-              loadingObject={_.loadingObject}
-            />
-            {_.validationComponent && _.validationComponent({ errors: errors })}
-            <After className={_.afterClassName} after={_.after} />
-          </Wrapper>
-        </>
-      );
-    }
-    console.log("def");
-    return (
-      <>
-        {renderComponent(
-          _.componentStructure,
-          InputElement,
-          _.validationComponent,
-          _.title,
-          _.before,
-          _.after,
-          _.wrapperClassName,
-          _.beforeClassName,
-          _.loadingClassName,
-          _.titleClassName,
-          _.afterClassName,
-          _.loading,
-          _.loadingObject,
-          errors
-        )}
       </>
     );
   })

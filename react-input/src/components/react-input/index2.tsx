@@ -16,6 +16,11 @@ import { InputInteger } from "./InputInteger";
 import { InputSelect } from "./InputSelect";
 import { InputDate } from "./InputDate";
 import { InputPassword } from "./InputPassword";
+import Wrapper from "../elements/Wrapper";
+import Before from "../elements/Before";
+import Title from "../elements/Title";
+import After from "../elements/After";
+import Loading from "../elements/Loading";
 
 export const Input = memo(
   (
@@ -49,18 +54,33 @@ export const Input = memo(
       loadingClassName: _?.loadingClassName,
       disabledClassName: _?.disabledClassName,
       loadingObject: _?.loadingObject,
+      componentStructure: _?.componentStructure,
       ..._.register(_.name, _.type),
     };
 
     switch (_.type) {
       case "text":
         return (
-          <InputText
+          <>
+          <Wrapper className={_.wrapperClassName}>
+            <Before className={_.beforeClassName} before={_.before} />
+            <InputText
             {...baseInput}
             maxLength={_.maxLength}
             minLength={_.minLength}
             type="text"
           />
+            <Title title={_.title} className={_.titleClassName} />
+            <Loading
+              className={_.loadingClassName}
+              isLoading={_.loading}
+              loadingObject={_.loadingObject}
+            />
+            {/* {_.validationComponent && _.validationComponent({ errors: errors })} */}
+            <After className={_.afterClassName} after={_.after} />
+          </Wrapper>
+        </>
+
         );
 
       case "decimal":
