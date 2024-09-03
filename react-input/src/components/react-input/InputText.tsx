@@ -2,7 +2,6 @@ import React, {
   forwardRef,
   memo,
   useContext,
-  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -27,9 +26,8 @@ export const InputText = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -107,22 +105,56 @@ export const InputText = memo(
         res = false;
       return res;
     };
-    return (
-      <>
-        <input
-          defaultValue={_.defaultValue}
-          ref={inputRef}
-          className={`${
-            isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-          }${_.disabled ? _.disabledClassName : ""}${_.className}`}
-          type="text"
-          title={_.title}
-          placeholder={_?.placeholder ?? ""}
-          onChange={(e) => onChange(e)}
-          onBlur={(e) => onBlur(e)}
-          disabled={_.disabled}
-        />
-      </>
+
+    const input: React.ReactNode = (
+      <input
+        defaultValue={_.defaultValue}
+        ref={inputRef}
+        className={`${
+          isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
+        }${_.disabled ? _.disabledClassName : ""}${_.className}`}
+        type="text"
+        title={_.title}
+        placeholder={_?.placeholder ?? ""}
+        onChange={(e) => onChange(e)}
+        onBlur={(e) => onBlur(e)}
+        disabled={_.disabled}
+      />
+    );
+
+    if (!_.componentStructure)
+      return (
+        <>
+          <Wrapper className={_.wrapperClassName}>
+            <Before className={_.beforeClassName} before={_.before} />
+            {input}
+            <Title title={_.title} className={_.titleClassName} />
+            <Loading
+              className={_.loadingClassName}
+              isLoading={_.loading}
+              loadingObject={_.loadingObject}
+            />
+            {_.validationComponent && _.validationComponent({ errors: errors })}
+            <After className={_.afterClassName} after={_.after} />
+          </Wrapper>
+        </>
+      );
+
+    return renderComponent(
+      _.componentStructure,
+      input,
+      _.validationComponent,
+      _.title,
+      _.before,
+      _.after,
+      _.wrapperClassName,
+      _.beforeClassName,
+      _.loadingClassName,
+      _.titleClassName,
+      _.afterClassName,
+      _.loading,
+      _.loadingObject,
+      errors
     );
   })
 );

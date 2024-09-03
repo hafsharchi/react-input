@@ -11,7 +11,7 @@ import Loading from "../components/elements/Loading";
 
 export const renderComponent = (
   descriptor: ComponentDescriptor,
-  InputComponent: React.FC<any>,
+  InputComponent: React.ReactNode,
   ValidationComponent?: React.FC<ValidationComponentProps>,
   title?: React.ReactNode,
   before?: React.ReactNode,
@@ -27,7 +27,7 @@ export const renderComponent = (
 ): React.ReactNode => {
   switch (descriptor.type) {
     case "input":
-      return <InputComponent />;
+      return InputComponent;
     case "wrapper":
       const wrapperChildren = descriptor.children
         ? descriptor.children.map((child) =>

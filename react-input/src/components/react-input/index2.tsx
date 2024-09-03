@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import { memo } from "react";
 import {
   BaseInput,
   Calendar,
@@ -16,11 +16,6 @@ import { InputInteger } from "./InputInteger";
 import { InputSelect } from "./InputSelect";
 import { InputDate } from "./InputDate";
 import { InputPassword } from "./InputPassword";
-import Wrapper from "../elements/Wrapper";
-import Before from "../elements/Before";
-import Title from "../elements/Title";
-import After from "../elements/After";
-import Loading from "../elements/Loading";
 
 export const Input = memo(
   (
@@ -61,26 +56,12 @@ export const Input = memo(
     switch (_.type) {
       case "text":
         return (
-          <>
-          <Wrapper className={_.wrapperClassName}>
-            <Before className={_.beforeClassName} before={_.before} />
-            <InputText
+          <InputText
             {...baseInput}
             maxLength={_.maxLength}
             minLength={_.minLength}
             type="text"
           />
-            <Title title={_.title} className={_.titleClassName} />
-            <Loading
-              className={_.loadingClassName}
-              isLoading={_.loading}
-              loadingObject={_.loadingObject}
-            />
-            {/* {_.validationComponent && _.validationComponent({ errors: errors })} */}
-            <After className={_.afterClassName} after={_.after} />
-          </Wrapper>
-        </>
-
         );
 
       case "decimal":
@@ -148,7 +129,9 @@ export const Input = memo(
             minLength={_.minLength}
             showIcon={_.showIcon}
             hideIcon={_.hideIcon}
-            togglePasswordVisibilityClassName={_.togglePasswordVisibilityClassName}
+            togglePasswordVisibilityClassName={
+              _.togglePasswordVisibilityClassName
+            }
             type="password"
           />
         );

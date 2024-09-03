@@ -61,7 +61,7 @@ export default function App({}: Props) {
         minLength={3}
         loadingObject={"Hello world"}
         className="input"
-        // componentStructure={componentStructure}
+        componentStructure={componentStructure}
         title="Hello"
       />
 

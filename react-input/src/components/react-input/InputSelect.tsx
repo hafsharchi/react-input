@@ -12,6 +12,12 @@ import { vCustomValidation } from "../../utils/vCustomValidation";
 import { CustomValidation, ReactInputContextProps, Select } from "../types";
 import { vRequired } from "../../utils";
 import ReactSelect, { GroupBase, OptionsOrGroups } from "react-select";
+import { renderComponent } from "../../utils/RenderComponent";
+import After from "../elements/After";
+import Before from "../elements/Before";
+import Loading from "../elements/Loading";
+import Title from "../elements/Title";
+import Wrapper from "../elements/Wrapper";
 
 export const InputSelect = memo(
   forwardRef((_: Select, ref: any) => {
@@ -75,7 +81,7 @@ export const InputSelect = memo(
       if (Array.isArray(currentValue) && currentValue.length === 0) {
         currentValue = null;
       }
-      
+
       var res = true;
 
       if (
@@ -101,43 +107,70 @@ export const InputSelect = memo(
 
       return res;
     };
-    return (
+    const input: React.ReactNode = (
       <>
-        <div
-          className={`${_.wrapperClassName} ${
-            (value && value?.length > 0) || inputValue ? "value" : ""
-          } `}
-        >
-          {_.before && <div className={_.beforeClassName}>{_.before}</div>}
-          <ReactSelect
-            unstyled={_.unstyled}
-            onInputChange={(e: any) => setInputValue(e)}
-            menuPortalTarget={_.portal}
-            ref={inputRef}
-            isDisabled={_.disabled}
-            noOptionsMessage={() => _.noOptionsMessage}
-            id={_.id}
-            placeholder={_.placeholder}
-            defaultValue={_?.defaultValue}
-            classNamePrefix={_?.classNamePrefix}
-            className={`${_.disabled ? _.disabledClassName : ""} ${
-              isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-            } ${_.fullWidth && "w-full"}`}
-            options={_.options}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
-            isMulti={_.multiple}
-            menuIsOpen={_.menuIsOpen}
-          />
-          <div className={_.titleClassName}>{_.title}</div>
-          {_.loading && (
-            <div className={_.loadingClassName}>{_.loadingObject}</div>
-          )}
-          {_.validationComponent && _.validationComponent({ errors: errors })}
-          {_.after && <div className={_.afterClassName}>{_.after}</div>}
-        </div>
+        <ReactSelect
+          unstyled={_.unstyled}
+          onInputChange={(e: any) => setInputValue(e)}
+          menuPortalTarget={_.portal}
+          ref={inputRef}
+          isDisabled={_.disabled}
+          noOptionsMessage={() => _.noOptionsMessage}
+          id={_.id}
+          placeholder={_.placeholder}
+          defaultValue={_?.defaultValue}
+          classNamePrefix={_?.classNamePrefix}
+          className={`${_.disabled ? _.disabledClassName : ""} ${
+            isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
+          } ${_.fullWidth && "w-full"}`}
+          options={_.options}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          isMulti={_.multiple}
+          menuIsOpen={_.menuIsOpen}
+        />
       </>
+    );
+    if (!_.componentStructure)
+      return (
+        <>
+          <Wrapper className={_.wrapperClassName}>
+            <Before className={_.beforeClassName} before={_.before} />
+            {input}
+            <Title title={_.title} className={_.titleClassName} />
+            <Loading
+              className={_.loadingClassName}
+              isLoading={_.loading}
+              loadingObject={_.loadingObject}
+            />
+            {_.validationComponent && _.validationComponent({ errors: errors })}
+            <After className={_.afterClassName} after={_.after} />
+          </Wrapper>
+        </>
+      );
+
+    return renderComponent(
+      _.componentStructure,
+      input,
+      _.validationComponent,
+      _.title,
+      _.before,
+      _.after,
+      _.wrapperClassName,
+      _.beforeClassName,
+      _.loadingClassName,
+      _.titleClassName,
+      _.afterClassName,
+      _.loading,
+      _.loadingObject,
+      errors
     );
   })
 );
+
+{/* <div
+  className={`${_.wrapperClassName} ${
+    (value && value?.length > 0) || inputValue ? "value" : ""
+  } `}
+></div>; */}
