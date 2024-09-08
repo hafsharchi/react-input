@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React,{ memo } from "react";
 import {
   BaseInput,
   Calendar,
@@ -10,12 +10,12 @@ import {
   Textarea,
   Password,
 } from "../types";
-import { InputText } from "./InputText";
 import { InputDecimal } from "./InputDecimal";
 import { InputInteger } from "./InputInteger";
 import { InputSelect } from "./InputSelect";
 import { InputDate } from "./InputDate";
 import { InputPassword } from "./InputPassword";
+import { InputText } from "./InputText";
 
 export const Input = memo(
   (
@@ -27,6 +27,7 @@ export const Input = memo(
       name: _.name,
       register: _.register,
       title: _.title,
+      titleAfter: _.titleAfter,
       disabled: _?.disabled,
       loading: _?.loading,
       onBlur: _?.onBlur,
@@ -128,7 +129,9 @@ export const Input = memo(
             minLength={_.minLength}
             showIcon={_.showIcon}
             hideIcon={_.hideIcon}
-            togglePasswordVisibilityClassName={_.togglePasswordVisibilityClassName}
+            togglePasswordVisibilityClassName={
+              _.togglePasswordVisibilityClassName
+            }
             type="password"
           />
         );

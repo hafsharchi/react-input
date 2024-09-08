@@ -3,11 +3,11 @@ import {
   ComponentDescriptor,
   ValidationComponentProps,
 } from "../components/types";
-import Wrapper from "../components/elements/Wrapper";
-import Title from "../components/elements/Title";
-import Before from "../components/elements/Before";
-import After from "../components/elements/After";
-import Loading from "../components/elements/Loading";
+import { Wrapper } from "../components/elements/Wrapper";
+import { Title } from "../components/elements/Title";
+import { Before } from "../components/elements/Before";
+import { After } from "../components/elements/After";
+import { Loading } from "../components/elements/Loading";
 
 export const renderComponent = (
   descriptor: ComponentDescriptor,
@@ -80,7 +80,7 @@ export const renderComponent = (
         : null;
       return React.createElement(
         descriptor.tag ?? "div",
-        {...descriptor.props, key},
+        { ...descriptor.props, key },
         descriptor.content,
         ...(otherChildren ?? "")
       );

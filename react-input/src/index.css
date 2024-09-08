@@ -43,11 +43,15 @@ input[type="password"]::-ms-clear {
   box-shadow: 60px 0px 119px -39px rgba(75, 82, 163, 1);
 }
 
-.loading {
-  background-color: orangered;
-  width: 100%;
-}
 input {
   width: 100%;
   box-sizing: border-box;
+}
+
+.validation{
+  background-color: orangered;
+  padding: 6px;
+  color: white;
+  border-radius: 6px;
+  margin-top: 5px;
 }

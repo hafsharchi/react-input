@@ -53,7 +53,7 @@ export default function App({}: Props) {
         afterClassName="after"
         beforeClassName="before"
         loadingClassName="loading"
-        // validationComponent={ValidationComponent}
+        validationComponent={ValidationComponent}
         validationOn="submit-blur-change"
         loading
         disabled={d}

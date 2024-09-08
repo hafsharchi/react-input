@@ -1,8 +1,7 @@
 import { RefObject } from "react";
 
 type VMaxLength = {
-  ref: RefObject<HTMLInputElement>;
-  // | React.FocusEvent<HTMLInputElement, Element>;
+  ref: RefObject<HTMLInputElement | HTMLTextAreaElement>;
   maxLength: number;
 };
 

@@ -13,6 +13,12 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { vRequired } from "../../utils";
+import { renderComponent } from "../../utils/RenderComponent";
+import { Wrapper } from "../elements/Wrapper";
+import { After } from "../elements/After";
+import { Before } from "../elements/Before";
+import { Loading } from "../elements/Loading";
+import { Title } from "../elements/Title";
 
 export const InputDate = memo(
   forwardRef((_: Calendar, ref: any) => {
@@ -78,14 +84,8 @@ export const InputDate = memo(
         res = false;
       return res;
     };
-
-    return (
-      <div
-        className={`${_.wrapperClassName} ${
-          value && value != "" ? "value" : ""
-        } `}
-      >
-        {_.before && <div className={_.beforeClassName}>{_.before}</div>}
+    const input: React.ReactNode = (
+      <>
         <DatePicker
           portal={_.portal != undefined && _.portal != false}
           ref={inputRef}
@@ -110,13 +110,44 @@ export const InputDate = memo(
           dateSeparator={_.dateSeparator}
           arrow={false}
         />
-        <div className={_.titleClassName}>{_.title}</div>
-        {_.loading && (
-          <div className={_.loadingClassName}>{_.loadingObject}</div>
-        )}
-        {_.validationComponent && _.validationComponent({ errors: errors })}
-        {_.after && <div className={_.afterClassName}>{_.after}</div>}
-      </div>
+      </>
+    );
+    if (!_.componentStructure)
+      return (
+        <>
+          <Wrapper className={_.wrapperClassName}>
+            <Before className={_.beforeClassName} before={_.before} />
+            {input}
+            <Title title={_.title} className={_.titleClassName} />
+            <Loading
+              className={_.loadingClassName}
+              isLoading={_.loading}
+              loadingObject={_.loadingObject}
+            />
+            {_.validationComponent && _.validationComponent({ errors: errors })}
+            <After className={_.afterClassName} after={_.after} />
+          </Wrapper>
+        </>
+      );
+    return renderComponent(
+      _.componentStructure,
+      input,
+      _.validationComponent,
+      _.title,
+      _.before,
+      _.after,
+      _.wrapperClassName,
+      _.beforeClassName,
+      _.loadingClassName,
+      _.titleClassName,
+      _.afterClassName,
+      _.loading,
+      _.loadingObject,
+      errors
     );
   })
 );
+
+// <div
+//   className={`${_.wrapperClassName} ${value && value != "" ? "value" : ""} `}
+// ></div>;

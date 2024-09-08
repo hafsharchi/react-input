@@ -12,6 +12,12 @@ import { vMinLength } from "../../utils/vMinLength";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
+import { renderComponent } from "../../utils/RenderComponent";
+import { Wrapper } from "../elements/Wrapper";
+import { After } from "../elements/After";
+import { Before } from "../elements/Before";
+import { Loading } from "../elements/Loading";
+import { Title } from "../elements/Title";
 
 export const InputPassword = memo(
   forwardRef((_: Password, ref: any) => {
@@ -142,37 +148,62 @@ export const InputPassword = memo(
       return res;
     };
 
-    return (
+    const input: React.ReactNode = (
       <>
-        <div className={_.wrapperClassName}>
-          {_.before && <div className={_.beforeClassName}>{_.before}</div>}
-          <input
-            defaultValue={_.defaultValue}
-            ref={inputRef}
-            className={`${
-              isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-            } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
-            type={showPassword ? "text" : "password"}
-            title={_.title}
-            placeholder={_?.placeholder ?? ""}
-            onChange={(e) => onChange(e)}
-            onBlur={(e) => onBlur(e)}
-            disabled={_.disabled}
-          />
-          <div className={_.titleClassName}>{_.title}</div>
-          <div
-            className={`toggle-password-visibility ${_.togglePasswordVisibilityClassName}`}
-            onClick={togglePassword}
-          >
-            {showPassword ? hideIcon : showIcon}
-          </div>
-          {_.loading && (
-            <div className={_.loadingClassName}>{_.loadingObject}</div>
-          )}
-          {_.validationComponent && _.validationComponent({ errors: errors })}
-          {_.after && <div className={_.afterClassName}>{_.after}</div>}
+        <input
+          defaultValue={_.defaultValue}
+          ref={inputRef}
+          className={`${
+            isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
+          } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
+          type={showPassword ? "text" : "password"}
+          title={_.title}
+          placeholder={_?.placeholder ?? ""}
+          onChange={(e) => onChange(e)}
+          onBlur={(e) => onBlur(e)}
+          disabled={_.disabled}
+        />
+        <div
+          className={`toggle-password-visibility ${_.togglePasswordVisibilityClassName}`}
+          onClick={togglePassword}
+        >
+          {showPassword ? hideIcon : showIcon}
         </div>
       </>
+    );
+    if (!_.componentStructure)
+      return (
+        <>
+          <Wrapper className={_.wrapperClassName}>
+            <Before className={_.beforeClassName} before={_.before} />
+            {input}
+            <Title title={_.title} className={_.titleClassName} />
+            <Loading
+              className={_.loadingClassName}
+              isLoading={_.loading}
+              loadingObject={_.loadingObject}
+            />
+            {_.validationComponent && _.validationComponent({ errors: errors })}
+            <After className={_.afterClassName} after={_.after} />
+          </Wrapper>
+        </>
+      );
+
+    return renderComponent(
+      _.componentStructure,
+      input,
+      _.validationComponent,
+      _.title,
+      _.before,
+      _.after,
+      _.wrapperClassName,
+      _.beforeClassName,
+      _.loadingClassName,
+      _.titleClassName,
+      _.afterClassName,
+      _.loading,
+      _.loadingObject,
+      errors
     );
   })
 );

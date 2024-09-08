@@ -11,7 +11,7 @@ type VRequired = {
 };
 
 export const vRequired = ({ currentValue, setErrors, error }: VRequired) => {
-  if (currentValue && currentValue?.length > 0) {
+  if (currentValue) {
     removeFromStateArrayByValue<string>(
       setErrors,
       error ?? VALIDATION_ERROR.REQUIRED
@@ -19,5 +19,6 @@ export const vRequired = ({ currentValue, setErrors, error }: VRequired) => {
     return true;
   }
   addToStateArrayByValue<string>(setErrors, error ?? VALIDATION_ERROR.REQUIRED);
+
   return false;
 };

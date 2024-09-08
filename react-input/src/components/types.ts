@@ -95,8 +95,8 @@ export type Select = BaseInput & {
 
 export type Textarea = BaseInput & {
   type: "textarea";
-  maxValue?: number;
-  minValue?: number;
+  maxLength?: number;
+  minLength?: number;
 };
 
 export type File = BaseInput & {

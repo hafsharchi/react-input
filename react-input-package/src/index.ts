@@ -1,4 +1,5 @@
 export * from "./components/react-input";
+export * from "./components/elements";
 export {
   BaseInput,
   CustomValidation,
@@ -16,6 +17,7 @@ export {
   Type,
   ValidationComponentProps,
   ValidationPatterns,
+  ComponentDescriptor
 } from "./components/types";
 export { useInput } from "./components/useInput";
 export { useOnClickOutside } from "./components/useOutside";

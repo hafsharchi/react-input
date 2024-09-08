@@ -6,29 +6,28 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { CustomValidation, ReactInputContextProps, Text } from "../types";
+import { CustomValidation, ReactInputContextProps, Textarea } from "../types";
 import { vMaxLength } from "../../utils/vMaxLength";
 import { vMinLength } from "../../utils/vMinLength";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
-import { Title } from "../elements/Title";
-import { Wrapper } from "../elements/Wrapper";
-import { Loading } from "../elements/Loading";
-import { Before } from "../elements/Before";
-import { After } from "../elements/After";
+import Title from "../elements/Title";
+import Wrapper from "../elements/Wrapper";
+import Loading from "../elements/Loading";
+import Before from "../elements/Before";
+import After from "../elements/After";
 import { renderComponent } from "../../utils/RenderComponent";
 
 export const InputText = memo(
-  forwardRef((_: Text, ref: any) => {
+  forwardRef((_: Textarea, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -50,7 +49,7 @@ export const InputText = memo(
       },
     }));
 
-    const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e?: React.ChangeEvent<HTMLTextAreaElement>) => {
       if (_.onChange) _.onChange(e);
 
       if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
@@ -59,7 +58,7 @@ export const InputText = memo(
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
     };
 
-    const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const onBlur = (e?: React.ChangeEvent<HTMLTextAreaElement>) => {
       if (_.onBlur) _.onBlur(e);
 
       if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
@@ -108,13 +107,12 @@ export const InputText = memo(
     };
 
     const input: React.ReactNode = (
-      <input
+      <textarea
         defaultValue={_.defaultValue}
         ref={inputRef}
         className={`${
           isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
         }${_.disabled ? _.disabledClassName : ""}${_.className}`}
-        type="text"
         title={_.title}
         placeholder={_?.placeholder ?? ""}
         onChange={(e) => onChange(e)}

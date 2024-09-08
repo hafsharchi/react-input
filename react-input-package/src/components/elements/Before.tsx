@@ -1,3 +1,4 @@
+import React from "react";
 
 type Props = {
   tag?: keyof JSX.IntrinsicElements;

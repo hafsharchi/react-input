@@ -4,8 +4,9 @@ export {
   addToStateArrayByValue,
   removeFromStateArrayByValue,
 } from "./StateArray";
-export { updateField } from "./updateField";
+export { updateField } from "./UpdateField";
 export { vCustomValidation } from "./vCustomValidation";
+export { renderComponent } from "./RenderComponent";
 export { vDecimal } from "./vDecimal";
 export { vInteger } from "./vInteger";
 export { vMaxLength } from "./vMaxLength";
