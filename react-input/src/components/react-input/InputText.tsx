@@ -12,11 +12,11 @@ import { vMinLength } from "../../utils/vMinLength";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
-import Title from "../elements/Title";
-import Wrapper from "../elements/Wrapper";
-import Loading from "../elements/Loading";
-import Before from "../elements/Before";
-import After from "../elements/After";
+import { Title } from "../elements/Title";
+import { Wrapper } from "../elements/Wrapper";
+import { Loading } from "../elements/Loading";
+import { Before } from "../elements/Before";
+import { After } from "../elements/After";
 import { renderComponent } from "../../utils/RenderComponent";
 
 export const InputText = memo(
@@ -26,8 +26,9 @@ export const InputText = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -62,6 +63,7 @@ export const InputText = memo(
       if (_.onBlur) _.onBlur(e);
 
       if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
+      if (_.mask) mask({ ref: inputRef, mask: _.maxLength, maskChar: _.maskChar });
 
       if (
         _.validationOn == "submit-blur-change" ||

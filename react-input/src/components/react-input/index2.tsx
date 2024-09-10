@@ -1,4 +1,4 @@
-import { memo } from "react";
+import React, { memo } from "react";
 import {
   BaseInput,
   Calendar,
@@ -10,12 +10,13 @@ import {
   Textarea,
   Password,
 } from "../types";
-import { InputText } from "./InputText";
 import { InputDecimal } from "./InputDecimal";
 import { InputInteger } from "./InputInteger";
 import { InputSelect } from "./InputSelect";
 import { InputDate } from "./InputDate";
 import { InputPassword } from "./InputPassword";
+import { InputText } from "./InputText";
+import { InputTextArea } from "./InputTextArea";
 
 export const Input = memo(
   (
@@ -58,6 +59,8 @@ export const Input = memo(
         return (
           <InputText
             {...baseInput}
+            mask={_.mask}
+            maskChar={_.maskChar}
             maxLength={_.maxLength}
             minLength={_.minLength}
             type="text"
@@ -100,6 +103,7 @@ export const Input = memo(
             {...baseInput}
             type="calendar"
             portal={_?.portal}
+            editable={_?.editable ?? false}
           />
         );
 
@@ -137,7 +141,14 @@ export const Input = memo(
         );
 
       case "textarea":
-        return <InputText {...baseInput} type="text" />;
+        return (
+          <InputTextArea
+            {...baseInput}
+            type="textarea"
+            maxLength={_.maxLength}
+            minLength={_.minLength}
+          />
+        );
 
       default:
         return <InputText {...baseInput} type="text" />;

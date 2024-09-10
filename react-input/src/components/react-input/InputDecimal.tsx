@@ -15,11 +15,11 @@ import { vCustomValidation } from "../../utils/vCustomValidation";
 import { CustomValidation, Decimal, ReactInputContextProps } from "../types";
 import { vRequired } from "../../utils";
 import { renderComponent } from "../../utils/RenderComponent";
-import Wrapper from "../elements/Wrapper";
-import After from "../elements/After";
-import Before from "../elements/Before";
-import Loading from "../elements/Loading";
-import Title from "../elements/Title";
+import { Wrapper } from "../elements/Wrapper";
+import { After } from "../elements/After";
+import { Before } from "../elements/Before";
+import { Loading } from "../elements/Loading";
+import { Title } from "../elements/Title";
 
 export const InputDecimal = memo(
   forwardRef((_: Decimal, ref: any) => {
@@ -28,8 +28,9 @@ export const InputDecimal = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
     useImperativeHandle(ref, () => ({
       getValue: () => {

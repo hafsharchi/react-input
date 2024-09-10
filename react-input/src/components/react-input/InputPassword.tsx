@@ -12,12 +12,12 @@ import { vMinLength } from "../../utils/vMinLength";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
-import Wrapper from "../elements/Wrapper";
 import { renderComponent } from "../../utils/RenderComponent";
-import After from "../elements/After";
-import Before from "../elements/Before";
-import Loading from "../elements/Loading";
-import Title from "../elements/Title";
+import { Wrapper } from "../elements/Wrapper";
+import { After } from "../elements/After";
+import { Before } from "../elements/Before";
+import { Loading } from "../elements/Loading";
+import { Title } from "../elements/Title";
 
 export const InputPassword = memo(
   forwardRef((_: Password, ref: any) => {
@@ -67,8 +67,9 @@ export const InputPassword = memo(
     const togglePassword = () => {
       setShowPassword((prev: boolean) => !prev);
     };
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
     useImperativeHandle(ref, () => ({
       getValue: () => {

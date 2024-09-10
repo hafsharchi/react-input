@@ -13,11 +13,11 @@ import { CustomValidation, ReactInputContextProps, Select } from "../types";
 import { vRequired } from "../../utils";
 import ReactSelect, { GroupBase, OptionsOrGroups } from "react-select";
 import { renderComponent } from "../../utils/RenderComponent";
-import After from "../elements/After";
-import Before from "../elements/Before";
-import Loading from "../elements/Loading";
-import Title from "../elements/Title";
-import Wrapper from "../elements/Wrapper";
+import { After } from "../elements/After";
+import { Before } from "../elements/Before";
+import { Loading } from "../elements/Loading";
+import { Title } from "../elements/Title";
+import { Wrapper } from "../elements/Wrapper";
 
 export const InputSelect = memo(
   forwardRef((_: Select, ref: any) => {
@@ -31,8 +31,9 @@ export const InputSelect = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
     const [hasChanged, setHasChanged] = useState<boolean>(false);
 
@@ -169,8 +170,10 @@ export const InputSelect = memo(
   })
 );
 
-{/* <div
+{
+  /* <div
   className={`${_.wrapperClassName} ${
     (value && value?.length > 0) || inputValue ? "value" : ""
   } `}
-></div>; */}
+></div>; */
+}

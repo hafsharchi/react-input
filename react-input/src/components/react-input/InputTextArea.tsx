@@ -12,22 +12,23 @@ import { vMinLength } from "../../utils/vMinLength";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
-import Title from "../elements/Title";
-import Wrapper from "../elements/Wrapper";
-import Loading from "../elements/Loading";
-import Before from "../elements/Before";
-import After from "../elements/After";
+import { Title } from "../elements/Title";
+import { Wrapper } from "../elements/Wrapper";
+import { Loading } from "../elements/Loading";
+import { Before } from "../elements/Before";
+import { After } from "../elements/After";
 import { renderComponent } from "../../utils/RenderComponent";
 
-export const InputText = memo(
+export const InputTextArea = memo(
   forwardRef((_: Textarea, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
     useImperativeHandle(ref, () => ({
       getValue: () => {

@@ -45,7 +45,7 @@ export default function App({}: Props) {
   return (
     <>
       <Input
-        type="text"
+        type="calendar"
         name="test"
         register={useRegister}
         wrapperClassName="wrapper"
@@ -57,8 +57,9 @@ export default function App({}: Props) {
         validationOn="submit-blur-change"
         loading
         disabled={d}
+        placeholder="____/__/__"
+        locale="persian"
         // required
-        minLength={3}
         loadingObject={"Hello world"}
         className="input"
         componentStructure={componentStructure}

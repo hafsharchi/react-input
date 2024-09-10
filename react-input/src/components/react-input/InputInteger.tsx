@@ -15,11 +15,11 @@ import { ReactInputContext } from "../../contexts/ReactInputContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
 import { renderComponent } from "../../utils/RenderComponent";
-import After from "../elements/After";
-import Before from "../elements/Before";
-import Loading from "../elements/Loading";
-import Title from "../elements/Title";
-import Wrapper from "../elements/Wrapper";
+import { After } from "../elements/After";
+import { Before } from "../elements/Before";
+import { Loading } from "../elements/Loading";
+import { Title } from "../elements/Title";
+import { Wrapper } from "../elements/Wrapper";
 
 export const InputInteger = memo(
   forwardRef((_: Integer, ref: any) => {
@@ -27,8 +27,9 @@ export const InputInteger = memo(
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
     useImperativeHandle(ref, () => ({
       getValue: () => {

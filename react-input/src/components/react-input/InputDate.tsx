@@ -13,12 +13,12 @@ import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { vRequired } from "../../utils";
-import Wrapper from "../elements/Wrapper";
 import { renderComponent } from "../../utils/RenderComponent";
-import After from "../elements/After";
-import Before from "../elements/Before";
-import Loading from "../elements/Loading";
-import Title from "../elements/Title";
+import { Wrapper } from "../elements/Wrapper";
+import { After } from "../elements/After";
+import { Before } from "../elements/Before";
+import { Loading } from "../elements/Loading";
+import { Title } from "../elements/Title";
 
 export const InputDate = memo(
   forwardRef((_: Calendar, ref: any) => {
@@ -29,8 +29,9 @@ export const InputDate = memo(
 
     const [errors, setErrors] = React.useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: ReactInputContextProps | undefined = useContext(
+      ReactInputContext
+    );
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -90,6 +91,7 @@ export const InputDate = memo(
           ref={inputRef}
           disabled={_.disabled == true ? true : false}
           value={value}
+          placeholder={_.placeholder}
           calendar={persian}
           locale={_?.locale == "persian" ? persian_fa : undefined}
           onOpenPickNewDate={false}
@@ -101,7 +103,7 @@ export const InputDate = memo(
           onChange={(e: any) => onChange(e)}
           format={_.format}
           onlyMonthPicker={_.onlyMonth}
-          editable={false}
+          editable={_.editable}
           range={_.range}
           className={_.class}
           containerClassName={`${_.fullWidth && "w-full"} flex date-container`}
