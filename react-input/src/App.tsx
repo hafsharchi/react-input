@@ -45,7 +45,7 @@ export default function App({}: Props) {
   return (
     <>
       <Input
-        type="calendar"
+        type="text"
         name="test"
         register={useRegister}
         wrapperClassName="wrapper"
@@ -58,13 +58,14 @@ export default function App({}: Props) {
         loading
         disabled={d}
         placeholder="____/__/__"
-        locale="persian"
         // required
         loadingObject={"Hello world"}
         className="input"
         componentStructure={componentStructure}
         title="Hello"
-      />
+mask="____/__/__"
+maskChar="_"
+/>
 
       <div onClick={() => setd((p) => !p)}>submit</div>
     </>
