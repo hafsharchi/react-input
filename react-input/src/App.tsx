@@ -43,7 +43,7 @@ export default function App({}: Props) {
     ],
   };
   return (
-    <>
+    <div dir="ltr">
       <Input
         type="text"
         name="test"
@@ -63,11 +63,11 @@ export default function App({}: Props) {
         className="input"
         componentStructure={componentStructure}
         title="Hello"
-mask="____/__/__"
-maskChar="_"
-/>
+        mask="____/__/__"
+        maskChar="_"
+      />
 
       <div onClick={() => setd((p) => !p)}>submit</div>
-    </>
+    </div>
   );
 }

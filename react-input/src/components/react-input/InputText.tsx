@@ -115,7 +115,7 @@ export const InputText = memo(
 
     const input: React.ReactNode = (
       <input
-        defaultValue={_.defaultValue}
+        defaultValue={_.mask}
         ref={inputRef}
         className={`${
           isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`

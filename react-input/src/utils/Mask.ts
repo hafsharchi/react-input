@@ -1,4 +1,5 @@
 import { RefObject } from "react";
+import { vMaxLength } from "./vMaxLength";
 
 type Maks = {
   ref: RefObject<HTMLInputElement | HTMLTextAreaElement>;
@@ -7,28 +8,20 @@ type Maks = {
 };
 
 export const applyMask = ({ ref, mask, maskChar }: Maks) => {
-  if (ref.current){
-    if (mask && maskChar) {
-      let maskedValue = "";
-      let valueIndex = 0;
-      for (let i = 0; i < mask.length; i++) {
-        if (mask[i] === maskChar) {
-          if (ref?.current?.value[valueIndex]) {
-            maskedValue += ref.current.value[valueIndex];
-            valueIndex++;
-          } else {
-            maskedValue += maskChar;
-          }
-        } else {
-          maskedValue += mask[i];
-        }
+  if (ref.current && mask) {
+    var value = ref.current.value.split("");
+
+    let res: Array<string> = [];
+    
+    for (let i = 0; i < value.length; i++) {
+      if (mask.split("")[i] == maskChar || mask.split("")[i] == value[i]) {
+        res.push(value[i]);
+      } else {
+        res.push(mask[i]);
+        res.push(value[i]);
       }
     }
-  return maskedValue;
-
+    ref.current.value = res.join("");
+    vMaxLength({ref:ref, maxLength:mask.length})
   }
-
-
-
-
 };
