@@ -84,6 +84,8 @@ export const Input = memo(
             maxValue={_.maxValue}
             minValue={_.minValue}
             separator={_.separator}
+            maxLength={_.maxLength}
+            minLength={_.minLength}
             type="integer"
           />
         );

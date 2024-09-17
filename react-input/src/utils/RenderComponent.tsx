@@ -51,10 +51,12 @@ export const renderComponent = (
             )
           )
         : null;
-      return (
-        <Wrapper key={key} className={wrapperClassName} tag={descriptor.tag}>
-          {wrapperChildren}
-        </Wrapper>
+
+      return React.createElement(
+        descriptor.tag ?? "div",
+        { ...{ className: wrapperClassName } },
+        key,
+        ...(wrapperChildren ?? "")
       );
     case "other":
       const otherChildren = descriptor.children

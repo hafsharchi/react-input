@@ -29,13 +29,13 @@ export const InputDate = memo(
 
     const [errors, setErrors] = React.useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (value) {
+          if (typeof value == "string") return value;
           var date: Date | string = new Date(value);
           if (_.locale == "english") {
             date = new Intl.DateTimeFormat("en-US", {
@@ -48,7 +48,7 @@ export const InputDate = memo(
               year: "numeric",
               month: "2-digit",
               day: "2-digit",
-            }).format(date);
+            }).format(value);
           }
           return date;
         }

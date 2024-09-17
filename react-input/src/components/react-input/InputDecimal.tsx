@@ -28,9 +28,8 @@ export const InputDecimal = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -74,6 +73,12 @@ export const InputDecimal = memo(
     };
 
     const checkValidation = (currentValue: string): boolean => {
+      if (
+        currentValue == "-" ||
+        currentValue == "." ||
+        currentValue[currentValue.length - 1] == "."
+      )
+        return false;
       var res = true;
 
       if (
@@ -97,7 +102,8 @@ export const InputDecimal = memo(
           res = false;
       });
       if (
-        _.minValue &&
+        _.minValue != undefined &&
+        _.minValue != null &&
         !vMinValue({
           currentValue: currentValue.replace(_.separator ?? "", ""),
           minValue: _.minValue,
@@ -108,7 +114,8 @@ export const InputDecimal = memo(
         res = false;
 
       if (
-        _.maxValue &&
+        _.maxValue != undefined &&
+        _.maxValue != null &&
         !vMaxValue({
           currentValue: currentValue.replace(_.separator ?? "", ""),
           maxValue: _.maxValue,

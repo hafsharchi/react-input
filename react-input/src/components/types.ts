@@ -66,6 +66,8 @@ export type Integer = BaseInput & {
   maxValue?: number;
   minValue?: number;
   separator?: string;
+  maxLength?: number;
+  minLength?: number;
 };
 
 export type Calendar = BaseInput & {
@@ -134,6 +136,7 @@ export type ErrorTypes =
 export interface ReactInputContextProps {
   validationErrors: ErrorTypes;
   setValidationErrors: React.Dispatch<React.SetStateAction<ErrorTypes>>;
+  onValidationFailed: Function;
 }
 
 export type ValidationComponentProps = {
@@ -141,7 +144,7 @@ export type ValidationComponentProps = {
 };
 
 export type CustomValidation = {
-  func: (value: string | number) => boolean;
+  func: (value: any) => boolean;
   error?: string;
 };
 
@@ -169,7 +172,6 @@ export type InputComponent = {
   props?: { [key: string]: any };
   content?: React.ReactNode;
 };
-
 
 export type ErrorState = {
   [key: string]: string[];

@@ -7,10 +7,17 @@ export const ReactInputContext = createContext<
 
 interface ReactInputProviderProps {
   children: ReactNode;
-  errors: ErrorTypes;
+  errors?: ErrorTypes;
+  onValidationFailedFunction?: Function;
 }
 
-export const ReactInputProvider = ({ children, errors }: ReactInputProviderProps) => {
+export const ReactInputProvider = ({
+  children,
+  errors,
+  onValidationFailedFunction = () => {
+    console.log("not valid");
+  },
+}: ReactInputProviderProps) => {
   const [validationErrors, setValidationErrors] = useState<ErrorTypes>({
     minValue: errors?.minValue ?? "Less than the minimum value",
     maxValue: errors?.maxValue ?? "More than the maximum value",
@@ -21,12 +28,12 @@ export const ReactInputProvider = ({ children, errors }: ReactInputProviderProps
     required: errors?.required ?? "This field cannot be empty",
     etc: errors?.etc ?? "not valid",
   });
-
-  const [error,setError] = useState<ErrorTypes>();
+  const onValidationFailed = onValidationFailedFunction;
 
   const contextValue: ReactInputContextProps = {
     validationErrors,
-    setValidationErrors
+    setValidationErrors,
+    onValidationFailed: onValidationFailed,
   };
 
   return (

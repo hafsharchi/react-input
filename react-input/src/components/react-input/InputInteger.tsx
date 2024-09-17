@@ -13,7 +13,7 @@ import { vInteger } from "../../utils/vInteger";
 import { separate } from "../../utils/Separate";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
-import { vRequired } from "../../utils";
+import { vMaxLength, vMinLength, vRequired } from "../../utils";
 import { renderComponent } from "../../utils/RenderComponent";
 import { After } from "../elements/After";
 import { Before } from "../elements/Before";
@@ -27,9 +27,8 @@ export const InputInteger = memo(
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -57,6 +56,8 @@ export const InputInteger = memo(
       vInteger({ ref: inputRef });
       if (_.separator) separate({ ref: inputRef, seperator: _.separator });
 
+      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
+
       if (_.validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef?.current?.value ?? ""));
     };
@@ -76,6 +77,7 @@ export const InputInteger = memo(
     };
 
     const checkValidation = (currentValue: string): boolean => {
+      if (currentValue == "-") return false;
       var res = true;
 
       if (
@@ -100,7 +102,8 @@ export const InputInteger = memo(
       });
 
       if (
-        _.minValue &&
+        _.minValue != undefined &&
+        _.minValue != null &&
         !vMinValue({
           currentValue: currentValue.replace(_.separator ?? "", ""),
           minValue: _.minValue,
@@ -111,7 +114,8 @@ export const InputInteger = memo(
         res = false;
 
       if (
-        _.maxValue &&
+        _.maxValue != undefined &&
+        _.maxValue != null &&
         !vMaxValue({
           currentValue: currentValue.replace(_.separator ?? "", ""),
           maxValue: _.maxValue,
@@ -121,6 +125,16 @@ export const InputInteger = memo(
       )
         res = false;
 
+      if (
+        _.minLength &&
+        !vMinLength({
+          currentValue: currentValue,
+          minLength: _.minLength,
+          setErrors: setErrors,
+          error: customized?.validationErrors?.minLength ?? undefined,
+        })
+      )
+        res = false;
       return res;
     };
 
