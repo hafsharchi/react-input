@@ -1,6 +1,7 @@
-import React from "react";
-import { Type } from "./types";
+import React, { useContext } from "react";
+import { ReactInputContextProps, Type } from "./types";
 import { useRef } from "react";
+import { ReactInputContext } from "../contexts";
 
 type Input = {
   type: Type;
@@ -9,6 +10,8 @@ type Input = {
 };
 
 export const useInput = () => {
+  const context = useContext(ReactInputContext);
+
   var inputs: Array<Input> = [];
 
   const useRegister = (name: string, type: Type) => {
@@ -56,7 +59,10 @@ export const useInput = () => {
     inputs.map((input) => {
       res = input.ref.current.checkValidation() && res;
     });
-    if (!res) return false;
+    if (!res) {
+      context?.onValidationFailed();
+      return false;
+    }
     func(get());
   };
 

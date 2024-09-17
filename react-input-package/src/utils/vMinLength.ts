@@ -15,7 +15,6 @@ export const vMinLength = ({ currentValue, minLength,setErrors, error }: VMinLen
       setErrors,
       error ?? VALIDATION_ERROR.MIN_LENGTH
     );
-    console.log("err " + value)
     return false;
   }
   removeFromStateArrayByValue<string>(

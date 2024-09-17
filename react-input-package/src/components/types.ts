@@ -39,6 +39,8 @@ export type BaseInput = {
 
 export type Text = BaseInput & {
   type: "text";
+  mask?: string;
+  maskChar?: string;
   maxLength?: number;
   minLength?: number;
 };
@@ -64,6 +66,8 @@ export type Integer = BaseInput & {
   maxValue?: number;
   minValue?: number;
   separator?: string;
+  maxLength?: number;
+  minLength?: number;
 };
 
 export type Calendar = BaseInput & {
@@ -79,6 +83,7 @@ export type Calendar = BaseInput & {
   class?: string;
   fullWidth?: boolean;
   portal?: any;
+  editable?: boolean;
 };
 
 export type Select = BaseInput & {
@@ -131,6 +136,7 @@ export type ErrorTypes =
 export interface ReactInputContextProps {
   validationErrors: ErrorTypes;
   setValidationErrors: React.Dispatch<React.SetStateAction<ErrorTypes>>;
+  onValidationFailed: Function;
 }
 
 export type ValidationComponentProps = {
@@ -138,7 +144,7 @@ export type ValidationComponentProps = {
 };
 
 export type CustomValidation = {
-  func: (value: string | number) => boolean;
+  func: (value: any) => boolean;
   error?: string;
 };
 
@@ -166,7 +172,6 @@ export type InputComponent = {
   props?: { [key: string]: any };
   content?: React.ReactNode;
 };
-
 
 export type ErrorState = {
   [key: string]: string[];

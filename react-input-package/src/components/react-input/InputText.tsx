@@ -18,6 +18,7 @@ import { Loading } from "../elements/Loading";
 import { Before } from "../elements/Before";
 import { After } from "../elements/After";
 import { renderComponent } from "../../utils/RenderComponent";
+import { applyMask } from "../../utils/Mask";
 
 export const InputText = memo(
   forwardRef((_: Text, ref: any) => {
@@ -26,9 +27,8 @@ export const InputText = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -52,6 +52,12 @@ export const InputText = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
+
+      applyMask({
+        ref: inputRef,
+        mask: _.mask,
+        maskChar: _.maskChar,
+      });
 
       if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
 

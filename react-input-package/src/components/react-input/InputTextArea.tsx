@@ -19,7 +19,7 @@ import { Before } from "../elements/Before";
 import { After } from "../elements/After";
 import { renderComponent } from "../../utils/RenderComponent";
 
-export const InputText = memo(
+export const InputTextArea = memo(
   forwardRef((_: Textarea, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLTextAreaElement>(null);
