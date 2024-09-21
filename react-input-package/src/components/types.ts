@@ -30,6 +30,7 @@ export type BaseInput = {
   beforeClassName?: string;
   afterClassName?: string;
   defaultValue?: any;
+  updateDefaultValueOnChange?: boolean;
   loadingClassName?: string;
   loadingObject?: React.ReactNode;
   componentStructure?: ComponentDescriptor;
@@ -96,6 +97,8 @@ export type Select = BaseInput & {
   portal?: any;
   menuIsOpen?: boolean;
   unstyled?: boolean;
+  isOptionDisabled?: any;
+  isOptionSelected?: any;
 };
 
 export type Textarea = BaseInput & {

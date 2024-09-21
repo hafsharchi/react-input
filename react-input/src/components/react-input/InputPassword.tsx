@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   memo,
   useContext,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -24,6 +25,11 @@ export const InputPassword = memo(
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    useEffect(() => {
+      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
+        inputRef.current.value = _.defaultValue;
+    }, [_.defaultValue]);
+    
     const showIcon = _.showIcon ?? (
       <svg
         xmlns="http://www.w3.org/2000/svg"

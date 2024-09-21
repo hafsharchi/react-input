@@ -32,6 +32,11 @@ export const InputDate = memo(
     const customized: ReactInputContextProps | undefined =
       useContext(ReactInputContext);
 
+    useEffect(() => {
+      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
+        setValue(_.defaultValue);
+    }, [_.defaultValue]);
+
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (value) {
@@ -95,9 +100,11 @@ export const InputDate = memo(
           calendar={persian}
           locale={_?.locale == "persian" ? persian_fa : undefined}
           onOpenPickNewDate={false}
-          inputClass={`${_.className} ${_.fullWidth && "w-full"} ${
-            _.disabled ? _.disabledClassName : ""
-          } ${isValid ? "" : "input-not-valid"}`}
+          inputClass={`${_.className ? _.className : ""} ${
+            _.fullWidth ? "w-full" : ""
+          } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${
+            isValid ? "" : "input-not-valid"
+          }`}
           minDate={_.minDate ?? undefined}
           maxDate={_.maxDate ?? undefined}
           onChange={(e: any) => onChange(e)}

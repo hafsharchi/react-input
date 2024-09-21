@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   memo,
   useContext,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -26,9 +27,13 @@ export const InputTextArea = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
+
+    useEffect(() => {
+      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
+        inputRef.current.value = _.defaultValue;
+    }, [_.defaultValue]);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -112,8 +117,10 @@ export const InputTextArea = memo(
         defaultValue={_.defaultValue}
         ref={inputRef}
         className={`${
-          isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-        }${_.disabled ? _.disabledClassName : ""}${_.className}`}
+          isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
+        }${_.disabled && _.disabledClassName ? _.disabledClassName : ""}${
+          _.className ? _.className : ""
+        }`}
         title={_.title}
         placeholder={_?.placeholder ?? ""}
         onChange={(e) => onChange(e)}

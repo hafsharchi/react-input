@@ -5,6 +5,7 @@ import React, {
   memo,
   useState,
   useContext,
+  useEffect,
 } from "react";
 import { CustomValidation, Integer, ReactInputContextProps } from "../types";
 import { vMinValue } from "../../utils/vMinValue";
@@ -29,6 +30,11 @@ export const InputInteger = memo(
     const [errors, setErrors] = useState<Array<string>>([]);
     const customized: ReactInputContextProps | undefined =
       useContext(ReactInputContext);
+
+    useEffect(() => {
+      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
+        inputRef.current.value = _.defaultValue;
+    }, [_.defaultValue]);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -144,8 +150,10 @@ export const InputInteger = memo(
           defaultValue={_.defaultValue}
           ref={inputRef}
           className={`${
-            isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-          } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
+            isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
+          } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${
+            _.className ? _.className : ""
+          }`}
           type="text"
           title={_.title}
           placeholder={_?.placeholder ?? ""}

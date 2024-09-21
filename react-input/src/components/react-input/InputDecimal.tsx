@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   memo,
   useContext,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -30,6 +31,11 @@ export const InputDecimal = memo(
 
     const customized: ReactInputContextProps | undefined =
       useContext(ReactInputContext);
+
+    useEffect(() => {
+      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
+        inputRef.current.value = _.defaultValue;
+    }, [_.defaultValue]);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -134,8 +140,10 @@ export const InputDecimal = memo(
           defaultValue={_.defaultValue}
           ref={inputRef}
           className={`${
-            isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-          } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
+            isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
+          } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${
+            _.className ? _.className : ""
+          }`}
           type="text"
           title={_.title}
           placeholder={_?.placeholder ?? ""}

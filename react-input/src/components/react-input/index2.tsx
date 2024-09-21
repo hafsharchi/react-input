@@ -47,6 +47,7 @@ export const Input = memo(
       beforeClassName: _?.beforeClassName,
       afterClassName: _?.afterClassName,
       defaultValue: _?.defaultValue,
+      updateDefaultValueOnChange: _?.updateDefaultValueOnChange ?? true,
       loadingClassName: _?.loadingClassName,
       disabledClassName: _?.disabledClassName,
       loadingObject: _?.loadingObject,
@@ -125,6 +126,8 @@ export const Input = memo(
             noOptionsMessage={_?.noOptionsMessage}
             unstyled={_?.unstyled}
             menuIsOpen={_?.menuIsOpen}
+            isOptionDisabled={_.isOptionDisabled}
+            isOptionSelected={_.isOptionSelected}
           />
         );
       case "password":

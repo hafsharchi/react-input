@@ -31,11 +31,15 @@ export const InputSelect = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
 
     const [hasChanged, setHasChanged] = useState<boolean>(false);
+
+    useEffect(() => {
+      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
+        setValue(_.defaultValue);
+    }, [_.defaultValue]);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -50,7 +54,7 @@ export const InputSelect = memo(
       ) => {
         if (inputRef.current) {
           setValue(newValue);
-          checkValidation(newValue);
+          if (_.validationOn != "submit" || !isValid) setIsValid(checkValidation(newValue));
         }
       },
       checkValidation: () => {
@@ -68,13 +72,17 @@ export const InputSelect = memo(
     };
 
     useEffect(() => {
-      if (hasChanged) {
-        checkValidation(value);
+      if (hasChanged && (_.validationOn == "submit-blur-change" || !isValid)) {
+        setIsValid(checkValidation(value));
       }
     }, [value]);
 
     const onBlur = (e?: any) => {
-      checkValidation(value);
+      if (
+        _.validationOn == "submit-blur" ||
+        _.validationOn == "submit-blur-change"
+      )
+        setIsValid(checkValidation(value));
       if (_.onBlur) _.onBlur(e);
     };
 
@@ -122,14 +130,16 @@ export const InputSelect = memo(
           defaultValue={_?.defaultValue}
           classNamePrefix={_?.classNamePrefix}
           className={`${_.disabled ? _.disabledClassName : ""} ${
-            isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-          } ${_.fullWidth && "w-full"}`}
+            isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
+          } ${_.fullWidth ? "w-full" : ""}`}
           options={_.options}
           value={value}
           onChange={onChange}
           onBlur={onBlur}
           isMulti={_.multiple}
           menuIsOpen={_.menuIsOpen}
+          isOptionDisabled={_.isOptionDisabled}
+          isOptionSelected={_.isOptionSelected}
         />
       </>
     );

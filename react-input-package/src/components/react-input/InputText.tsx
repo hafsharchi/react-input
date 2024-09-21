@@ -2,6 +2,7 @@ import React, {
   forwardRef,
   memo,
   useContext,
+  useEffect,
   useImperativeHandle,
   useRef,
   useState,
@@ -26,6 +27,11 @@ export const InputText = memo(
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
+
+    useEffect(() => {
+      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
+        inputRef.current.value = _.defaultValue;
+    }, [_.defaultValue]);
 
     const customized: ReactInputContextProps | undefined =
       useContext(ReactInputContext);
@@ -118,8 +124,10 @@ export const InputText = memo(
         defaultValue={_.defaultValue}
         ref={inputRef}
         className={`${
-          isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
-        }${_.disabled ? _.disabledClassName : ""}${_.className}`}
+          isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
+        }${_.disabled && _.disabledClassName ? _.disabledClassName : ""}${
+          _.className ? _.className : ""
+        }`}
         type="text"
         title={_.title}
         placeholder={_?.placeholder ?? ""}

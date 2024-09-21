@@ -15,7 +15,7 @@
     "react-dom": "^18.2.0",
     "react-input": "file:",
     "react-multi-date-picker": "^4.3.5",
-    "react-select": "^5.7.7"
+    "react-select": "^5.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

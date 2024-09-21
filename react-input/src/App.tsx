@@ -10,7 +10,6 @@ type Props = {};
 
 export default function App({}: Props) {
   const { useRegister, submit, update } = useInput();
-  const [d, setd] = useState(false);
   const componentStructure: ComponentDescriptor = {
     type: "wrapper",
     props: { className: "inside-wrapper" },
@@ -20,15 +19,20 @@ export default function App({}: Props) {
       },
     ],
   };
+  const [d, setd] = useState<number>(0);
+  const [f, setf] = useState({label: "fdflkj dkls jf", value: 1});
 
   return (
     <div dir="ltr">
-
       <Input
-        type="integer"
-        name="3124"
-        minValue={0}
-        maxValue={10}
+        type="select"
+        options={[
+          { label: "fdflkj dkls jf", value: 1 },
+          { label: "fdflgdfg fdg dhj", value: 2 },
+        ]}
+        name="test"
+        onChange={(e) => setd(e.value)}
+        // fullWidth
         register={useRegister}
         wrapperClassName="wrapper"
         titleClassName="title"
@@ -36,16 +40,43 @@ export default function App({}: Props) {
         beforeClassName="before"
         loadingClassName="loading"
         validationComponent={ValidationComponent}
-        validationOn="submit-blur-change"
+        defaultValue={f}
+        validationOn="submit"
         placeholder="____/__/__"
         required
         className="input"
         // componentStructure={componentStructure}
         title="Hello"
       />
-
+      {d == 2 && (
+        <>
+          <Input
+            type="select"
+            options={[
+              { label: "fdflkj dkls jf", value: 1 },
+              { label: "fdflgdfg fdg dhj", value: 2 },
+            ]}
+            name="tes5t"
+            // fullWidth
+            register={useRegister}
+            wrapperClassName="wrapper"
+            titleClassName="title"
+            afterClassName="after"
+            beforeClassName="before"
+            loadingClassName="loading"
+            validationComponent={ValidationComponent}
+            validationOn="submit"
+            placeholder="____/__/__"
+            required
+            className="input"
+            // componentStructure={componentStructure}
+            title="Hello"
+          />
+        </>
+      )}
+      <div onClick={() => setf({ label: "fdflgdfg fdg dhj", value: 2 })}>haha</div>
       <div onClick={() => submit((p) => console.log(p))}>submit</div>
-      <div onClick={() => update("test", "1400/06/20")}>update</div>
+      <div onClick={() => update("test", { label: "fdflgdfg fdg dhj", value: 2 })}>update</div>
     </div>
   );
 }
