@@ -138,6 +138,14 @@ body {
     @apply font-black text-2xl my-2;
   }
   p{
-    @apply text-subtext font-light;
+    @apply text-subtext font-light my-4;
+  }
+
+  td,th{
+    @apply border p-2;
+  }
+
+  th{
+    @apply bg-[#ffffff05] font-black;
   }
 }
