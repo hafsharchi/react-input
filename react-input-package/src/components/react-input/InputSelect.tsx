@@ -35,10 +35,19 @@ export const InputSelect = memo(
       useContext(ReactInputContext);
 
     const [hasChanged, setHasChanged] = useState<boolean>(false);
+    type ddd = { label: string; value: string };
+    const prevDefaultValueRef = useRef<ddd>();
 
     useEffect(() => {
-      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
+      if (
+        inputRef.current &&
+        _.updateDefaultValueOnChange &&
+        _.defaultValue &&
+        _.defaultValue?.value != prevDefaultValueRef.current?.value
+      ) {
         setValue(_.defaultValue);
+        prevDefaultValueRef.current = _.defaultValue;
+      }
     }, [_.defaultValue]);
 
     useImperativeHandle(ref, () => ({
@@ -54,7 +63,8 @@ export const InputSelect = memo(
       ) => {
         if (inputRef.current) {
           setValue(newValue);
-          if (_.validationOn != "submit" || !isValid) setIsValid(checkValidation(newValue));
+          if (_.validationOn != "submit" || !isValid)
+            setIsValid(checkValidation(newValue));
         }
       },
       checkValidation: () => {
@@ -72,8 +82,10 @@ export const InputSelect = memo(
     };
 
     useEffect(() => {
-      if (hasChanged && (_.validationOn == "submit-blur-change" || !isValid)) {
-        setIsValid(checkValidation(value));
+      if (hasChanged) {
+        if (_.onChange && value) _.onChange(value);
+        if (_.validationOn == "submit-blur-change" || !isValid)
+          setIsValid(checkValidation(value));
       }
     }, [value]);
 

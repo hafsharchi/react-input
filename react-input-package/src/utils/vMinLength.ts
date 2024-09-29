@@ -10,7 +10,7 @@ type VMinLength = {
 
 export const vMinLength = ({ currentValue, minLength,setErrors, error }: VMinLength) => {
   var value = currentValue + "";
-  if (value.length < minLength) {
+  if (value.length < minLength && value.length !== 0) {
     addToStateArrayByValue<string>(
       setErrors,
       error ?? VALIDATION_ERROR.MIN_LENGTH

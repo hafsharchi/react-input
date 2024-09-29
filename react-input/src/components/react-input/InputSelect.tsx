@@ -82,9 +82,10 @@ export const InputSelect = memo(
     };
 
     useEffect(() => {
-      if (_.onChange) _.onChange(value);
-      if (hasChanged && (_.validationOn == "submit-blur-change" || !isValid)) {        
-        setIsValid(checkValidation(value));
+      if (hasChanged) {
+        if (_.onChange && value) _.onChange(value);
+        if (_.validationOn == "submit-blur-change" || !isValid)
+          setIsValid(checkValidation(value));
       }
     }, [value]);
 
