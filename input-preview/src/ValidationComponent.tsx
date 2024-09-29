@@ -1,4 +1,4 @@
-import { ValidationComponentProps } from "ha-dd-react-input";
+import { ValidationComponentProps } from "input-master";
 
 const ValidationComponent = (_: ValidationComponentProps) => {
   if (_.errors)

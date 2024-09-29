@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import PreviewBox from "../../-components/PreviewBox";
 import DocsBreadcrumb from "../-components/DocsBreadcrumb";
-import { Input, useInput } from "ha-dd-react-input";
+import { Input, useInput } from "input-master";
 import ValidationComponent from "../../../../ValidationComponent";
+import { Button } from "../../../../components/Button";
 
 export const Route = createFileRoute("/_main-layout/docs/text/")({
   component: Text,
@@ -14,6 +15,8 @@ function Text() {
   return (
     <>
       <DocsBreadcrumb page="Text Type" />
+      <div className="flex gap-2 my-2"><Button>Preview</Button>
+      <Button>Code</Button></div>
       <PreviewBox>
         <Input
           after={"$"}

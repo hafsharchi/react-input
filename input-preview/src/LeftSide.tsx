@@ -1,4 +1,4 @@
-import { Input, useInput } from "ha-dd-react-input";
+import { Input, useInput } from "input-master";
 import { Button } from "./components/Button";
 import ValidationComponent from "./ValidationComponent";
 
