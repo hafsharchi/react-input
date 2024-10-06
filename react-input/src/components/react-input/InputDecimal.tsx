@@ -139,6 +139,8 @@ export const InputDecimal = memo(
         <input
           defaultValue={_.defaultValue}
           ref={inputRef}
+          data-test={_.dataTest}
+          id={_.id}
           className={`${
             isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
           } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${

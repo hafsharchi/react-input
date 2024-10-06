@@ -6,7 +6,7 @@ export const removeFromStateArrayByValue = <T>(setState: SetValue<T[]>, value: T
 
 export const addToStateArrayByValue = <T>(setState: SetValue<T[]>, value: T): void => {
   setState((prevArray: T[]) => {
-    if (!prevArray.includes(value)) {
+    if (!prevArray?.includes(value)) {
       return [...prevArray, value];
     }
     return prevArray;

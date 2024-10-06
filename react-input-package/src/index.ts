@@ -14,6 +14,7 @@ export {
   Password,
   Text,
   Textarea,
+  Checkbox,
   Type,
   ValidationComponentProps,
   ValidationPatterns,

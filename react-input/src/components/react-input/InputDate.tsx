@@ -94,6 +94,7 @@ export const InputDate = memo(
         <DatePicker
           portal={_.portal != undefined && _.portal != false}
           ref={inputRef}
+          id={_.id}
           disabled={_.disabled == true ? true : false}
           value={value}
           placeholder={_.placeholder}
@@ -109,6 +110,7 @@ export const InputDate = memo(
           maxDate={_.maxDate ?? undefined}
           onChange={(e: any) => onChange(e)}
           format={_.format}
+          
           onlyMonthPicker={_.onlyMonth}
           editable={_.editable}
           range={_.range}

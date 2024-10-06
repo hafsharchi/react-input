@@ -5,3 +5,4 @@ export { InputInteger } from "./InputInteger";
 export { InputSelect } from "./InputSelect";
 export { InputText } from "./InputText";
 export { InputTextArea } from "./InputTextArea";
+export { InputCheckbox } from "./InputCheckbox";

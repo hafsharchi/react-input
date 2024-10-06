@@ -46,6 +46,11 @@ export type Text = BaseInput & {
   minLength?: number;
 };
 
+export type Checkbox = BaseInput & {
+  type: "checkbox";
+  titleClickable?: boolean;
+};
+
 export type Password = BaseInput & {
   type: "password";
   showIcon?: any;
@@ -75,8 +80,8 @@ export type Calendar = BaseInput & {
   type: "calendar";
   locale: "persian" | "english";
   range?: boolean;
-  maxDate?: string;
-  minDate?: string;
+  maxDate?: Date | string;
+  minDate?: Date | string;
   onlyMonth?: boolean;
   separator?: string;
   format?: string;
@@ -120,7 +125,7 @@ export type Type =
   | "calendar"
   | "select"
   | "textarea"
-  | "file"
+  | "checkbox"
   | "password";
 
 export type ErrorTypes =

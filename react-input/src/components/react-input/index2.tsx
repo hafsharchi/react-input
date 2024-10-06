@@ -9,6 +9,7 @@ import {
   Text,
   Textarea,
   Password,
+  Checkbox,
 } from "../types";
 import { InputDecimal } from "./InputDecimal";
 import { InputInteger } from "./InputInteger";
@@ -17,10 +18,20 @@ import { InputDate } from "./InputDate";
 import { InputPassword } from "./InputPassword";
 import { InputText } from "./InputText";
 import { InputTextArea } from "./InputTextArea";
+import { InputCheckbox } from "./InputCheckbox";
 
 export const Input = memo(
   (
-    _: Text | Decimal | Integer | Calendar | Select | Textarea | File | Password
+    _:
+      | Text
+      | Decimal
+      | Integer
+      | Calendar
+      | Select
+      | Textarea
+      | File
+      | Password
+      | Checkbox
   ) => {
     var baseInput: BaseInput = {
       id: _.id,
@@ -110,9 +121,6 @@ export const Input = memo(
           />
         );
 
-      case "file":
-        return <InputText {...baseInput} type="text" />;
-
       case "select":
         return (
           <InputSelect
@@ -154,6 +162,9 @@ export const Input = memo(
             minLength={_.minLength}
           />
         );
+
+      case "checkbox":
+        return <InputCheckbox titleClickable={_.titleClickable} {...baseInput} type="checkbox" />;
 
       default:
         return <InputText {...baseInput} type="text" />;

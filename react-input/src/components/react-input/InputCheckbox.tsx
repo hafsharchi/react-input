@@ -7,11 +7,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { CustomValidation, ReactInputContextProps, Textarea } from "../types";
-import { vMaxLength } from "../../utils/vMaxLength";
-import { vMinLength } from "../../utils/vMinLength";
+import { Checkbox, ReactInputContextProps } from "../types";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
-import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
 import { Title } from "../elements/Title";
 import { Wrapper } from "../elements/Wrapper";
@@ -20,64 +17,61 @@ import { Before } from "../elements/Before";
 import { After } from "../elements/After";
 import { renderComponent } from "../../utils/RenderComponent";
 
-export const InputTextArea = memo(
-  forwardRef((_: Textarea, ref: any) => {
+export const InputCheckbox = memo(
+  forwardRef((_: Checkbox, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
-    const inputRef = useRef<HTMLTextAreaElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
+
+    useEffect(() => {
+      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
+        inputRef.current.checked = _.defaultValue;
+    }, [_.defaultValue]);
 
     const customized: ReactInputContextProps | undefined =
       useContext(ReactInputContext);
 
-    useEffect(() => {
-      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
-        inputRef.current.value = _.defaultValue;
-    }, [_.defaultValue]);
-
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current) {
-          return inputRef.current?.value ?? "";
+          console.log(inputRef.current);
+          return inputRef.current?.checked ?? "";
         }
       },
-      updateValue: (newValue: string) => {
+      updateValue: (newValue: boolean) => {
         if (inputRef.current) {
-          inputRef.current.value = newValue;
+          inputRef.current.checked = newValue;
           onChange();
         }
       },
       checkValidation: () => {
         if (inputRef.current) {
-          setIsValid(checkValidation(inputRef.current.value ?? ""));
-          return checkValidation(inputRef.current.value ?? "");
+          setIsValid(checkValidation(inputRef.current.checked ?? false));
+          return checkValidation(inputRef.current.checked ?? false);
         }
       },
     }));
 
-    const onChange = (e?: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
 
-      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
-
       if (_.validationOn == "submit-blur-change" || !isValid)
-        setIsValid(checkValidation(inputRef.current?.value ?? ""));
+        setIsValid(checkValidation(inputRef?.current?.checked ?? false));
     };
 
-    const onBlur = (e?: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onBlur) _.onBlur(e);
-
-      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
 
       if (
         _.validationOn == "submit-blur-change" ||
         _.validationOn == "submit-blur" ||
         !isValid
       )
-        setIsValid(checkValidation(inputRef.current?.value ?? ""));
+        setIsValid(checkValidation(inputRef?.current?.checked ?? false));
     };
 
-    const checkValidation = (currentValue: string): boolean => {
+    const checkValidation = (currentValue: boolean): boolean => {
       var res = true;
       if (
         _.required &&
@@ -89,39 +83,21 @@ export const InputTextArea = memo(
       )
         res = false;
 
-      _.customValidations?.forEach((customValidation: CustomValidation) => {
-        if (
-          !vCustomValidation({
-            currentValue: currentValue,
-            setErrors: setErrors,
-            customValidation: customValidation,
-          })
-        )
-          res = false;
-      });
-      if (
-        _.minLength &&
-        !vMinLength({
-          currentValue: currentValue,
-          minLength: _.minLength,
-          setErrors: setErrors,
-          error: customized?.validationErrors?.minLength ?? undefined,
-        })
-      )
-        res = false;
+
       return res;
     };
 
     const input: React.ReactNode = (
-      <textarea
+      <input
         defaultValue={_.defaultValue}
+        id={_.id ? _.id : `${_.name}_checkbox`}
         ref={inputRef}
-        id={_.id}
         className={`${
           isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
         }${_.disabled && _.disabledClassName ? _.disabledClassName : ""}${
           _.className ? _.className : ""
         }`}
+        type="checkbox"
         title={_.title}
         placeholder={_?.placeholder ?? ""}
         onChange={(e) => onChange(e)}
@@ -136,7 +112,7 @@ export const InputTextArea = memo(
           <Wrapper className={_.wrapperClassName}>
             <Before className={_.beforeClassName} before={_.before} />
             {input}
-            <Title title={_.title} className={_.titleClassName} />
+            <Title tag="label" htmlFor={_.titleClickable ? _.id ?? `${_.name}_checkbox` : undefined} title={_.title} className={_.titleClassName} />
             <Loading
               className={_.loadingClassName}
               isLoading={_.loading}

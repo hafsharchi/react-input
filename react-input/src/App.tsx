@@ -19,19 +19,16 @@ export default function App({}: Props) {
       },
     ],
   };
-  const [d, setd] = useState<number>(0);
-  const [f, setf] = useState({label: "fdflkj dkls jf", value: 1});
 
   return (
     <div dir="ltr">
       <Input
         type="select"
-        options={[
-          { label: "fdflkj dkls jf", value: 1 },
-          { label: "fdflgdfg fdg dhj", value: 2 },
-        ]}
+    options={[{value:2,lable:"dfdssd"}]}
+        // titleClickable
         name="test"
-        onChange={(e) => setd(e.value)}
+        dataTest={"xxx"}
+        id="2324342543503498573489"
         // fullWidth
         register={useRegister}
         wrapperClassName="wrapper"
@@ -40,43 +37,14 @@ export default function App({}: Props) {
         beforeClassName="before"
         loadingClassName="loading"
         validationComponent={ValidationComponent}
-        defaultValue={f}
-        validationOn="submit"
+        validationOn="submit-blur-change"
         placeholder="____/__/__"
         required
         className="input"
-        // componentStructure={componentStructure}
         title="Hello"
       />
-      {d == 2 && (
-        <>
-          <Input
-            type="select"
-            options={[
-              { label: "fdflkj dkls jf", value: 1 },
-              { label: "fdflgdfg fdg dhj", value: 2 },
-            ]}
-            name="tes5t"
-            // fullWidth
-            register={useRegister}
-            wrapperClassName="wrapper"
-            titleClassName="title"
-            afterClassName="after"
-            beforeClassName="before"
-            loadingClassName="loading"
-            validationComponent={ValidationComponent}
-            validationOn="submit"
-            placeholder="____/__/__"
-            required
-            className="input"
-            // componentStructure={componentStructure}
-            title="Hello"
-          />
-        </>
-      )}
-      <div onClick={() => setf({ label: "fdflgdfg fdg dhj", value: 2 })}>haha</div>
       <div onClick={() => submit((p) => console.log(p))}>submit</div>
-      <div onClick={() => update("test", { label: "fdflgdfg fdg dhj", value: 2 })}>update</div>
+      <div onClick={() => update("test", true)}>update</div>
     </div>
   );
 }

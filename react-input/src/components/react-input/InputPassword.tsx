@@ -29,7 +29,7 @@ export const InputPassword = memo(
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
         inputRef.current.value = _.defaultValue;
     }, [_.defaultValue]);
-    
+
     const showIcon = _.showIcon ?? (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -73,9 +73,8 @@ export const InputPassword = memo(
     const togglePassword = () => {
       setShowPassword((prev: boolean) => !prev);
     };
-    const customized: ReactInputContextProps | undefined = useContext(
-      ReactInputContext
-    );
+    const customized: ReactInputContextProps | undefined =
+      useContext(ReactInputContext);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -159,6 +158,7 @@ export const InputPassword = memo(
         <input
           defaultValue={_.defaultValue}
           ref={inputRef}
+          id={_.id}
           className={`${
             isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
           } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}

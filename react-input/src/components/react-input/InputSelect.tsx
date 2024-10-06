@@ -132,6 +132,8 @@ export const InputSelect = memo(
       <>
         <ReactSelect
           unstyled={_.unstyled}
+          data-test={_.dataTest}
+          id={_.id}
           onInputChange={(e: any) => setInputValue(e)}
           menuPortalTarget={_.portal}
           ref={inputRef}
