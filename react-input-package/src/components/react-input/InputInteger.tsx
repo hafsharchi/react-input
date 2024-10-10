@@ -34,6 +34,7 @@ export const InputInteger = memo(
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
         inputRef.current.value = _.defaultValue;
+      separate({ ref: inputRef, seperator: _.separator ?? "" });
     }, [_.defaultValue]);
 
     useImperativeHandle(ref, () => ({
@@ -149,6 +150,7 @@ export const InputInteger = memo(
         <input
           defaultValue={_.defaultValue}
           ref={inputRef}
+          id={_.id}
           className={`${
             isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
           } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${

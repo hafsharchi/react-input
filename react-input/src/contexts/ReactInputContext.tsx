@@ -14,9 +14,7 @@ interface ReactInputProviderProps {
 export const ReactInputProvider = ({
   children,
   errors,
-  onValidationFailedFunction = () => {
-    console.log("not valid");
-  },
+  onValidationFailedFunction = () => {},
 }: ReactInputProviderProps) => {
   const [validationErrors, setValidationErrors] = useState<ErrorTypes>({
     minValue: errors?.minValue ?? "Less than the minimum value",

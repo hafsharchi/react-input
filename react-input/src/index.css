@@ -30,11 +30,6 @@ input[type="password"]::-ms-clear {
   cursor: pointer;
 }
 
-.wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
 
 .inside-wrapper {
   width: 100%;

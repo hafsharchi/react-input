@@ -35,7 +35,6 @@ export const InputCheckbox = memo(
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current) {
-          console.log(inputRef.current);
           return inputRef.current?.checked ?? "";
         }
       },

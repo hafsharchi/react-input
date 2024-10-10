@@ -4,6 +4,8 @@ import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { Input, useInput } from "input-master";
 import ValidationComponent from "../../../../ValidationComponent";
 import { Button } from "../../../../components/Button";
+import { inputConfigs } from "../../../../lib/input_default_settings";
+import { useState } from "react";
 
 export const Route = createFileRoute("/_main-layout/docs/text/")({
   component: Text,
@@ -11,16 +13,59 @@ export const Route = createFileRoute("/_main-layout/docs/text/")({
 
 function Text() {
   const { useRegister } = useInput();
-
+  const [activeTab, setActiveTab] = useState<number>(0);
+  const [styled, setStyled] = useState<boolean>(true);
   return (
     <>
       <DocsBreadcrumb page="Text Type" />
-      <div className="flex gap-2 my-2"><Button>Preview</Button>
-      <Button>Code</Button></div>
-      <PreviewBox>
+
+      <div className="relative  my-4">
+        <div className="flex gap-2">
+          <Button
+            active={activeTab == 0}
+            onClick={() => {
+              setActiveTab(0);
+            }}
+            variant="tab"
+          >
+            Preview
+          </Button>
+          <Button
+            active={activeTab == 1}
+            onClick={() => {
+              setActiveTab(1);
+            }}
+            variant="tab"
+          >
+            Code
+          </Button>
+        </div>
+        <div className="h-[1px] absolute bottom-[1px] bg-foreground opacity-10 w-full"></div>
+      </div>
+      <PreviewBox
+        settings={
+          <div className="flex absolute left-4 top-4 gap-1">
+            <Button
+              active={styled}
+              onClick={() => {
+                setStyled(true);
+              }}
+            >
+              styled
+            </Button>
+            <Button
+              active={!styled}
+              onClick={() => {
+                setStyled(false);
+              }}
+            >
+              default
+            </Button>
+          </div>
+        }
+      >
         <Input
-          after={"$"}
-          afterClassName="af"
+          {...inputConfigs(styled)}
           type="text"
           placeholder=""
           id="1"
@@ -28,11 +73,8 @@ function Text() {
           validationOn="submit-blur-change"
           register={useRegister}
           title="Title"
-          className="wrapper"
+          loading
           validationComponent={ValidationComponent}
-          wrapperClassName="wrapper"
-          titleClassName="title"
-          loadingClassName="loading"
         />
       </PreviewBox>
       <br />

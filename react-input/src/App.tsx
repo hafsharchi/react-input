@@ -3,6 +3,7 @@ import { Input } from "./components";
 import { ComponentDescriptor } from "./components/types";
 import { useInput } from "./components/useInput";
 import "./index.css";
+import "./input.css";
 import ValidationComponent from "./ValidationComponent";
 import { ReactInputProvider } from "./contexts";
 
@@ -24,27 +25,29 @@ export default function App({}: Props) {
     <div dir="ltr">
       <Input
         type="select"
-    options={[{value:2,lable:"dfdssd"}]}
-        // titleClickable
+        options={[
+          { label: "Default", value: 0 },
+          { label: "Input Master", value: 1 },
+        ]}
         name="test"
-        dataTest={"xxx"}
-        id="2324342543503498573489"
+        unstyled
         // fullWidth
         register={useRegister}
-        wrapperClassName="wrapper"
+        wrapperClassName=""
         titleClassName="title"
         afterClassName="after"
+        multiple
+        classNamePrefix="filter"
         beforeClassName="before"
         loadingClassName="loading"
         validationComponent={ValidationComponent}
-        validationOn="submit-blur-change"
-        placeholder="____/__/__"
+        validationOn="submit"
         required
         className="input"
-        title="Hello"
+        title="Hello hdsjfk"
       />
       <div onClick={() => submit((p) => console.log(p))}>submit</div>
-      <div onClick={() => update("test", true)}>update</div>
+      <div onClick={() => update("test", null)}>update</div>
     </div>
   );
 }

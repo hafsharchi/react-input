@@ -94,6 +94,7 @@ export const InputDate = memo(
         <DatePicker
           portal={_.portal != undefined && _.portal != false}
           ref={inputRef}
+          id={_.id}
           disabled={_.disabled == true ? true : false}
           value={value}
           placeholder={_.placeholder}
@@ -123,7 +124,11 @@ export const InputDate = memo(
     if (!_.componentStructure)
       return (
         <>
-          <Wrapper className={_.wrapperClassName}>
+          <Wrapper
+            className={`${_.wrapperClassName} ${
+              value && value != "" ? "value" : ""
+            } `}
+          >
             <Before className={_.beforeClassName} before={_.before} />
             {input}
             <Title title={_.title} className={_.titleClassName} />
@@ -144,7 +149,7 @@ export const InputDate = memo(
       _.title,
       _.before,
       _.after,
-      _.wrapperClassName,
+      `${_.wrapperClassName} ${value && value != "" ? "value" : ""} `,
       _.beforeClassName,
       _.loadingClassName,
       _.titleClassName,
@@ -155,7 +160,3 @@ export const InputDate = memo(
     );
   })
 );
-
-// <div
-//   className={`${_.wrapperClassName} ${value && value != "" ? "value" : ""} `}
-// ></div>;

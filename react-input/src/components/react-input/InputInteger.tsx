@@ -34,6 +34,7 @@ export const InputInteger = memo(
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
         inputRef.current.value = _.defaultValue;
+      separate({ ref: inputRef, seperator: _.separator ?? "" });
     }, [_.defaultValue]);
 
     useImperativeHandle(ref, () => ({

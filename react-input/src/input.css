@@ -121,7 +121,7 @@ html {
   padding-top: 12px;
 }
 /* ---------- Handle title movement both on select and calendar types ---------- */
-.value > .title {
+.has-value > .title {
   top: 9px;
   font-size: 9px;
 }

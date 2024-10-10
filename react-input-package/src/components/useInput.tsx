@@ -27,13 +27,13 @@ export const useInput = () => {
   };
 
   const update = (inputName: string, newValue: any) => {
-    var input: any = inputs.find((input: any) => input.name == inputName);
+    var input: any = inputs?.find((input: any) => input.name == inputName);
     input.ref.current.updateValue(newValue);
   };
 
   const get = (inputName?: any) => {
     if (inputName) {
-      var input = inputs.find((input) => {
+      var input = inputs?.find((input) => {
         return input.name == inputName;
       });
       return input?.ref.current.getValue() ?? "";

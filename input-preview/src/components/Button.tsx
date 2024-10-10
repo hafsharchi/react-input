@@ -1,18 +1,33 @@
+import { MouseEvent } from "react";
+
 type Props = {
-  children: any;
+  children: React.ReactNode;
   disabled?: boolean;
   active?: boolean;
+  onClick?: (event: MouseEvent<HTMLDivElement>) => void;
+  variant?: "tab" | "default";
 };
 
-export const Button = ({ children, disabled, active }: Props) => {
+export const Button = ({
+  children,
+  disabled,
+  active,
+  onClick,
+  variant = "default",
+}: Props) => {
   return (
     <div
-      className={`bg-white/10 text-sm transition-colors rounded-lg px-3 py-1  cursor-pointer  ${
+      onClick={onClick}
+      className={` text-sm  rounded-t-lg cursor-pointer  ${
         disabled
-          ? "text-sky-200 bg-white hover:bg-sky-50 hover:text-sky-400"
-          : active
-          ? "text-white bg-sky-600 hover:bg-sky-700"
-          : "text-white"
+          ? ""
+          : active && variant == "tab"
+            ? "text-foreground border-b-2 border-foreground px-3 py-3 "
+            : !active && variant == "tab"
+              ? "text-foreground px-3 py-3 "
+              : active && variant == "default"
+                ? "bg-foreground/90 text-xs py-1 cursor-pointer  transition-all text-background px-2 rounded-lg"
+                : "bg-foreground/10 text-xs py-1 cursor-pointer  transition-all text-foreground px-2 rounded-lg"
       }`}
     >
       {children}

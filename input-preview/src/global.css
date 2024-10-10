@@ -2,87 +2,95 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
-  font-family: 'Geist';
-  src: url('./assets/fonts/Geist-Thin.woff2') format('woff2'),
-       url('./assets/fonts/Geist-Thin.woff') format('woff');
+  font-family: "Geist";
+  src:
+    url("./assets/fonts/Geist-Thin.woff2") format("woff2"),
+    url("./assets/fonts/Geist-Thin.woff") format("woff");
   font-weight: 100;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist';
-  src: url('./assets/fonts/Geist-UltraLight.woff2') format('woff2'),
-       url('./assets/fonts/Geist-UltraLight.woff') format('woff');
+  font-family: "Geist";
+  src:
+    url("./assets/fonts/Geist-UltraLight.woff2") format("woff2"),
+    url("./assets/fonts/Geist-UltraLight.woff") format("woff");
   font-weight: 200;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist';
-  src: url('./assets/fonts/Geist-Light.woff2') format('woff2'),
-       url('./assets/fonts/Geist-Light.woff') format('woff');
+  font-family: "Geist";
+  src:
+    url("./assets/fonts/Geist-Light.woff2") format("woff2"),
+    url("./assets/fonts/Geist-Light.woff") format("woff");
   font-weight: 300;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist';
-  src: url('./assets/fonts/Geist-Regular.woff2') format('woff2'),
-       url('./assets/fonts/Geist-Regular.woff') format('woff');
+  font-family: "Geist";
+  src:
+    url("./assets/fonts/Geist-Regular.woff2") format("woff2"),
+    url("./assets/fonts/Geist-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist';
-  src: url('./assets/fonts/Geist-Medium.woff2') format('woff2'),
-       url('./assets/fonts/Geist-Medium.woff') format('woff');
+  font-family: "Geist";
+  src:
+    url("./assets/fonts/Geist-Medium.woff2") format("woff2"),
+    url("./assets/fonts/Geist-Medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist';
-  src: url('./assets/fonts/Geist-SemiBold.woff2') format('woff2'),
-       url('./assets/fonts/Geist-SemiBold.woff') format('woff');
+  font-family: "Geist";
+  src:
+    url("./assets/fonts/Geist-SemiBold.woff2") format("woff2"),
+    url("./assets/fonts/Geist-SemiBold.woff") format("woff");
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist';
-  src: url('./assets/fonts/Geist-Bold.woff2') format('woff2'),
-       url('./assets/fonts/Geist-Bold.woff') format('woff');
+  font-family: "Geist";
+  src:
+    url("./assets/fonts/Geist-Bold.woff2") format("woff2"),
+    url("./assets/fonts/Geist-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist';
-  src: url('./assets/fonts/Geist-Black.woff2') format('woff2'),
-       url('./assets/fonts/Geist-Black.woff') format('woff');
+  font-family: "Geist";
+  src:
+    url("./assets/fonts/Geist-Black.woff2") format("woff2"),
+    url("./assets/fonts/Geist-Black.woff") format("woff");
   font-weight: 800;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Geist';
-  src: url('./assets/fonts/Geist-UltraBlack.woff2') format('woff2'),
-       url('./assets/fonts/Geist-UltraBlack.woff') format('woff');
+  font-family: "Geist";
+  src:
+    url("./assets/fonts/Geist-UltraBlack.woff2") format("woff2"),
+    url("./assets/fonts/Geist-UltraBlack.woff") format("woff");
   font-weight: 900;
   font-style: normal;
 }
 
 body {
-  font-family: 'Geist', sans-serif;
+  font-family: "Geist", sans-serif;
 }
 @layer base {
   :root {
-    --background: #fff;
-    --foreground: #18181b;
-    --subtext: #A1A1A7;
+    --background: 0 0% 100%;
+    --foreground: 240 6% 10%;
+    --subtext: 240 3% 64%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
@@ -97,16 +105,16 @@ body {
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border:#a1a1a760;
+    --border: #a1a1a760;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: #09090B;
-    --foreground: #FAFAFB;
-    --subtext: #85858D;
+    --background: 240 10% 4%;
+    --foreground: 240 11% 98%;
+    --subtext: 240 3% 54%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
@@ -121,7 +129,7 @@ body {
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border:#a1a1a720;
+    --border: #a1a1a720;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
@@ -134,18 +142,19 @@ body {
   body {
     @apply bg-background text-foreground font-geist font-normal leading-loose;
   }
-  h2{
-    @apply font-black text-2xl my-2;
+  h2 {
+    @apply font-bold text-2xl my-2;
   }
-  p{
+  p {
     @apply text-subtext font-light my-4;
   }
 
-  td,th{
+  td,
+  th {
     @apply border p-2;
   }
 
-  th{
+  th {
     @apply bg-[#ffffff05] font-black;
   }
 }

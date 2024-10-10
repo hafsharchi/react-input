@@ -1,5 +1,8 @@
 import { VALIDATION_ERROR } from "../constants/validatonErrors";
-import { addToStateArrayByValue, removeFromStateArrayByValue } from "./StateArray";
+import {
+  addToStateArrayByValue,
+  removeFromStateArrayByValue,
+} from "./StateArray";
 
 type VMinValue = {
   currentValue: string;
@@ -15,7 +18,6 @@ export const vMinValue = ({
   error,
 }: VMinValue) => {
   if (parseFloat(currentValue) < minValue) {
-    console.log("false")
     addToStateArrayByValue<string>(
       setErrors,
       error ?? VALIDATION_ERROR.MIN_VALUE

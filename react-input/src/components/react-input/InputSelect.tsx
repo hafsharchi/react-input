@@ -132,8 +132,6 @@ export const InputSelect = memo(
       <>
         <ReactSelect
           unstyled={_.unstyled}
-          data-test={_.dataTest}
-          id={_.id}
           onInputChange={(e: any) => setInputValue(e)}
           menuPortalTarget={_.portal}
           ref={inputRef}
@@ -157,10 +155,19 @@ export const InputSelect = memo(
         />
       </>
     );
+
     if (!_.componentStructure)
       return (
         <>
-          <Wrapper className={_.wrapperClassName}>
+          <Wrapper
+            className={`${_.wrapperClassName} ${
+              (value && !_.multiple) ||
+              (_.multiple && value && value.length != 0) ||
+              inputValue
+                ? "has-value"
+                : ""
+            }`}
+          >
             <Before className={_.beforeClassName} before={_.before} />
             {input}
             <Title title={_.title} className={_.titleClassName} />
@@ -182,7 +189,13 @@ export const InputSelect = memo(
       _.title,
       _.before,
       _.after,
-      _.wrapperClassName,
+      `${_.wrapperClassName} ${
+        (value && !_.multiple) ||
+        (_.multiple && value && value.length != 0) ||
+        inputValue
+          ? "has-value"
+          : ""
+      }`,
       _.beforeClassName,
       _.loadingClassName,
       _.titleClassName,

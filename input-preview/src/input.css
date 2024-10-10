@@ -1,43 +1,25 @@
-
 /** ---------- Input Styles ---------- **/
-.wrapper,
+.default-input-wrapper,
 .date-container {
-  position: relative;
+  @apply relative;
 }
 
-.wrapper > input,
+.default-input-wrapper > input,
 .date-container > input {
-  position: relative;
-  -webkit-appearance: none;
-  -ms-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  width: 100% !important;
-  padding-left: 15px;
-  padding-right: 15px;
-  outline: none;
-  font-size: 13px;
-  height: var(--input-height);
-  display: flex;
-  padding-top: 14px;
-  transition: all 0.1s ease;
-  @apply rounded-md bg-[#09090Baa] !border-white border-opacity-5 border backdrop-blur-[4px] transition-all duration-300 ease-in-out;
+  @apply relative appearance-none w-full px-input outline-none h-11 pt-3 text-sm rounded-md bg-[#09090Baa] !border-white border-opacity-15 border backdrop-blur-[4px] transition-all duration-300 ease-in-out;
 }
 
-.wrapper > input:hover,
+.default-input-wrapper > input:hover,
 .date-container > input:hover {
   background: var(--input-coler-hover) !important;
 }
 
-.wrapper > input:focus,
+.default-input-wrapper > input:focus,
 .date-container > input:focus {
-  @apply bg-[#09090Baa] border-opacity-15;
+  @apply bg-[#09090Baa] border-opacity-25 ring-1 ring-white/10;
 }
 
-.wrapper .title {
+.default-input-wrapper .default-input-title {
   pointer-events: none;
   padding-left: 12px;
   padding-right: 12px;
@@ -52,16 +34,19 @@
   top: 21px;
   line-height: 100%;
   transform: translateY(-50%);
-  @apply text-subtext font-light;
+  @apply font-normal;
   font-size: 13px;
-  transition: top 0.2s ease, color 0.2s ease, font-size 0.2s ease;
+  transition:
+    top 0.2s ease,
+    color 0.2s ease,
+    font-size 0.2s ease;
 }
 
 /* ---------- ---------- ---------- */
 /* ---------- Move Title ---------- */
-.wrapper > input:focus + .title,
-.wrapper > input.dirty + .title,
-.wrapper > input:not(:placeholder-shown) + .title {
+.default-input-wrapper > input:focus + .default-input-title,
+.default-input-wrapper > input.dirty + .default-input-title,
+.default-input-wrapper > input:not(:placeholder-shown) + .default-input-title {
   top: 11px;
   font-size: 11px;
 }
@@ -93,18 +78,16 @@
   padding-right: 12px;
   height: var(--input-height);
 
-  @apply focus-within:shadow-[0_0_0_1px] focus-within:shadow-sky-600; 
+  @apply focus-within:shadow-[0_0_0_1px] focus-within:shadow-sky-600;
 }
 
-
-.filter__control
-.filter__value-container {
+.filter__control .filter__value-container {
   padding-top: 12px;
 }
 /* ---------- Handle title movement both on select and calendar types ---------- */
-.value > .title {
+.has-value > .default-input-title {
   top: 11px;
-  font-size:11px;
+  font-size: 11px;
 }
 /* ---------- ------------- ---------- */
 /* ---------- Select's Menu ---------- */
@@ -132,7 +115,7 @@
 /* ---------- -------------- ---------- */
 
 /** ---------- Loading Styles ---------- **/
-.loading {
+.default-input-loading {
   position: absolute;
   top: 0;
   left: 0;
@@ -144,7 +127,7 @@
   overflow: hidden;
 }
 
-.loading:after {
+.default-input-loading:after {
   content: "";
   top: 0;
   transform: translateX(100%);
@@ -218,6 +201,6 @@
   text-align: center;
   padding-top: 3px;
   box-sizing: border-box;
-  border-radius:  0 var(--input-border-radius) var(--input-border-radius) 0;
+  border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
   background-color: var(--input-coler-focus);
 }
