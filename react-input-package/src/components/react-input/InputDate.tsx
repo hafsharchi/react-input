@@ -130,8 +130,8 @@ export const InputDate = memo(
             } `}
           >
             <Before className={_.beforeClassName} before={_.before} />
-            {input}
             <Title title={_.title} className={_.titleClassName} />
+            {input}
             <Loading
               className={_.loadingClassName}
               isLoading={_.loading}

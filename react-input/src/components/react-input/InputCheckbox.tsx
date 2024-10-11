@@ -110,8 +110,8 @@ export const InputCheckbox = memo(
         <>
           <Wrapper className={_.wrapperClassName}>
             <Before className={_.beforeClassName} before={_.before} />
-            {input}
             <Title tag="label" htmlFor={_.titleClickable ? _.id ?? `${_.name}_checkbox` : undefined} title={_.title} className={_.titleClassName} />
+            {input}
             <Loading
               className={_.loadingClassName}
               isLoading={_.loading}
