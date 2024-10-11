@@ -1,3 +1,61 @@
+import { ComponentDescriptor } from "input-master";
+
+const cs: ComponentDescriptor = {
+  type: "wrapper",
+  children: [
+    {
+      type: "before",
+    },
+    {
+      type: "input",
+    },
+    {
+      type: "title",
+    },
+    {
+      type: "loading",
+    },
+    {
+      type: "after",
+    },
+    {
+      type: "validation",
+    },
+  ],
+};
+
+const checkboxCs: ComponentDescriptor = {
+  type: "wrapper",
+  children: [
+    { type: "before" },
+    {
+      type: "other",
+      props: {
+        className: "default-leftside-wrapper-checkbox w-full",
+      },
+      children: [
+        {
+          type: "other",
+          props: {
+            className: "default-inside-wrapper-checkbox",
+          },
+          children: [
+            {
+              type: "input",
+            },
+            {
+              type: "title",
+            },
+          ],
+        },
+        {
+          type: "validation",
+        },
+      ],
+    },
+  ],
+};
+
 export const inputConfigs = (styled: boolean) => {
   if (!styled) return {};
   return {
@@ -11,6 +69,7 @@ export const inputConfigs = (styled: boolean) => {
     afterClassName: "default-input-after",
     beforeClassName: "default-input-before",
     titleClassName: "default-input-title",
+    componentStructure: cs,
     validationOn: "submit",
     portal: document.querySelector("body"),
   };
@@ -26,6 +85,7 @@ export const checkboxConfigs = () => {
     afterClassName: "default-checkbox-after",
     beforeClassName: "default-checkbox-before",
     titleClassName: "default-checkbox-title",
+    checkboxCs: checkboxCs,
     validationOn: "submit",
     portal: document.querySelector("body"),
   };
