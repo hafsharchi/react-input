@@ -6,17 +6,17 @@
 
 .default-input-wrapper > input,
 .date-container > input {
-  @apply relative appearance-none w-full px-input outline-none h-11 pt-3 text-sm rounded-md bg-[#09090Baa] !border-white border-opacity-15 border backdrop-blur-[4px] transition-all duration-300 ease-in-out;
+  @apply relative appearance-none w-full px-input outline-none h-11 pt-3 text-sm rounded-md bg-background/5 !border-foreground/15 border backdrop-blur-[2px] transition-all duration-300 ease-in-out;
 }
 
 .default-input-wrapper > input:hover,
 .date-container > input:hover {
-  background: var(--input-coler-hover) !important;
+  @apply bg-foreground/5;
 }
 
 .default-input-wrapper > input:focus,
 .date-container > input:focus {
-  @apply bg-[#09090Baa] border-opacity-25 ring-1 ring-white/10;
+  @apply bg-foreground/5 border-opacity-25;
 }
 
 .default-input-wrapper .default-input-title {
@@ -47,8 +47,8 @@
 .default-input-wrapper > input:focus + .default-input-title,
 .default-input-wrapper > input.dirty + .default-input-title,
 .default-input-wrapper > input:not(:placeholder-shown) + .default-input-title {
-  top: 11px;
-  font-size: 11px;
+  top: 0.75rem;
+  font-size: 0.75rem;
 }
 /* ---------- ---------- ---------- */
 
