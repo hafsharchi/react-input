@@ -137,16 +137,22 @@ body {
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border leading-loose;
   }
   body {
-    @apply bg-background text-foreground font-geist font-normal leading-loose;
+    @apply bg-background text-foreground font-geist font-normal
   }
   h2 {
     @apply font-bold text-2xl my-2;
   }
   p {
-    @apply text-subtext font-light my-4;
+    @apply text-foreground/70 font-light my-4;
+  }
+  li {
+    @apply text-foreground/80 list-disc py-1.5;
+  }
+  b {
+    @apply pr-1 text-foreground font-semibold;
   }
 
   td,

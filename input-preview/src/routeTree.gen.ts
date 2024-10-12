@@ -13,8 +13,11 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as MainLayoutImport } from './routes/_main-layout'
 import { Route as MainLayoutIndexImport } from './routes/_main-layout/index'
+import { Route as MainLayoutDocsTextareaIndexImport } from './routes/_main-layout/docs/textarea/index'
 import { Route as MainLayoutDocsTextIndexImport } from './routes/_main-layout/docs/text/index'
+import { Route as MainLayoutDocsPasswordIndexImport } from './routes/_main-layout/docs/password/index'
 import { Route as MainLayoutDocsIntroductionIndexImport } from './routes/_main-layout/docs/introduction/index'
+import { Route as MainLayoutDocsIntegerDecimalIndexImport } from './routes/_main-layout/docs/integer-decimal/index'
 
 // Create/Update Routes
 
@@ -28,14 +31,32 @@ const MainLayoutIndexRoute = MainLayoutIndexImport.update({
   getParentRoute: () => MainLayoutRoute,
 } as any)
 
+const MainLayoutDocsTextareaIndexRoute =
+  MainLayoutDocsTextareaIndexImport.update({
+    path: '/docs/textarea/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any)
+
 const MainLayoutDocsTextIndexRoute = MainLayoutDocsTextIndexImport.update({
   path: '/docs/text/',
   getParentRoute: () => MainLayoutRoute,
 } as any)
 
+const MainLayoutDocsPasswordIndexRoute =
+  MainLayoutDocsPasswordIndexImport.update({
+    path: '/docs/password/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any)
+
 const MainLayoutDocsIntroductionIndexRoute =
   MainLayoutDocsIntroductionIndexImport.update({
     path: '/docs/introduction/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any)
+
+const MainLayoutDocsIntegerDecimalIndexRoute =
+  MainLayoutDocsIntegerDecimalIndexImport.update({
+    path: '/docs/integer-decimal/',
     getParentRoute: () => MainLayoutRoute,
   } as any)
 
@@ -57,6 +78,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainLayoutIndexImport
       parentRoute: typeof MainLayoutImport
     }
+    '/_main-layout/docs/integer-decimal/': {
+      id: '/_main-layout/docs/integer-decimal/'
+      path: '/docs/integer-decimal'
+      fullPath: '/docs/integer-decimal'
+      preLoaderRoute: typeof MainLayoutDocsIntegerDecimalIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
     '/_main-layout/docs/introduction/': {
       id: '/_main-layout/docs/introduction/'
       path: '/docs/introduction'
@@ -64,11 +92,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainLayoutDocsIntroductionIndexImport
       parentRoute: typeof MainLayoutImport
     }
+    '/_main-layout/docs/password/': {
+      id: '/_main-layout/docs/password/'
+      path: '/docs/password'
+      fullPath: '/docs/password'
+      preLoaderRoute: typeof MainLayoutDocsPasswordIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
     '/_main-layout/docs/text/': {
       id: '/_main-layout/docs/text/'
       path: '/docs/text'
       fullPath: '/docs/text'
       preLoaderRoute: typeof MainLayoutDocsTextIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
+    '/_main-layout/docs/textarea/': {
+      id: '/_main-layout/docs/textarea/'
+      path: '/docs/textarea'
+      fullPath: '/docs/textarea'
+      preLoaderRoute: typeof MainLayoutDocsTextareaIndexImport
       parentRoute: typeof MainLayoutImport
     }
   }
@@ -79,8 +121,11 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   MainLayoutRoute: MainLayoutRoute.addChildren({
     MainLayoutIndexRoute,
+    MainLayoutDocsIntegerDecimalIndexRoute,
     MainLayoutDocsIntroductionIndexRoute,
+    MainLayoutDocsPasswordIndexRoute,
     MainLayoutDocsTextIndexRoute,
+    MainLayoutDocsTextareaIndexRoute,
   }),
 })
 
@@ -99,20 +144,35 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_main-layout.tsx",
       "children": [
         "/_main-layout/",
+        "/_main-layout/docs/integer-decimal/",
         "/_main-layout/docs/introduction/",
-        "/_main-layout/docs/text/"
+        "/_main-layout/docs/password/",
+        "/_main-layout/docs/text/",
+        "/_main-layout/docs/textarea/"
       ]
     },
     "/_main-layout/": {
       "filePath": "_main-layout/index.tsx",
       "parent": "/_main-layout"
     },
+    "/_main-layout/docs/integer-decimal/": {
+      "filePath": "_main-layout/docs/integer-decimal/index.tsx",
+      "parent": "/_main-layout"
+    },
     "/_main-layout/docs/introduction/": {
       "filePath": "_main-layout/docs/introduction/index.tsx",
       "parent": "/_main-layout"
     },
+    "/_main-layout/docs/password/": {
+      "filePath": "_main-layout/docs/password/index.tsx",
+      "parent": "/_main-layout"
+    },
     "/_main-layout/docs/text/": {
       "filePath": "_main-layout/docs/text/index.tsx",
+      "parent": "/_main-layout"
+    },
+    "/_main-layout/docs/textarea/": {
+      "filePath": "_main-layout/docs/textarea/index.tsx",
       "parent": "/_main-layout"
     }
   }

@@ -13,12 +13,11 @@ export default function Sidebar({ className }: Props) {
 
       <h1 className="font-semibold text-foreground mt-4">Types</h1>
       <SidebarLink to="/docs/text">Text</SidebarLink>
-      <SidebarLink to="/">Integer</SidebarLink>
-      <SidebarLink to="/">Decimal</SidebarLink>
-      <SidebarLink to="/">Calendar</SidebarLink>
-      <SidebarLink to="/">Select</SidebarLink>
-      <SidebarLink to="/">Textarea</SidebarLink>
-      <SidebarLink to="/">Password</SidebarLink>
+      <SidebarLink to="/docs/integer-decimal">Integer / Decimal</SidebarLink>
+      <SidebarLink to="/docs/d">Calendar</SidebarLink>
+      <SidebarLink to="/docs/t">Select</SidebarLink>
+      <SidebarLink to="/docs/textarea">Textarea</SidebarLink>
+      <SidebarLink to="/docs/password">Password</SidebarLink>
 
       <h1 className="font-semibold text-foreground mt-4">Validation</h1>
       <SidebarLink to="/">Validation Component</SidebarLink>

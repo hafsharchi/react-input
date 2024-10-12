@@ -25,23 +25,23 @@ function Introduction() {
         user interfaces.
       </p>
       <br />
-      <span className="font-gblack">Key Features:</span>
+      <b>Key Features:</b>
       <ul>
         <li>
-          - Optimized Performance: Enjoy significantly fewer re-renders compared
+          <b>Optimized Performance: </b> Enjoy significantly fewer re-renders compared
           to traditional useState approaches.
         </li>
         <li>
-          - Comprehensive Input Types: Seamlessly handle text, decimal, integer,
+        <b>Comprehensive Input Types: </b> Seamlessly handle text, decimal, integer,
           calendar, and select inputs out of the box, with more types coming
           soon.
         </li>
         <li>
-          - Effortless Validation: Implement complex validation rules with ease,
+          <b>Effortless Validation:</b> Implement complex validation rules with ease,
           saving you time and headaches.
         </li>
         <li>
-          - Flexible and Extensible: Designed to grow with your needs,
+          <b>Flexible and Extensible:</b> Designed to grow with your needs,
           FormMaster is perfect for projects of all sizes.
         </li>
       </ul>
