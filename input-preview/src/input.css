@@ -6,7 +6,7 @@
 
 .default-input-wrapper > input,
 .date-container > input {
-  @apply relative appearance-none w-full px-input outline-none h-11 pt-3 text-sm rounded-md bg-background/5 border-foreground/15 border backdrop-blur-[2px] transition-all duration-300 ease-in-out;
+  @apply relative appearance-none w-full px-input outline-none h-11 pt-3 text-sm rounded-md bg-background/5 border-foreground/15 border backdrop-blur-[2px] transition-colors duration-300 ease-in-out;
 }
 
 .default-input-wrapper > input:hover,
@@ -203,4 +203,31 @@
   box-sizing: border-box;
   border-radius: 0 var(--input-border-radius) var(--input-border-radius) 0;
   background-color: var(--input-coler-focus);
+}
+
+.default-input-wrapper > textarea {
+  @apply relative appearance-none w-full px-input outline-none h-20 min-h-11 pt-4 text-sm rounded-md bg-background/5 border-foreground/15 border max-h-36 backdrop-blur-[2px] transition-colors duration-300 ease-in-out;
+}
+
+.default-input-wrapper > textarea:hover {
+  @apply bg-foreground/5;
+}
+
+.default-input-wrapper > textarea:focus,
+.date-container > textarea:focus {
+  @apply bg-foreground/5 border-opacity-25;
+}
+
+.default-input-wrapper > textarea:focus + .default-input-title,
+.default-input-wrapper > textarea.dirty + .default-input-title,
+.default-input-wrapper
+  > textarea:not(:placeholder-shown)
+  + .default-input-title {
+  top: 0.75rem;
+  font-size: 0.75rem;
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
 }

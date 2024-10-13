@@ -6,15 +6,48 @@ import ValidationComponent from "../../../../ValidationComponent";
 import { Button } from "../../../../components/Button";
 import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
+import CodeHighlighter from "../../../../components/CodeHighlighter";
 
 export const Route = createFileRoute("/_main-layout/docs/textarea/")({
-  component: Text,
+  component: TextArea,
 });
 
-function Text() {
-  const { useRegister } = useInput();
+function TextArea() {
+  const { useRegister, submit } = useInput();
   const [activeTab, setActiveTab] = useState<number>(0);
   const [styled, setStyled] = useState<boolean>(true);
+  const codeSnippet = `import { Input, useInput } from "input-master";
+  
+export const Form = () => {
+  const { useRegister, submit } = useInput();
+  
+  return (
+    <>
+      <Input
+        type="textarea"
+        title="Description *"
+        required
+        minLength={5}
+        maxLength={80}
+        name="description"
+        notValidClassName="border !border-rose-500/50"
+        validationComponent={ValidationComponent}
+        validationOn="submit-blur-change"
+        register={useRegister}
+      />
+      <button
+        onClick={() =>
+          submit((formData) => // automatically checks validation and if is valid:
+            alert('description: ' + formData.description)
+          )
+        }
+      >
+        submit
+      </button>
+    </>
+  );
+};
+`;
   return (
     <>
       <DocsBreadcrumb page="Text Type" />
@@ -42,58 +75,76 @@ function Text() {
         </div>
         <div className="h-[1px] absolute bottom-[1px] bg-foreground opacity-10 w-full"></div>
       </div>
-      <PreviewBox
-        settings={
-          <div className="flex absolute left-4 top-4 gap-1">
+      {activeTab == 0 ? (
+        <>
+          <PreviewBox
+            settings={
+              <div className="flex absolute left-4 top-4 gap-1">
+                <Button
+                  active={styled}
+                  onClick={() => {
+                    setStyled(true);
+                  }}
+                >
+                  styled
+                </Button>
+                <Button
+                  active={!styled}
+                  onClick={() => {
+                    setStyled(false);
+                  }}
+                >
+                  default
+                </Button>
+              </div>
+            }
+          >
+            <Input
+              {...inputConfigs(styled)}
+              type="textarea"
+              title="Description *"
+              required
+              minLength={5}
+              maxLength={80}
+              name="description"
+              notValidClassName="border !border-rose-500/50"
+              validationComponent={ValidationComponent}
+              validationOn="submit-blur-change"
+              register={useRegister}
+            />
+
             <Button
-              active={styled}
-              onClick={() => {
-                setStyled(true);
-              }}
+              variant="submit"
+              className="mx-auto mt-3"
+              onClick={() =>
+                submit((d) =>
+                  alert(`description: ${d.description}`)
+                )
+              }
             >
-              styled
+              Sumbit
             </Button>
-            <Button
-              active={!styled}
-              onClick={() => {
-                setStyled(false);
-              }}
-            >
-              default
-            </Button>
-          </div>
-        }
-      >
-        <Input
-          {...inputConfigs(styled)}
-          type="text"
-          placeholder=""
-          id="1"
-          name="mains"
-          validationOn="submit-blur-change"
-          register={useRegister}
-          title="Title"
-          loading
-          validationComponent={ValidationComponent}
-        />
-      </PreviewBox>
+          </PreviewBox>
+        </>
+      ) : (
+        <>
+          <CodeHighlighter
+            language="tsx"
+            className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
+            code={codeSnippet}
+          />
+        </>
+      )}
       <br />
       <h2>Description</h2>
       <p>
-        The Text input type allows users to enter single-line text values. By
-        default, it includes all the shared features that are available across
-        all input types. If you haven’t seen the shared props yet, you can check
-        them out here.
+        The Textarea input type is perfect for capturing longer, multi-line text
+        entries, like comments, descriptions, or messages. Just like the Text
+        input, it includes all the standard features of our library and is fully
+        customizable!
       </p>
       <p>
-        At the top, you can find an example of how to implement the Text input
-        with various configurations, such as validation checks and form
-        submission. It also comes with the default styling from our
-        documentation's UI. For more details on how to customize the appearance,
-        you can visit the Styling Documentation.
-      </p>
-      <p>
-        Below is a table of specific properties unique to the Text input type:
+        Below is a table of specific properties unique to the Textarea input type:
       </p>
       <h2>Props</h2>
       <table className="w-full text-center text-sm rounded-lg  border-1 border-red-400">
@@ -109,26 +160,14 @@ function Text() {
           <tr>
             <td>MaxLength</td>
             <td>number</td>
-            <td></td>
-            <td></td>
+            <td>-</td>
+            <td>-</td>
           </tr>
           <tr>
             <td>MinLength</td>
             <td>number</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>Mask</td>
-            <td>string</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>MaskChar</td>
-            <td>string</td>
-            <td></td>
-            <td></td>
+            <td>-</td>
+            <td>-</td>
           </tr>
         </tbody>
       </table>

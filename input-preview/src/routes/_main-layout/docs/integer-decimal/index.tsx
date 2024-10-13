@@ -58,7 +58,9 @@ function Text() {
   
         <button 
           onClick={() =>
-            submit((d) => alert('age: ' + d.age + ', percent: ' + d.percent + ', price: ' + d.price))
+            submit((formData) =>  // automatically checks validation and if is valid:
+              alert('age: '+ formData.age +', percent: '+ formData.percent +', price: '+ formData.price)
+            )
           }
         > 
           submit 
@@ -169,7 +171,7 @@ function Text() {
       ) : (
         <>
           <CodeHighlighter
-            language="javascript"
+            language="tsx"
             className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
             code={codeSnippet}
           />

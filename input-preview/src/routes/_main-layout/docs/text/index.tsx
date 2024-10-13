@@ -44,7 +44,7 @@ export const TextInput = () => {
       />
       <button
         onClick={() =>
-          submit((formData) =>
+          submit((formData) => // automatically checks validation and if is valid:
             alert("firstName: " + formData.firstName + "lastName: " + formData.lastName)
           )
         }

@@ -155,6 +155,12 @@ export const InputPassword = memo(
 
     const input: React.ReactNode = (
       <>
+        <div
+          className={`toggle-password-visibility ${_.togglePasswordVisibilityClassName}`}
+          onClick={togglePassword}
+        >
+          {showPassword ? hideIcon : showIcon}
+        </div>
         <input
           defaultValue={_.defaultValue}
           ref={inputRef}
@@ -173,12 +179,6 @@ export const InputPassword = memo(
           onBlur={(e) => onBlur(e)}
           disabled={_.disabled}
         />
-        <div
-          className={`toggle-password-visibility ${_.togglePasswordVisibilityClassName}`}
-          onClick={togglePassword}
-        >
-          {showPassword ? hideIcon : showIcon}
-        </div>
       </>
     );
     if (!_.componentStructure)

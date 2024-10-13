@@ -156,7 +156,7 @@ body {
   }
 
   td{
-    @apply border p-2;
+    @apply border p-2 text-left;
   }
 
   tr{

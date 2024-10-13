@@ -24,9 +24,9 @@ export const Button = ({
         disabled
           ? ""
           : active && variant == "tab"
-            ? "text-foreground border-b-2 border-foreground px-3 py-3 "
+            ? "text-foreground border-b-2 border-foreground px-3 py-1 "
             : !active && variant == "tab"
-              ? "text-foreground px-3 py-3 "
+              ? "text-foreground px-3 py-1 "
               : active && variant == "default"
                 ? "bg-foreground/90 text-xs py-1 cursor-pointer  transition-all text-background px-2 rounded-lg"
                 : !active && variant == "default" ? "bg-foreground/10 text-xs py-1 cursor-pointer  transition-all text-foreground px-2 rounded-lg" :
