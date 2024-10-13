@@ -21,7 +21,6 @@ function Text() {
 export const TextInput = () => {
   const { useRegister, submit } = useInput();
   
-    
   return (
     <>
       <Input
@@ -43,8 +42,15 @@ export const TextInput = () => {
         register={useRegister}
         maxLength={7}
       />
-
-      <button onClick={() => submit((d) => alert("firstName: " + d.firstName "lastName: " + d.lastName))}> submit </button>
+      <button
+        onClick={() =>
+          submit((formData) =>
+            alert("firstName: " + formData.firstName + "lastName: " + formData.lastName)
+          )
+        }
+      >
+        submit
+      </button>
     </>
   );
 };
@@ -127,7 +133,7 @@ export const TextInput = () => {
       ) : (
         <>
           <CodeHighlighter
-            language="javascript"
+            language="tsx"
             className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
             code={codeSnippet}
           />

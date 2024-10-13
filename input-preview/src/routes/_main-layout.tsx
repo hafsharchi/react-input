@@ -13,9 +13,9 @@ function MainLayout() {
   return (
     <ThemeProvider>
       <Header />
-      <div className="flex w-3/4 mx-auto min-h-screen gap-20">
+      <div className="flex w-3/4 overflow-hidden mx-auto min-h-screen gap-20">
         <Sidebar className="shrink-0 w-60" />
-        <div className="w-full">
+        <div className="w-full overflow-hidden">
           <Outlet />
         </div>
         <Rightbar className="w-60 hidden 2xl:block shrink-0" />

@@ -215,26 +215,32 @@ function Text() {
           <tr>
             <td>MaxLength</td>
             <td>number</td>
-            <td></td>
-            <td></td>
+            <td>-</td>
+            <td>-</td>
           </tr>
           <tr>
             <td>MinLength</td>
             <td>number</td>
-            <td></td>
-            <td></td>
+            <td>-</td>
+            <td>-</td>
           </tr>
           <tr>
-            <td>Mask</td>
+            <td>separator</td>
             <td>string</td>
-            <td></td>
-            <td></td>
+            <td>Inserts the specified character to group digits by three (e.g., 1,000).</td>
+            <td>-</td>
           </tr>
           <tr>
-            <td>MaskChar</td>
-            <td>string</td>
-            <td></td>
-            <td></td>
+            <td>minValue</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>maxValue</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
           </tr>
         </tbody>
       </table>
@@ -279,26 +285,20 @@ function Text() {
           <tr>
             <td>MaxLength</td>
             <td>number</td>
-            <td></td>
-            <td></td>
+            <td>-</td>
+            <td>-</td>
           </tr>
           <tr>
             <td>MinLength</td>
             <td>number</td>
-            <td></td>
-            <td></td>
+            <td>-</td>
+            <td>-</td>
           </tr>
           <tr>
-            <td>Mask</td>
+            <td>separator</td>
             <td>string</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>MaskChar</td>
-            <td>string</td>
-            <td></td>
-            <td></td>
+            <td>Inserts the specified character to group digits by three (e.g., 1,000).</td>
+            <td>-</td>
           </tr>
         </tbody>
       </table>
