@@ -82,7 +82,6 @@ export const InputCheckbox = memo(
       )
         res = false;
 
-
       return res;
     };
 
@@ -92,7 +91,9 @@ export const InputCheckbox = memo(
         id={_.id ? _.id : `${_.name}_checkbox`}
         ref={inputRef}
         className={`${
-          isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
+          isValid
+            ? ""
+            : `${_.notValidClassName ? _.notValidClassName : "input-not-valid"}`
         }${_.disabled && _.disabledClassName ? _.disabledClassName : ""}${
           _.className ? _.className : ""
         }`}
@@ -110,7 +111,14 @@ export const InputCheckbox = memo(
         <>
           <Wrapper className={_.wrapperClassName}>
             <Before className={_.beforeClassName} before={_.before} />
-            <Title tag="label" htmlFor={_.titleClickable ? _.id ?? `${_.name}_checkbox` : undefined} title={_.title} className={_.titleClassName} />
+            <Title
+              tag="label"
+              htmlFor={
+                _.titleClickable ? _.id ?? `${_.name}_checkbox` : undefined
+              }
+              title={_.title}
+              className={_.titleClassName}
+            />
             {input}
             <Loading
               className={_.loadingClassName}

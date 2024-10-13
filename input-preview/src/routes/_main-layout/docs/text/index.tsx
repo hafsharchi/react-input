@@ -26,12 +26,25 @@ export const TextInput = () => {
     <>
       <Input
         type="text"
-        title="First Name"
+        title="First Name *"
+        required
+        minLength={2}
         name="firstName"
-        validationOn="submit-blur-change"
+        notValidClassName="border !border-rose-500/50"
+        validationComponent={ValidationComponent}
+        validationOn="submit"
         register={useRegister}
       />
-      <div onClick={()=>submit(formData => console.log(formData))}> submit! </div>
+      <Input
+        type="text"
+        title="Last Name"
+        name="lastName"
+        validationOn="submit-blur-change"
+        register={useRegister}
+        maxLength={7}
+      />
+
+      <button onClick={() => submit((d) => alert("firstName: " + d.firstName "lastName: " + d.lastName))}> submit </button>
     </>
   );
 };
@@ -92,7 +105,9 @@ export const TextInput = () => {
               type="text"
               title="First Name *"
               required
+              minLength={2}
               name="firstName"
+              notValidClassName="border !border-rose-500/50"
               validationComponent={ValidationComponent}
               validationOn="submit"
               register={useRegister}
@@ -104,17 +119,16 @@ export const TextInput = () => {
               name="lastName"
               validationOn="submit-blur-change"
               register={useRegister}
+              maxLength={7}
             />
             <Button variant="submit" className="mx-auto mt-3" onClick={() => submit((d) => alert(`firstName: ${d.firstName}, lastName: ${d.lastName}`))}>Sumbit</Button>
           </PreviewBox>
-
-          
         </>
       ) : (
         <>
           <CodeHighlighter
             language="javascript"
-            className="text-xs rounded-lg border bg-background shrink-0 h-full w-full"
+            className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
             code={codeSnippet}
           />
         </>
@@ -144,27 +158,16 @@ export const TextInput = () => {
           <tr>
             <td>MaxLength</td>
             <td>number</td>
-            <td></td>
-            <td></td>
+            <td>-</td>
+            <td>-</td>
           </tr>
           <tr>
             <td>MinLength</td>
             <td>number</td>
-            <td></td>
-            <td></td>
+            <td>-</td>
+            <td>-</td>
           </tr>
-          <tr>
-            <td>Mask</td>
-            <td>string</td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>MaskChar</td>
-            <td>string</td>
-            <td></td>
-            <td></td>
-          </tr>
+          
         </tbody>
       </table>
     </>

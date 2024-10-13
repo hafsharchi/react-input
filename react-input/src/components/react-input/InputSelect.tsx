@@ -142,7 +142,11 @@ export const InputSelect = memo(
           defaultValue={_?.defaultValue}
           classNamePrefix={_?.classNamePrefix}
           className={`${_.disabled ? _.disabledClassName : ""} ${
-            isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
+            isValid
+              ? ""
+              : `${
+                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
+                }`
           } ${_.fullWidth ? "w-full" : ""}`}
           options={_.options}
           value={value}

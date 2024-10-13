@@ -104,7 +104,11 @@ export const InputDate = memo(
           inputClass={`${_.className ? _.className : ""} ${
             _.fullWidth ? "w-full" : ""
           } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${
-            isValid ? "" : "input-not-valid"
+            isValid
+              ? ""
+              : `${
+                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
+                }`
           }`}
           minDate={_.minDate ?? undefined}
           maxDate={_.maxDate ?? undefined}

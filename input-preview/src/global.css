@@ -159,8 +159,11 @@ body {
   th {
     @apply border p-2;
   }
+  tr{
+    @apply text-foreground/80;
+  }
 
   th {
-    @apply bg-[#ffffff05] font-black;
+    @apply bg-foreground/5 font-bold;
   }
 }

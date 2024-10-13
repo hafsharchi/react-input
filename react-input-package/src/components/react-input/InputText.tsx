@@ -125,7 +125,9 @@ export const InputText = memo(
         id={_.id}
         ref={inputRef}
         className={`${
-          isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
+          isValid
+            ? ""
+            : `${_.notValidClassName ? _.notValidClassName : "input-not-valid"}`
         }${_.disabled && _.disabledClassName ? _.disabledClassName : ""}${
           _.className ? _.className : ""
         }`}

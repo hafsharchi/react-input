@@ -24,20 +24,14 @@ export default function App({}: Props) {
   return (
     <div dir="ltr">
       <Input
-        type="select"
-        options={[
-          { label: "Default", value: 0 },
-          { label: "Input Master", value: 1 },
-        ]}
+        type="password"
+        
         name="test"
-        unstyled
         // fullWidth
         register={useRegister}
         wrapperClassName=""
         titleClassName="title"
         afterClassName="after"
-        multiple
-        classNamePrefix="filter"
         beforeClassName="before"
         loadingClassName="loading"
         validationComponent={ValidationComponent}

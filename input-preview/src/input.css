@@ -6,7 +6,7 @@
 
 .default-input-wrapper > input,
 .date-container > input {
-  @apply relative appearance-none w-full px-input outline-none h-11 pt-3 text-sm rounded-md bg-background/5 !border-foreground/15 border backdrop-blur-[2px] transition-all duration-300 ease-in-out;
+  @apply relative appearance-none w-full px-input outline-none h-11 pt-3 text-sm rounded-md bg-background/5 border-foreground/15 border backdrop-blur-[2px] transition-all duration-300 ease-in-out;
 }
 
 .default-input-wrapper > input:hover,

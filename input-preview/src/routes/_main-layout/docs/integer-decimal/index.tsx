@@ -6,15 +6,67 @@ import ValidationComponent from "../../../../ValidationComponent";
 import { Button } from "../../../../components/Button";
 import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
+import CodeHighlighter from "../../../../components/CodeHighlighter";
 
 export const Route = createFileRoute("/_main-layout/docs/integer-decimal/")({
   component: Text,
 });
 
 function Text() {
-  const { useRegister } = useInput();
+  const { useRegister, submit } = useInput();
   const [activeTab, setActiveTab] = useState<number>(0);
   const [styled, setStyled] = useState<boolean>(true);
+  const codeSnippet = `import { Input, useInput } from "input-master";
+  
+  export const TextInput = () => {
+    const { useRegister, submit } = useInput();
+    
+      
+    return (
+      <>
+        <Input
+          type="integer"
+          title="Age (integer)"
+          minValue={0}
+          maxLength={3}
+          maxValue={120}
+          name="age"
+          notValidClassName="border !border-rose-500/50"
+          validationOn="submit-blur-change"
+          register={useRegister}
+        />
+        <Input
+          type="decimal"
+          title="Percent (decimal)"
+          minValue={0}
+          maxValue={100}
+          notValidClassName="border !border-rose-500/50"
+          name="percent"
+          validationOn="submit-blur-change"
+          register={useRegister}
+        />
+        <Input
+          type="decimal"
+          title="Price (with separator)"
+          minValue={0}
+          separator=","
+          notValidClassName="border !border-rose-500/50"
+          name="price"
+          validationOn="submit-blur-change"
+          register={useRegister}
+        />
+  
+        <button 
+          onClick={() =>
+            submit((d) => alert('age: ' + d.age + ', percent: ' + d.percent + ', price: ' + d.price))
+          }
+        > 
+          submit 
+        </button>
+      </>
+    );
+  };
+  `;
   return (
     <>
       <DocsBreadcrumb page="Integer / Decimal Types" />
@@ -42,41 +94,87 @@ function Text() {
         </div>
         <div className="h-[1px] absolute bottom-[1px] bg-foreground opacity-10 w-full"></div>
       </div>
-      <PreviewBox
-        settings={
-          <div className="flex absolute left-4 top-4 gap-1">
+      {activeTab == 0 ? (
+        <>
+          <PreviewBox
+            settings={
+              <div className="flex absolute left-4 top-4 gap-1">
+                <Button
+                  active={styled}
+                  onClick={() => {
+                    setStyled(true);
+                  }}
+                >
+                  styled
+                </Button>
+                <Button
+                  active={!styled}
+                  onClick={() => {
+                    setStyled(false);
+                  }}
+                >
+                  default
+                </Button>
+              </div>
+            }
+          >
+            <Input
+              {...inputConfigs(styled)}
+              type="integer"
+              title="Age (integer)"
+              minValue={0}
+              maxLength={3}
+              maxValue={120}
+              name="age"
+              notValidClassName="border !border-rose-500/50"
+              validationComponent={ValidationComponent}
+              validationOn="submit-blur-change"
+              register={useRegister}
+            />
+            <Input
+              {...inputConfigs(styled)}
+              type="decimal"
+              title="Percent (decimal)"
+              minValue={0}
+              maxValue={100}
+              notValidClassName="border !border-rose-500/50"
+              validationComponent={ValidationComponent}
+              name="percent"
+              validationOn="submit-blur-change"
+              register={useRegister}
+            />
+            <Input
+              {...inputConfigs(styled)}
+              type="decimal"
+              title="Price (with separator)"
+              minValue={0}
+              separator=","
+              notValidClassName="border !border-rose-500/50"
+              validationComponent={ValidationComponent}
+              name="price"
+              validationOn="submit-blur-change"
+              register={useRegister}
+            />
             <Button
-              active={styled}
-              onClick={() => {
-                setStyled(true);
-              }}
+              variant="submit"
+              className="mx-auto mt-3"
+              onClick={() =>
+                submit((d) => alert(`age: ` + d.age + `, percent: ` + d.percent + `, price: ` + d.price))
+              }
             >
-              styled
+              Sumbit
             </Button>
-            <Button
-              active={!styled}
-              onClick={() => {
-                setStyled(false);
-              }}
-            >
-              default
-            </Button>
-          </div>
-        }
-      >
-        <Input
-          {...inputConfigs(styled)}
-          type="text"
-          placeholder=""
-          id="1"
-          name="mains"
-          validationOn="submit-blur-change"
-          register={useRegister}
-          title="Title"
-          loading
-          validationComponent={ValidationComponent}
-        />
-      </PreviewBox>
+          </PreviewBox>
+        </>
+      ) : (
+        <>
+          <CodeHighlighter
+            language="javascript"
+            className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
+            code={codeSnippet}
+          />
+        </>
+      )}
       <br />
       <h2>Integer Input Type</h2>
       <p>
@@ -99,7 +197,6 @@ function Text() {
           <b>Custom Separators: </b>Enhance readability by adding a separator to
           break up large numbers, for example, 1,000,000 with a , separator!
         </li>
-        
       </ul>
       <p>
         All the general input properties are also available for Integer—check
@@ -141,7 +238,7 @@ function Text() {
           </tr>
         </tbody>
       </table>
-      <hr />
+      <hr className="my-5" />
       <h2>Decimal Input Type</h2>
       <p>
         The Decimal input type lets users enter numbers with decimals, perfect

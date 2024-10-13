@@ -40,7 +40,7 @@ export const InputInteger = memo(
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current && inputRef.current.value) {
-          return inputRef.current?.value.replace(_.separator ?? "", "") ?? "";
+          return inputRef.current?.value.replaceAll(_.separator ?? "", "") ?? "";
         }
         return "";
       },
@@ -100,7 +100,7 @@ export const InputInteger = memo(
       _.customValidations?.forEach((customValidation: CustomValidation) => {
         if (
           !vCustomValidation({
-            currentValue: currentValue.replace(_.separator ?? "", ""),
+            currentValue: currentValue.replaceAll(_.separator ?? "", ""),
             setErrors: setErrors,
             customValidation: customValidation,
           })
@@ -112,7 +112,7 @@ export const InputInteger = memo(
         _.minValue != undefined &&
         _.minValue != null &&
         !vMinValue({
-          currentValue: currentValue.replace(_.separator ?? "", ""),
+          currentValue: currentValue.replaceAll(_.separator ?? "", ""),
           minValue: _.minValue,
           setErrors: setErrors,
           error: customized?.validationErrors?.minValue ?? undefined,
@@ -124,7 +124,7 @@ export const InputInteger = memo(
         _.maxValue != undefined &&
         _.maxValue != null &&
         !vMaxValue({
-          currentValue: currentValue.replace(_.separator ?? "", ""),
+          currentValue: currentValue.replaceAll(_.separator ?? "", ""),
           maxValue: _.maxValue,
           setErrors: setErrors,
           error: customized?.validationErrors?.maxValue ?? undefined,
@@ -152,7 +152,11 @@ export const InputInteger = memo(
           ref={inputRef}
           id={_.id}
           className={`${
-            isValid ? "" : `${_.notValidClassName ? "input-not-valid" : ""}`
+            isValid
+              ? ""
+              : `${
+                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
+                }`
           } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${
             _.className ? _.className : ""
           }`}

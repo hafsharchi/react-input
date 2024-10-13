@@ -160,7 +160,11 @@ export const InputPassword = memo(
           ref={inputRef}
           id={_.id}
           className={`${
-            isValid ? "" : `${_.notValidClassName ?? "input-not-valid"}`
+            isValid
+              ? ""
+              : `${
+                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
+                }`
           } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
           type={showPassword ? "text" : "password"}
           title={_.title}

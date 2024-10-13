@@ -16,7 +16,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.31",
     "highlight.js": "^11.10.0",
-    "input-master": "^0.1.13",
+    "input-master": "^0.1.14",
     "lucide-react": "^0.433.0",
     "react": "^18.3.1",
     "react-copy-to-clipboard": "^5.1.0",
