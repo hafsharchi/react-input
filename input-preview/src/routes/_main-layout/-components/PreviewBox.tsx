@@ -12,7 +12,7 @@ export default function PreviewBox({ children, settings }: Props) {
     <>
       <div className="relative flex h-[300px] w-full flex-col items-center justify-center rounded-lg border border-border bg-background">
         {settings}
-        <p className="z-10 whitespace-pre-wrap relative grid gap-3">{children}</p>
+        <p className="z-10 whitespace-pre-wrap relative grid gap-3 w-1/3">{children}</p>
         <DotPattern
           className={cn(
             "[mask-image:radial-gradient(300px_circle_at_center,white,transparent)]"

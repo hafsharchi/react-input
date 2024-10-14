@@ -15,6 +15,7 @@ import { Route as MainLayoutImport } from './routes/_main-layout'
 import { Route as MainLayoutIndexImport } from './routes/_main-layout/index'
 import { Route as MainLayoutDocsTextareaIndexImport } from './routes/_main-layout/docs/textarea/index'
 import { Route as MainLayoutDocsTextIndexImport } from './routes/_main-layout/docs/text/index'
+import { Route as MainLayoutDocsSelectIndexImport } from './routes/_main-layout/docs/select/index'
 import { Route as MainLayoutDocsPasswordIndexImport } from './routes/_main-layout/docs/password/index'
 import { Route as MainLayoutDocsIntroductionIndexImport } from './routes/_main-layout/docs/introduction/index'
 import { Route as MainLayoutDocsIntegerDecimalIndexImport } from './routes/_main-layout/docs/integer-decimal/index'
@@ -39,6 +40,11 @@ const MainLayoutDocsTextareaIndexRoute =
 
 const MainLayoutDocsTextIndexRoute = MainLayoutDocsTextIndexImport.update({
   path: '/docs/text/',
+  getParentRoute: () => MainLayoutRoute,
+} as any)
+
+const MainLayoutDocsSelectIndexRoute = MainLayoutDocsSelectIndexImport.update({
+  path: '/docs/select/',
   getParentRoute: () => MainLayoutRoute,
 } as any)
 
@@ -99,6 +105,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainLayoutDocsPasswordIndexImport
       parentRoute: typeof MainLayoutImport
     }
+    '/_main-layout/docs/select/': {
+      id: '/_main-layout/docs/select/'
+      path: '/docs/select'
+      fullPath: '/docs/select'
+      preLoaderRoute: typeof MainLayoutDocsSelectIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
     '/_main-layout/docs/text/': {
       id: '/_main-layout/docs/text/'
       path: '/docs/text'
@@ -124,6 +137,7 @@ export const routeTree = rootRoute.addChildren({
     MainLayoutDocsIntegerDecimalIndexRoute,
     MainLayoutDocsIntroductionIndexRoute,
     MainLayoutDocsPasswordIndexRoute,
+    MainLayoutDocsSelectIndexRoute,
     MainLayoutDocsTextIndexRoute,
     MainLayoutDocsTextareaIndexRoute,
   }),
@@ -147,6 +161,7 @@ export const routeTree = rootRoute.addChildren({
         "/_main-layout/docs/integer-decimal/",
         "/_main-layout/docs/introduction/",
         "/_main-layout/docs/password/",
+        "/_main-layout/docs/select/",
         "/_main-layout/docs/text/",
         "/_main-layout/docs/textarea/"
       ]
@@ -165,6 +180,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_main-layout/docs/password/": {
       "filePath": "_main-layout/docs/password/index.tsx",
+      "parent": "/_main-layout"
+    },
+    "/_main-layout/docs/select/": {
+      "filePath": "_main-layout/docs/select/index.tsx",
       "parent": "/_main-layout"
     },
     "/_main-layout/docs/text/": {

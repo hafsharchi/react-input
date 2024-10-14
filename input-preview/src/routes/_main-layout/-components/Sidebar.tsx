@@ -15,7 +15,7 @@ export default function Sidebar({ className }: Props) {
       <SidebarLink to="/docs/text">Text</SidebarLink>
       <SidebarLink to="/docs/integer-decimal">Integer / Decimal</SidebarLink>
       <SidebarLink to="/docs/d">Calendar</SidebarLink>
-      <SidebarLink to="/docs/t">Select</SidebarLink>
+      <SidebarLink to="/docs/select">Select</SidebarLink>
       <SidebarLink to="/docs/textarea">Textarea</SidebarLink>
       <SidebarLink to="/docs/password">Password</SidebarLink>
 

@@ -53,36 +53,13 @@
 /* ---------- ---------- ---------- */
 
 /** ---------- Select Styles ---------- **/
-.select {
-  position: relative;
-  border: none !important;
-  -webkit-appearance: none !important;
-  -ms-appearance: none !important;
-  -moz-appearance: none !important;
-  appearance: none !important;
-  width: 100% !important;
-  padding-left: var(--input-padding-x);
-  padding-right: var(--input-padding-x);
-  border-radius: var(--input-border-radius) !important;
-  outline: none !important;
-  font-size: 13px;
-  display: flex;
-  transition: background-size 0.1s ease;
-}
-
 /* ---------- Select's Input ---------- */
 .filter__control {
-  border-radius: var(--input-border-radius);
-  background-color: var(--input-coler);
-  padding-left: 12px;
-  padding-right: 12px;
-  height: var(--input-height);
-
-  @apply focus-within:shadow-[0_0_0_1px] focus-within:shadow-sky-600;
+  @apply relative appearance-none w-full px-input outline-none h-11 text-sm rounded-md bg-background/5 border-foreground/15 border backdrop-blur-[2px] transition-colors duration-300 ease-in-out;
 }
 
 .filter__control .filter__value-container {
-  padding-top: 12px;
+  @apply pt-3;
 }
 /* ---------- Handle title movement both on select and calendar types ---------- */
 .has-value > .default-input-title {
@@ -92,25 +69,21 @@
 /* ---------- ------------- ---------- */
 /* ---------- Select's Menu ---------- */
 .filter__menu {
-  background-color: var(--input-coler);
-  padding: 8px;
-  display: flex;
-  gap: 50px;
-  border-radius: var(--input-border-radius);
-  margin-top: 10px;
+  @apply bg-background/5 backdrop-blur-xl z-20 px-1 border rounded-md mt-1;
 }
-
-.filter__menu-list {
-  width: 100%;
-  gap: 10px;
-  display: flex;
-  flex-direction: column;
-  max-height: 370px;
+.filter__menu-portal {
+  z-index: 200!important;
 }
 
 .filter__option {
-  background-color: aqua;
-  width: 100%;
+  @apply my-1 rounded-md !text-xs text-foreground/70 font-light px-2.5 py-1.5;
+}
+
+.filter__option--is-selected {
+  @apply bg-foreground/5 text-foreground/80;
+}
+.filter__option--is-focused {
+  @apply bg-foreground/10;
 }
 /* ---------- -------------- ---------- */
 

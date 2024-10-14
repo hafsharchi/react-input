@@ -59,6 +59,9 @@ module.exports = {
       padding: {
         input: "0.7rem",
       },
+      fontSize: {
+        "2xs": "10px",
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
