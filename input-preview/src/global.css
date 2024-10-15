@@ -166,4 +166,8 @@ body {
   th {
     @apply text-foreground/40 py-1 font-light border;
   }
+
+  code{
+    @apply bg-foreground/10 dark:bg-foreground/20 px-1 text-xs rounded-md py-0.5;
+  }
 }

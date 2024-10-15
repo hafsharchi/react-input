@@ -118,11 +118,7 @@ export const Form = () => {
             <Button
               variant="submit"
               className="mx-auto mt-3"
-              onClick={() =>
-                submit((d) =>
-                  alert(`password: ${d.password}`)
-                )
-              }
+              onClick={() => submit((d) => alert(`password: ${d.password}`))}
             >
               Sumbit
             </Button>
@@ -145,17 +141,23 @@ export const Form = () => {
         user experience. It comes with all the standard features of our input
         library and can be fully customized to suit your needs!
       </p>
+      <p>
+        <b>Note: </b> To ensure a consistent design and prevent the browser's
+        default eye icon from displaying on password fields, add the following
+        CSS to your project:
+      </p>
       <CodeHighlighter
-            language="css"
-            className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
-            code={`input[type="password"]::-ms-reveal,
+        language="css"
+        className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
+        code={`input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
   display: none;
 }
 `}
-          />
+      />
       <p>
-        Below is a table of specific properties unique to the Password input type:
+        Below is a table of specific properties unique to the Password input
+        type:
       </p>
       <h2>Props</h2>
       <table className="w-full text-center text-sm">

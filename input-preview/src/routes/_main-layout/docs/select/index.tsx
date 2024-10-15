@@ -106,13 +106,13 @@ export const TextInput = () => {
               </div>
             }
           >
-             <Input
+            <Input
               {...inputConfigs(styled)}
               type="select"
               options={[
                 { label: "Blue", value: 1 },
                 { label: "Red", value: 2 },
-                { label: "Green", value: "3" }
+                { label: "Green", value: "3" },
               ]}
               name="hey"
               classNamePrefix="filter"
@@ -120,21 +120,42 @@ export const TextInput = () => {
               placeholder=""
               title="First Name *"
               required
-              notValidClassName="border !border-rose-500/50"
+              notValidClassName="select-not-valid"
               validationComponent={ValidationComponent}
               validationOn="submit"
               register={useRegister}
             />
-            {/* <Input
+            <Input
               {...inputConfigs(styled)}
-              type="text"
-              title="Last Name"
-              name="lastName"
-              validationOn="submit-blur-change"
+              type="select"
+              options={[
+                { label: "Blue", value: 1 },
+                { label: "Red", value: 2 },
+                { label: "Green", value: "3" },
+              ]}
+              name="heydd"
+              multiple
+              classNamePrefix="filter"
+              fullWidth
+              placeholder=""
+              title="First Name *"
+              required
+              notValidClassName="select-not-valid"
+              validationComponent={ValidationComponent}
+              validationOn="submit"
               register={useRegister}
-              maxLength={7}
-            /> */}
-            <Button variant="submit" className="mx-auto mt-3" onClick={() => submit((d) => alert(`firstName: ${d.firstName}, lastName: ${d.lastName}`))}>Sumbit</Button>
+            />
+            <Button
+              variant="submit"
+              className="mx-auto mt-3"
+              onClick={() =>
+                submit((d) =>
+                  alert(`firstName: ${d.firstName}, lastName: ${d.lastName}`)
+                )
+              }
+            >
+              Sumbit
+            </Button>
           </PreviewBox>
         </>
       ) : (
@@ -149,13 +170,25 @@ export const TextInput = () => {
       <br />
       <h2>Description</h2>
       <p>
-        The Text input type is perfect for capturing single-line text from
-        users, like names or short responses! It automatically includes all the
-        shared features available across our input types. If you're curious
-        about these shared properties, feel free to check them out here.
+        The Select input type provides a dropdown menu for selecting from a list
+        of options, offering a streamlined way to handle multiple-choice fields.
+        This component uses the popular <code>react-select</code> library under
+        the hood, bringing along all the powerful features and configuration
+        options that <code>react-select</code> provides.
       </p>
       <p>
-        Below is a table of specific properties unique to the Text input type:
+        With the Select input, you get the best of both worlds: all the
+        customization and accessibility enhancements from{" "}
+        <code>react-select</code> , combined with the added flexibility and
+        features of our input library. You can apply any{" "}
+        <code>react-select</code> prop to the Select input, along with our
+        library's unique props, giving you a highly customizable and efficient
+        selection component.
+      </p>
+      <p>
+        Explore the full range of options available in react-select here, and
+        refer to our Common Props Documentation for additional customization
+        options provided by our library.
       </p>
       <h2>Props</h2>
       <table className="w-full text-center text-sm rounded-lg  border-1 border-red-400">
@@ -180,7 +213,6 @@ export const TextInput = () => {
             <td>-</td>
             <td>-</td>
           </tr>
-          
         </tbody>
       </table>
     </>
