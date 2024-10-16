@@ -58,7 +58,7 @@
   @apply !border-rose-500/50 border;
 }
 .filter__control {
-  @apply relative appearance-none w-full px-input outline-none h-11 text-sm rounded-md bg-background/5 border-foreground/15 border backdrop-blur-[2px] transition-colors duration-300 ease-in-out;
+  @apply relative appearance-none w-full px-input outline-none !min-h-11 text-sm rounded-md bg-background/5 border-foreground/15 border backdrop-blur-[2px] transition-colors duration-300 ease-in-out;
 }
 
 .filter__control .filter__value-container {

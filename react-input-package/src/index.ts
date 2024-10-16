@@ -18,10 +18,11 @@ export {
   Type,
   ValidationComponentProps,
   ValidationPatterns,
-  ComponentDescriptor
+  ComponentDescriptor,
 } from "./components/types";
 export { useInput } from "./components/useInput";
 export { useOnClickOutside } from "./components/useOutside";
 export { VALIDATION_ERROR } from "./constants";
 export * from "./utils";
 export { ReactInputContext, ReactInputProvider } from "./contexts";
+export { components } from "react-select";
