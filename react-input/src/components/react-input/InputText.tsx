@@ -131,7 +131,7 @@ export const InputText = memo(
         }${_.disabled && _.disabledClassName ? _.disabledClassName : ""}${
           _.className ? _.className : ""
         }`}
-        type="text"
+        // type="text"
         title={_.title}
         placeholder={_?.placeholder ?? ""}
         onChange={(e) => onChange(e)}

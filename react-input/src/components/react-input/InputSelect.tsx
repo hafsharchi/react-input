@@ -76,6 +76,7 @@ export const InputSelect = memo(
     }));
 
     const onChange = (e?: any) => {
+      console.log(e);
       setHasChanged(true);
       if (_.onChange) _.onChange(e);
       setValue(e);
@@ -128,19 +129,46 @@ export const InputSelect = memo(
 
       return res;
     };
+
+    const {
+      portal,
+      disabled,
+      disabledClassName,
+      onChange: _onChange,
+      onBlur: _onBlur,
+      onInputChange,
+      register,
+      name,
+      type,
+      after,
+      afterClassName,
+      before,
+      beforeClassName,
+      className,
+      title,
+      titleClassName,
+      loading,
+      loadingClassName,
+      loadingObject,
+      multiple,
+      fullWidth,
+      componentStructure,
+      wrapperClassName,
+      validationComponent,
+      validationOn,
+      notValidClassName,
+      ...rest
+    } = _;
     const input: React.ReactNode = (
       <>
         <ReactSelect
-          unstyled={_.unstyled}
           onInputChange={(e) => {
             setInputValue(e);
-            if (_.onInputChange) _.onInputChange;
+            if (onInputChange) onInputChange;
           }}
           menuPortalTarget={_.portal}
           ref={inputRef}
           isDisabled={_.disabled}
-          defaultValue={_?.defaultValue}
-          classNamePrefix={_?.classNamePrefix}
           className={`${_.disabled ? _.disabledClassName : ""} ${
             isValid
               ? ""
@@ -148,12 +176,11 @@ export const InputSelect = memo(
                   _.notValidClassName ? _.notValidClassName : "input-not-valid"
                 }`
           } ${_.fullWidth ? "w-full" : ""}`}
-          options={_.options}
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          // isMulti={_.multiple}
-          {..._}
+          isMulti={_.multiple}
+          {...rest}
         />
       </>
     );

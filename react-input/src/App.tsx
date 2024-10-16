@@ -30,7 +30,7 @@ export default function App({}: Props) {
           { label: "3", value: "3" },
         ]}
         name="test"
-        disabled
+        // disabled
         // fullWidth
         register={useRegister}
         wrapperClassName=""
