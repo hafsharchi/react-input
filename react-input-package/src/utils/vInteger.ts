@@ -8,7 +8,7 @@ type VInteger = {
 export const vInteger = ({ ref }: VInteger) => {
   if (ref.current) {
     let value = ref.current.value;
-    value = value.replace(/[^0-9-]/g, "");
+    value = value.replaceAll(/[^0-9-]/g, "");
 
     ref.current.value = handleNegative(value);
   }

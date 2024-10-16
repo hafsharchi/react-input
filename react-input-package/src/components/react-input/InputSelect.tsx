@@ -132,13 +132,13 @@ export const InputSelect = memo(
       <>
         <ReactSelect
           unstyled={_.unstyled}
-          onInputChange={(e: any) => setInputValue(e)}
+          onInputChange={(e) => {
+            setInputValue(e);
+            if (_.onInputChange) _.onInputChange;
+          }}
           menuPortalTarget={_.portal}
           ref={inputRef}
           isDisabled={_.disabled}
-          noOptionsMessage={() => _.noOptionsMessage}
-          id={_.id}
-          placeholder={_.placeholder}
           defaultValue={_?.defaultValue}
           classNamePrefix={_?.classNamePrefix}
           className={`${_.disabled ? _.disabledClassName : ""} ${
@@ -152,10 +152,8 @@ export const InputSelect = memo(
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          isMulti={_.multiple}
-          menuIsOpen={_.menuIsOpen}
-          isOptionDisabled={_.isOptionDisabled}
-          isOptionSelected={_.isOptionSelected}
+          // isMulti={_.multiple}
+          {..._}
         />
       </>
     );

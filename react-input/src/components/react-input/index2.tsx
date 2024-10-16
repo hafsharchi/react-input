@@ -68,103 +68,31 @@ export const Input = memo(
 
     switch (_.type) {
       case "text":
-        return (
-          <InputText
-            {...baseInput}
-            mask={_.mask}
-            maskChar={_.maskChar}
-            maxLength={_.maxLength}
-            minLength={_.minLength}
-            type="text"
-          />
-        );
+        return <InputText {...baseInput} {..._} />;
 
       case "decimal":
-        return (
-          <InputDecimal
-            {...baseInput}
-            maxValue={_.maxValue}
-            minValue={_.minValue}
-            separator={_.separator}
-            type="decimal"
-          />
-        );
+        return <InputDecimal {...baseInput} {..._} />;
       case "integer":
-        return (
-          <InputInteger
-            {...baseInput}
-            maxValue={_.maxValue}
-            minValue={_.minValue}
-            separator={_.separator}
-            maxLength={_.maxLength}
-            minLength={_.minLength}
-            type="integer"
-          />
-        );
+        return <InputInteger {...baseInput} {..._} />;
       case "calendar":
-        return (
-          <InputDate
-            locale={_?.locale}
-            minDate={_?.minDate}
-            maxDate={_?.maxDate}
-            onlyMonth={_?.onlyMonth}
-            range={_?.range}
-            separator={_?.separator}
-            dateSeparator={_?.dateSeparator}
-            format={_?.format}
-            class={_?.class}
-            fullWidth={_?.fullWidth}
-            {...baseInput}
-            type="calendar"
-            portal={_?.portal}
-            editable={_?.editable ?? false}
-          />
-        );
+        return <InputDate {...baseInput} {..._} />;
 
       case "select":
-        return (
-          <InputSelect
-            {...baseInput}
-            type="select"
-            options={_.options}
-            classNamePrefix={_.classNamePrefix}
-            multiple={_?.multiple}
-            fullWidth={_?.fullWidth}
-            portal={_?.portal}
-            noOptionsMessage={_?.noOptionsMessage}
-            unstyled={_?.unstyled}
-            menuIsOpen={_?.menuIsOpen}
-            isOptionDisabled={_.isOptionDisabled}
-            isOptionSelected={_.isOptionSelected}
-          />
-        );
+        return <InputSelect {...baseInput} {..._} />;
       case "password":
-        return (
-          <InputPassword
-            {...baseInput}
-            maxLength={_.maxLength}
-            minLength={_.minLength}
-            showIcon={_.showIcon}
-            hideIcon={_.hideIcon}
-            togglePasswordVisibilityClassName={
-              _.togglePasswordVisibilityClassName
-            }
-            type="password"
-          />
-        );
+        return <InputPassword {...baseInput} {..._} />;
 
       case "textarea":
-        return (
-          <InputTextArea
-            {...baseInput}
-            type="textarea"
-            maxLength={_.maxLength}
-            minLength={_.minLength}
-          />
-        );
+        return <InputTextArea {...baseInput} {..._} />;
 
       case "checkbox":
-        return <InputCheckbox titleClickable={_.titleClickable} {...baseInput} type="checkbox" />;
+        return (
+          <InputCheckbox
+            titleClickable={_.titleClickable}
+            {...baseInput}
+            type="checkbox"
+          />
+        );
 
       default:
         return <InputText {...baseInput} type="text" />;

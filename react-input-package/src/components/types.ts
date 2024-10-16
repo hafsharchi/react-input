@@ -2,6 +2,7 @@
 
 import React from "react";
 import { GroupBase, OptionsOrGroups } from "react-select";
+import { Props as SelectProps } from "react-select";
 
 export type ValidationPatterns = "email" | "website" | string;
 
@@ -92,19 +93,13 @@ export type Calendar = BaseInput & {
   editable?: boolean;
 };
 
-export type Select = BaseInput & {
-  type: "select";
-  options: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined;
-  multiple?: boolean;
-  classNamePrefix?: string;
-  fullWidth?: boolean;
-  noOptionsMessage?: any;
-  portal?: any;
-  menuIsOpen?: boolean;
-  unstyled?: boolean;
-  isOptionDisabled?: any;
-  isOptionSelected?: any;
-};
+export type Select = BaseInput &
+  Omit<SelectProps, "isDisabled" | "isMulti" | "defaultValue" | "value"> & {
+    type: "select";
+    multiple?: boolean;
+    fullWidth?: boolean;
+    portal?: any;
+  };
 
 export type Textarea = BaseInput & {
   type: "textarea";

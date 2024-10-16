@@ -8,7 +8,7 @@ type VDecimal = {
 export const vDecimal = ({ ref }: VDecimal) => {
   if (ref.current) {
     let value = ref.current.value;
-    value = value.replace(/[^0-9-.]/g, "");
+    value = value.replaceAll(/[^0-9-.]/g, "");
 
     let splittedValue = value.split(".");
     const dotCount = splittedValue.length - 1;
@@ -19,7 +19,7 @@ export const vDecimal = ({ ref }: VDecimal) => {
         splittedValue
           .splice(1, splittedValue.length)
           .join("")
-          .replace(/,/g, "");
+          .replaceAll(/,/g, "");
     }
 
     ref.current.value = handleNegative(value);

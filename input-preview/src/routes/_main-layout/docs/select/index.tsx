@@ -133,11 +133,10 @@ export const TextInput = () => {
                 { label: "Red", value: 2 },
                 { label: "Green", value: "3" },
               ]}
+              placeholder=""
               name="heydd"
               multiple
-              classNamePrefix="filter"
               fullWidth
-              placeholder=""
               title="First Name *"
               required
               notValidClassName="select-not-valid"

@@ -24,9 +24,13 @@ export default function App({}: Props) {
   return (
     <div dir="ltr">
       <Input
-        type="password"
-        
+        type="select"
+        options={[
+          { label: "3", value: "1" },
+          { label: "3", value: "3" },
+        ]}
         name="test"
+        disabled
         // fullWidth
         register={useRegister}
         wrapperClassName=""
@@ -37,6 +41,7 @@ export default function App({}: Props) {
         validationComponent={ValidationComponent}
         validationOn="submit"
         required
+        
         className="input"
         title="Hello hdsjfk"
       />

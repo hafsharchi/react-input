@@ -61,7 +61,6 @@ export const inputConfigs = (styled: boolean) => {
   return {
     fullWidth: true,
     unstyled: true,
-    classNamePrefix: "default-input-select",
     loadingClassName: "default-input-loading",
     disabledClassName: "default-input-disabled",
     wrapperClassName: "default-input-wrapper",
@@ -70,6 +69,7 @@ export const inputConfigs = (styled: boolean) => {
     beforeClassName: "default-input-before",
     titleClassName: "default-input-title",
     componentStructure: cs,
+    classNamePrefix:"filter",
     validationOn: "submit",
     portal: document.querySelector("body"),
   };
