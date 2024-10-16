@@ -137,7 +137,7 @@ body {
 
 @layer base {
   * {
-    @apply border-border leading-loose;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground font-geist font-normal

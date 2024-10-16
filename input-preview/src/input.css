@@ -203,7 +203,120 @@
   font-size: 0.75rem;
 }
 
+.filter__multi-value {
+  @apply bg-foreground/10 gap-1 pl-1 h-min text-2xs rounded-md leading-none;
+}
+
+.filter__value-container--is-multi{
+  @apply gap-1 mt-1 leading-none !items-start;
+}
+
+.filter__multi-value__label {
+  @apply content-center py-0.5 leading-none pt-1;
+}
+
+.filter__multi-value__remove{
+  @apply bg-foreground/5 hover:bg-foreground/10 transition-colors px-1 py-0.5 rounded-r-md;
+}
+
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear {
   display: none;
+}
+
+
+
+
+
+
+
+
+
+/* *______________________________________________________________________________ */
+/* *______________________________________________________________________________ */
+/* *______________________________________________________________________________ */
+/* *______________________________________________________________________________ */
+/* *______________________________________________________________________________ */
+
+
+.rmdp-wrapper{
+  @apply bg-background/5 !text-foreground rounded-md backdrop-blur-sm border;
+}
+.rmdp-header-values{
+  @apply text-foreground;
+}
+.rmdp-arrow-container{
+  @apply fill-foreground;
+}
+.rmdp-shadow{
+  @apply !shadow-none;
+}
+
+
+
+.rmdp-panel-body li {
+  @apply bg-red-500;
+}
+
+.rmdp-week-day {
+  @apply bg-blue-500;
+}
+
+.rmdp-day.rmdp-deactive {
+  @apply bg-green-500;
+}
+
+.rmdp-range {
+  @apply bg-yellow-500;
+
+}
+
+.rmdp-arrow {
+  @apply border border-red-500;
+  border-width: 0 1px 1px 0;
+
+}
+
+.rmdp-arrow-container:hover {
+  @apply bg-yellow-500;
+
+}
+
+.rmdp-panel-body::-webkit-scrollbar-thumb {
+  @apply bg-cyan-500;
+}
+
+.rmdp-day.rmdp-today span {
+  @apply bg-rose-600;
+}
+
+.rmdp-rtl .rmdp-panel {
+  @apply border-r border-green-400;
+
+}
+
+.rmdp-day.rmdp-selected span:not(.highlight) {
+  @apply bg-rose-900;
+
+}
+
+.rmdp-day:not(.rmdp-day-hidden) span:hover {
+  @apply bg-green-900;
+}
+
+.b-deselect {
+  @apply bg-green-900;
+
+}
+
+.rmdp-action-button {
+  color: var(--rmdp-primary-red);
+}
+
+.rmdp-button:not(.rmdp-action-button) {
+  background-color: var(--rmdp-primary-red);
+}
+
+.rmdp-button:not(.rmdp-action-button):hover {
+  background-color: var(--rmdp-deselect-red);
 }

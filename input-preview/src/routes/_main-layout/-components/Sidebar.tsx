@@ -14,7 +14,7 @@ export default function Sidebar({ className }: Props) {
       <h1 className="font-semibold text-foreground mt-4">Types</h1>
       <SidebarLink to="/docs/text">Text</SidebarLink>
       <SidebarLink to="/docs/integer-decimal">Integer / Decimal</SidebarLink>
-      <SidebarLink to="/docs/d">Calendar</SidebarLink>
+      <SidebarLink to="/docs/calendar">Calendar</SidebarLink>
       <SidebarLink to="/docs/select">Select</SidebarLink>
       <SidebarLink to="/docs/textarea">Textarea</SidebarLink>
       <SidebarLink to="/docs/password">Password</SidebarLink>
