@@ -98,7 +98,7 @@ export const InputDate = memo(
           disabled={_.disabled == true ? true : false}
           value={value}
           placeholder={_.placeholder}
-          calendar={persian}
+          calendar={_?.locale == "persian" ? persian : undefined}
           locale={_?.locale == "persian" ? persian_fa : undefined}
           onOpenPickNewDate={false}
           inputClass={`${_.className ? _.className : ""} ${
@@ -130,7 +130,7 @@ export const InputDate = memo(
         <>
           <Wrapper
             className={`${_.wrapperClassName} ${
-              value && value != "" ? "value" : ""
+              value && value != "" ? "has-value" : ""
             } `}
           >
             <Before className={_.beforeClassName} before={_.before} />
@@ -153,7 +153,7 @@ export const InputDate = memo(
       _.title,
       _.before,
       _.after,
-      `${_.wrapperClassName} ${value && value != "" ? "value" : ""} `,
+      `${_.wrapperClassName} ${value && value != "" ? "has-value" : ""} `,
       _.beforeClassName,
       _.loadingClassName,
       _.titleClassName,
