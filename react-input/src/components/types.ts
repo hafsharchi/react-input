@@ -97,6 +97,7 @@ export type Select = BaseInput &
   Omit<SelectProps, "isDisabled" | "isMulti" | "defaultValue" | "value"> & {
     type: "select";
     multiple?: boolean;
+    disabled?: boolean;
     fullWidth?: boolean;
     portal?: any;
   };

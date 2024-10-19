@@ -105,19 +105,19 @@ export const Form = () => {
               {...inputConfigs(styled)}
               type="calendar"
               locale="english"
-              title="Password *"
+              title="Date *"
               required
-              name="password"
-              className="pr-5"
+              name="date"
               notValidClassName="border !border-rose-500/50"
               validationComponent={ValidationComponent}
               validationOn="submit"
               register={useRegister}
             />
+            
             <Button
               variant="submit"
               className="mx-auto mt-3"
-              onClick={() => submit((d) => alert(`password: ${d.password}`))}
+              onClick={() => submit((d) => alert(`date: ${d.date}`))}
             >
               Sumbit
             </Button>
@@ -135,27 +135,44 @@ export const Form = () => {
       <br />
       <h2>Description</h2>
       <p>
-        The Password input type is ideal for securely capturing sensitive
-        information, like passwords, with options to toggle visibility for easy
-        user experience. It comes with all the standard features of our input
-        library and can be fully customized to suit your needs!
+        The Calendar input type provides a user-friendly interface for selecting
+        dates and is perfect for date-specific fields like birthdates,
+        appointment scheduling, or event planning. This component leverages the
+        powerful <code>react-multidate-picker</code> library, ensuring smooth
+        performance and a wide range of features for date picking and
+        customization.
       </p>
       <p>
-        <b>Note: </b> To ensure a consistent design and prevent the browser's
-        default eye icon from displaying on password fields, add the following
-        CSS to your project:
+        While the Calendar input supports most features from
+        <code>react-multidate-picker</code>, we’re continuously enhancing it,
+        and some additional features will be included in future updates.
+        However, all key functionalities are already in place, making it fully
+        usable and customizable in your current projects.
       </p>
-      <CodeHighlighter
-        language="css"
-        className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
-        code={`input[type="password"]::-ms-reveal,
-input[type="password"]::-ms-clear {
-  display: none;
-}
-`}
-      />
+
       <p>
-        Below is a table of specific properties unique to the Password input
+        One standout feature of the Calendar input is its support for multiple
+        calendar types, including English (Gregorian), Persian, Arabic and Hindi
+        calendars. This makes it a highly versatile solution for applications
+        that need to cater to different regions and languages.
+      </p>
+
+      <p>
+        In addition to all the features of <code>react-multidate-picker</code>,
+        we’ve integrated our library’s BaseProps, so you can take full advantage
+        of customization, validation, and styling options provided by our
+        system. This ensures consistency across all your input components.
+      </p>
+
+      <p>
+        For a full list of the supported features and configurations, refer to
+        the <code>react-multidate-picker</code> documentation, as our Calendar
+        input retains most of these features while adding our library’s extended
+        capabilities.
+      </p>
+      
+      <p>
+        Below is a table of specific properties unique to the Calendar input
         type:
       </p>
       <h2>Props</h2>
@@ -168,6 +185,11 @@ input[type="password"]::-ms-clear {
           </tr>
         </thead>
         <tbody className="font-light">
+          <tr>
+            <td colSpan={3}>
+              Including All Base Props And these specific props:
+            </td>
+          </tr>
           <tr>
             <td>showIcon</td>
             <td className="whitespace-nowrap">React Node</td>

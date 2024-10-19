@@ -76,7 +76,6 @@ export const InputSelect = memo(
     }));
 
     const onChange = (e?: any) => {
-      console.log(e);
       setHasChanged(true);
       if (_.onChange) _.onChange(e);
       setValue(e);

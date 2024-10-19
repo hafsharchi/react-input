@@ -63,6 +63,7 @@ export const InputDate = memo(
         setValue(newValue);
       },
       checkValidation: () => {
+        setIsValid(checkValidation(value));
         return checkValidation(value);
       },
     }));
@@ -87,8 +88,10 @@ export const InputDate = memo(
         })
       )
         res = false;
+
       return res;
     };
+    
     const input: React.ReactNode = (
       <>
         <DatePicker
@@ -103,7 +106,9 @@ export const InputDate = memo(
           onOpenPickNewDate={false}
           inputClass={`${_.className ? _.className : ""} ${
             _.fullWidth ? "w-full" : ""
-          } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${
+          } dsds ${
+            _.disabled && _.disabledClassName ? _.disabledClassName : ""
+          } ${
             isValid
               ? ""
               : `${

@@ -143,7 +143,7 @@ export const TextInput = () => {
               components={{
                 DropdownIndicator,
                 ClearIndicator,
-                MultiValueRemove
+                MultiValueRemove,
               }}
               placeholder=""
               name="heydd"
@@ -183,23 +183,37 @@ export const TextInput = () => {
       <p>
         The Select input type provides a dropdown menu for selecting from a list
         of options, offering a streamlined way to handle multiple-choice fields.
-        This component uses the popular <code>react-select</code> library under
+        This component uses the popular<code>react-select</code>library under
         the hood, bringing along all the powerful features and configuration
-        options that <code>react-select</code> provides.
+        options that<code>react-select</code>provides.
       </p>
       <p>
         With the Select input, you get the best of both worlds: all the
         customization and accessibility enhancements from
-        <code>react-select</code> , combined with the added flexibility and
+        <code>react-select</code>, combined with the added flexibility and
         features of our input library. You can apply any
-        <code>react-select</code> prop to the Select input, along with our
+        <code>react-select</code>prop to the Select input, along with our
         library's unique props, giving you a highly customizable and efficient
         selection component.
       </p>
       <p>
-        Explore the full range of options available in react-select here, and
-        refer to our Common Props Documentation for additional customization
-        options provided by our library.
+        Explore the full range of options available in<code>react-select</code>
+        here, and refer to our Base Props Documentation for additional
+        customization options provided by our library. However, due to some
+        conflicts with our library’s BaseProps, a few key props are slightly
+        different. These props have been adjusted to align with our library's
+        conventions:
+        <ul>
+          <li>
+            multiple: similar to isMulti in<code>react-select</code>
+          </li>
+          <li>
+            disabled: similar to isDisabled in<code>react-select</code>
+          </li>
+          <li>
+            portal: similar to menuPortalTarget<code>react-select</code>
+          </li>
+        </ul>
       </p>
       <h2>Props</h2>
       <table className="w-full text-center text-sm rounded-lg  border-1 border-red-400">
@@ -250,7 +264,7 @@ const ClearIndicator = (props: any) => {
   return (
     components.ClearIndicator && (
       <components.ClearIndicator {...props}>
-        <X strokeWidth={0.8} size={18}/>
+        <X strokeWidth={0.8} size={18} />
       </components.ClearIndicator>
     )
   );
@@ -261,7 +275,7 @@ const MultiValueRemove = (props: any) => {
   return (
     components.MultiValueRemove && (
       <components.MultiValueRemove {...props}>
-        <X strokeWidth={1} size={15} className="cursor-pointer"/>
+        <X strokeWidth={1} size={15} className="cursor-pointer" />
       </components.MultiValueRemove>
     )
   );
