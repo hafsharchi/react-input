@@ -25,28 +25,46 @@ export const TextInput = () => {
   return (
     <>
       <Input
-        type="text"
-        title="First Name *"
+        type="select"
+        options={[
+          { label: "Blue", value: 1 },
+          { label: "Red", value: 2 },
+          { label: "Green", value: 3 },
+        ]}
+        name="color"
+        classNamePrefix="filter"
+        fullWidth
+        placeholder=""
+        title="Color *"
         required
-        minLength={2}
-        name="firstName"
-        notValidClassName="border !border-rose-500/50"
+        notValidClassName="select-not-valid"
         validationComponent={ValidationComponent}
         validationOn="submit"
         register={useRegister}
       />
       <Input
-        type="text"
-        title="Last Name"
-        name="lastName"
-        validationOn="submit-blur-change"
+        type="select"
+        options={[
+          { label: "Blue", value: 1 },
+          { label: "Red", value: 2 },
+          { label: "Green", value: 3 },
+        ]}
+        name="colors"
+        classNamePrefix="filter"
+        fullWidth
+        placeholder=""
+        title="Colors *"
+        multiple
+        required
+        notValidClassName="select-not-valid"
+        validationComponent={ValidationComponent}
+        validationOn="submit"
         register={useRegister}
-        maxLength={7}
       />
       <button
         onClick={() =>
           submit((formData) => // automatically checks validation and if is valid:
-            alert("firstName: " + formData.firstName + "lastName: " + formData.lastName)
+            alert('color:' + formData.color.value + 'colors:' + formData.colors.map(c => c.value))
           )
         }
       >
@@ -113,13 +131,13 @@ export const TextInput = () => {
               options={[
                 { label: "Blue", value: 1 },
                 { label: "Red", value: 2 },
-                { label: "Green", value: "3" },
+                { label: "Green", value: 3 },
               ]}
-              name="hey"
+              name="color"
               classNamePrefix="filter"
               fullWidth
               placeholder=""
-              title="First Name *"
+              title="Color *"
               required
               notValidClassName="select-not-valid"
               validationComponent={ValidationComponent}
@@ -136,9 +154,7 @@ export const TextInput = () => {
               options={[
                 { label: "Blue", value: 1 },
                 { label: "Red", value: 2 },
-                { label: "Green", value: "3" },
-                { label: "Green", value: "4" },
-                { label: "Green", value: "5" },
+                { label: "Green", value: 3 },
               ]}
               components={{
                 DropdownIndicator,
@@ -146,10 +162,10 @@ export const TextInput = () => {
                 MultiValueRemove,
               }}
               placeholder=""
-              name="heydd"
+              name="colors"
               multiple
               fullWidth
-              title="First Name *"
+              title="Colors *"
               required
               notValidClassName="select-not-valid"
               validationComponent={ValidationComponent}
@@ -161,7 +177,9 @@ export const TextInput = () => {
               className="mx-auto mt-3"
               onClick={() =>
                 submit((d) =>
-                  alert(`firstName: ${d.firstName}, lastName: ${d.lastName}`)
+                  alert(
+                    `color: ${d.color.value}, colors: ${d.colors.map((c: any) => c.value)}`
+                  )
                 )
               }
             >

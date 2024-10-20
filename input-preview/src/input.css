@@ -58,12 +58,16 @@
   @apply !border-rose-500/50 border;
 }
 .filter__control {
-  @apply relative appearance-none w-full px-input outline-none !min-h-11 text-sm rounded-md bg-background/5 border-foreground/15 border backdrop-blur-[2px] transition-colors duration-300 ease-in-out;
+  @apply relative appearance-none hover:bg-foreground/5 w-full px-input outline-none !min-h-11 text-sm rounded-md bg-background/5 border-foreground/15 border backdrop-blur-[2px] transition-all duration-300 ease-in-out;
 }
 
+.filter__control--is-focused {
+  @apply bg-foreground/5 border-opacity-25 transition-all duration-300;
+}
 .filter__control .filter__value-container {
   @apply pt-3;
 }
+
 /* ---------- Handle title movement both on select and calendar types ---------- */
 .has-value > .default-input-title {
   top: 11px;
@@ -72,7 +76,7 @@
 /* ---------- ------------- ---------- */
 /* ---------- Select's Menu ---------- */
 .filter__menu {
-  @apply bg-background/5 backdrop-blur-xl z-20 px-1 border rounded-md mt-1;
+  @apply bg-foreground/[0.01] backdrop-blur-xl z-20 px-1 border rounded-md mt-1;
 }
 .filter__menu-portal {
   z-index: 200!important;
@@ -224,20 +228,11 @@ input[type="password"]::-ms-clear {
   display: none;
 }
 
-
-
-
-
-
-
-
-
 /* *______________________________________________________________________________ */
 /* *______________________________________________________________________________ */
 /* *______________________________________________________________________________ */
 /* *______________________________________________________________________________ */
 /* *______________________________________________________________________________ */
-
 
 .rmdp-wrapper{
   @apply bg-foreground/[0.01] dark:bg-foreground/[0.03] !text-foreground rounded-md backdrop-blur-lg border;
@@ -302,7 +297,6 @@ input[type="password"]::-ms-clear {
   @apply bg-background/5;
 }
 
-
 .rmdp-day-picker[data-active="false"] {
   opacity: 0;
 }
@@ -310,5 +304,4 @@ input[type="password"]::-ms-clear {
 
 .b-deselect {
   @apply bg-green-900;
-
 }

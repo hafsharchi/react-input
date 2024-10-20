@@ -20,10 +20,10 @@ export default function Sidebar({ className }: Props) {
       <SidebarLink to="/docs/password">Password</SidebarLink>
 
       <h1 className="font-semibold text-foreground mt-4">Validation</h1>
-      <SidebarLink to="/">Validation Component</SidebarLink>
-      <SidebarLink to="/">Custom Validations</SidebarLink>
-      <SidebarLink to="/">Set default validation errors</SidebarLink>
-      <SidebarLink to="/">Validation on</SidebarLink>
+      <SidebarLink to="/docs/validation-component">Validation Component</SidebarLink>
+      <SidebarLink to="/docs/custom-validations">Custom Validations</SidebarLink>
+      <SidebarLink to="/docs/validation-defaults">Validation defaults</SidebarLink>
+      <SidebarLink to="/docs/validation-on">Validation on</SidebarLink>
 
       <h1 className="font-semibold text-foreground mt-4">Other Features</h1>
       <SidebarLink to="/">Styling</SidebarLink>

@@ -56,8 +56,8 @@ const checkboxCs: ComponentDescriptor = {
   ],
 };
 
-export const inputConfigs = (styled: boolean) => {
-  if (!styled) return {};
+export const inputConfigs = (styled?: boolean) => {
+  if (styled == false) return {};
   return {
     fullWidth: true,
     unstyled: true,

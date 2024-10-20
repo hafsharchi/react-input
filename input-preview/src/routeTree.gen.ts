@@ -13,12 +13,16 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as MainLayoutImport } from './routes/_main-layout'
 import { Route as MainLayoutIndexImport } from './routes/_main-layout/index'
+import { Route as MainLayoutDocsValidationOnIndexImport } from './routes/_main-layout/docs/validation-on/index'
+import { Route as MainLayoutDocsValidationDefaultsIndexImport } from './routes/_main-layout/docs/validation-defaults/index'
+import { Route as MainLayoutDocsValidationComponentIndexImport } from './routes/_main-layout/docs/validation-component/index'
 import { Route as MainLayoutDocsTextareaIndexImport } from './routes/_main-layout/docs/textarea/index'
 import { Route as MainLayoutDocsTextIndexImport } from './routes/_main-layout/docs/text/index'
 import { Route as MainLayoutDocsSelectIndexImport } from './routes/_main-layout/docs/select/index'
 import { Route as MainLayoutDocsPasswordIndexImport } from './routes/_main-layout/docs/password/index'
 import { Route as MainLayoutDocsIntroductionIndexImport } from './routes/_main-layout/docs/introduction/index'
 import { Route as MainLayoutDocsIntegerDecimalIndexImport } from './routes/_main-layout/docs/integer-decimal/index'
+import { Route as MainLayoutDocsCustomValidationsIndexImport } from './routes/_main-layout/docs/custom-validations/index'
 import { Route as MainLayoutDocsCalendarIndexImport } from './routes/_main-layout/docs/calendar/index'
 
 // Create/Update Routes
@@ -32,6 +36,24 @@ const MainLayoutIndexRoute = MainLayoutIndexImport.update({
   path: '/',
   getParentRoute: () => MainLayoutRoute,
 } as any)
+
+const MainLayoutDocsValidationOnIndexRoute =
+  MainLayoutDocsValidationOnIndexImport.update({
+    path: '/docs/validation-on/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any)
+
+const MainLayoutDocsValidationDefaultsIndexRoute =
+  MainLayoutDocsValidationDefaultsIndexImport.update({
+    path: '/docs/validation-defaults/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any)
+
+const MainLayoutDocsValidationComponentIndexRoute =
+  MainLayoutDocsValidationComponentIndexImport.update({
+    path: '/docs/validation-component/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any)
 
 const MainLayoutDocsTextareaIndexRoute =
   MainLayoutDocsTextareaIndexImport.update({
@@ -67,6 +89,12 @@ const MainLayoutDocsIntegerDecimalIndexRoute =
     getParentRoute: () => MainLayoutRoute,
   } as any)
 
+const MainLayoutDocsCustomValidationsIndexRoute =
+  MainLayoutDocsCustomValidationsIndexImport.update({
+    path: '/docs/custom-validations/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any)
+
 const MainLayoutDocsCalendarIndexRoute =
   MainLayoutDocsCalendarIndexImport.update({
     path: '/docs/calendar/',
@@ -96,6 +124,13 @@ declare module '@tanstack/react-router' {
       path: '/docs/calendar'
       fullPath: '/docs/calendar'
       preLoaderRoute: typeof MainLayoutDocsCalendarIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
+    '/_main-layout/docs/custom-validations/': {
+      id: '/_main-layout/docs/custom-validations/'
+      path: '/docs/custom-validations'
+      fullPath: '/docs/custom-validations'
+      preLoaderRoute: typeof MainLayoutDocsCustomValidationsIndexImport
       parentRoute: typeof MainLayoutImport
     }
     '/_main-layout/docs/integer-decimal/': {
@@ -140,6 +175,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainLayoutDocsTextareaIndexImport
       parentRoute: typeof MainLayoutImport
     }
+    '/_main-layout/docs/validation-component/': {
+      id: '/_main-layout/docs/validation-component/'
+      path: '/docs/validation-component'
+      fullPath: '/docs/validation-component'
+      preLoaderRoute: typeof MainLayoutDocsValidationComponentIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
+    '/_main-layout/docs/validation-defaults/': {
+      id: '/_main-layout/docs/validation-defaults/'
+      path: '/docs/validation-defaults'
+      fullPath: '/docs/validation-defaults'
+      preLoaderRoute: typeof MainLayoutDocsValidationDefaultsIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
+    '/_main-layout/docs/validation-on/': {
+      id: '/_main-layout/docs/validation-on/'
+      path: '/docs/validation-on'
+      fullPath: '/docs/validation-on'
+      preLoaderRoute: typeof MainLayoutDocsValidationOnIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
   }
 }
 
@@ -149,12 +205,16 @@ export const routeTree = rootRoute.addChildren({
   MainLayoutRoute: MainLayoutRoute.addChildren({
     MainLayoutIndexRoute,
     MainLayoutDocsCalendarIndexRoute,
+    MainLayoutDocsCustomValidationsIndexRoute,
     MainLayoutDocsIntegerDecimalIndexRoute,
     MainLayoutDocsIntroductionIndexRoute,
     MainLayoutDocsPasswordIndexRoute,
     MainLayoutDocsSelectIndexRoute,
     MainLayoutDocsTextIndexRoute,
     MainLayoutDocsTextareaIndexRoute,
+    MainLayoutDocsValidationComponentIndexRoute,
+    MainLayoutDocsValidationDefaultsIndexRoute,
+    MainLayoutDocsValidationOnIndexRoute,
   }),
 })
 
@@ -174,12 +234,16 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/_main-layout/",
         "/_main-layout/docs/calendar/",
+        "/_main-layout/docs/custom-validations/",
         "/_main-layout/docs/integer-decimal/",
         "/_main-layout/docs/introduction/",
         "/_main-layout/docs/password/",
         "/_main-layout/docs/select/",
         "/_main-layout/docs/text/",
-        "/_main-layout/docs/textarea/"
+        "/_main-layout/docs/textarea/",
+        "/_main-layout/docs/validation-component/",
+        "/_main-layout/docs/validation-defaults/",
+        "/_main-layout/docs/validation-on/"
       ]
     },
     "/_main-layout/": {
@@ -188,6 +252,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_main-layout/docs/calendar/": {
       "filePath": "_main-layout/docs/calendar/index.tsx",
+      "parent": "/_main-layout"
+    },
+    "/_main-layout/docs/custom-validations/": {
+      "filePath": "_main-layout/docs/custom-validations/index.tsx",
       "parent": "/_main-layout"
     },
     "/_main-layout/docs/integer-decimal/": {
@@ -212,6 +280,18 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_main-layout/docs/textarea/": {
       "filePath": "_main-layout/docs/textarea/index.tsx",
+      "parent": "/_main-layout"
+    },
+    "/_main-layout/docs/validation-component/": {
+      "filePath": "_main-layout/docs/validation-component/index.tsx",
+      "parent": "/_main-layout"
+    },
+    "/_main-layout/docs/validation-defaults/": {
+      "filePath": "_main-layout/docs/validation-defaults/index.tsx",
+      "parent": "/_main-layout"
+    },
+    "/_main-layout/docs/validation-on/": {
+      "filePath": "_main-layout/docs/validation-on/index.tsx",
       "parent": "/_main-layout"
     }
   }
