@@ -158,7 +158,7 @@ export const InputDate = memo(
       _.title,
       _.before,
       _.after,
-      `${_.wrapperClassName} ${value && value != "" ? "value" : ""} `,
+      `${_.wrapperClassName} ${value && value != "" ? "has-value" : ""} `,
       _.beforeClassName,
       _.loadingClassName,
       _.titleClassName,

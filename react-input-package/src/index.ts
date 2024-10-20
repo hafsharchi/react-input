@@ -1,3 +1,5 @@
+import { components } from "react-select";
+
 export * from "./components/react-input";
 export * from "./components/elements";
 export {
@@ -26,3 +28,4 @@ export { VALIDATION_ERROR } from "./constants";
 export * from "./utils";
 export { ReactInputContext, ReactInputProvider } from "./contexts";
 export { components } from "react-select";
+import "react-multi-date-picker/styles/backgrounds/bg-gray.css"
