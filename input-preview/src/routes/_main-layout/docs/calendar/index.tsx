@@ -105,6 +105,7 @@ export const Form = () => {
               {...inputConfigs(styled)}
               type="calendar"
               locale="english"
+              editable={false}
               title="Date *"
               required
               name="date"
