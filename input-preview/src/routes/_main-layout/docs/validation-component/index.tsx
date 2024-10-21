@@ -119,30 +119,9 @@ export const TextInput = () => {
       </div>
       {activeTab == 0 ? (
         <>
-          <PreviewBox
-            settings={
-              <div className="flex absolute left-4 top-4 gap-1">
-                <Button
-                  active={styled}
-                  onClick={() => {
-                    setStyled(true);
-                  }}
-                >
-                  styled
-                </Button>
-                <Button
-                  active={!styled}
-                  onClick={() => {
-                    setStyled(false);
-                  }}
-                >
-                  default
-                </Button>
-              </div>
-            }
-          >
+          <PreviewBox>
             <Input
-              {...inputConfigs(styled)}
+              {...inputConfigs()}
               type="text"
               title="First Name *"
               required
@@ -154,7 +133,7 @@ export const TextInput = () => {
               register={useRegister}
             />
             <Input
-              {...inputConfigs(styled)}
+              {...inputConfigs()}
               type="text"
               title="Last Name *"
               required

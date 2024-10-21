@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import PreviewBox from "../../-components/PreviewBox";
 import DocsBreadcrumb from "../-components/DocsBreadcrumb";
-import { Input, useInput } from "input-master";
+import { CustomValidation, Input, useInput } from "input-master";
 import ValidationComponent from "../../../../ValidationComponent";
 import { Button } from "../../../../components/Button";
 import { inputConfigs } from "../../../../lib/input_default_settings";
@@ -12,45 +12,67 @@ export const Route = createFileRoute("/_main-layout/docs/custom-validations/")({
   component: Text,
 });
 
+export const emailValidation: CustomValidation = {
+  func(value): boolean {
+    if (value === '') return true; // Allow empty values
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value.toString());
+  },
+  error: 'Please enter a valid email address',
+};
+
+// Custom validation to allow only English characters
+export const englishOnlyValidation: CustomValidation = {
+  func(value): boolean {
+    if (value === '') return true; // Allow empty values
+    const englishOnlyRegex = /^[a-zA-Z0-9@.\-_]+$/;
+    return englishOnlyRegex.test(value.toString());
+  },
+  error: 'Only English characters are allowed',
+};
+
 function Text() {
   const { useRegister, submit } = useInput();
   const [activeTab, setActiveTab] = useState<number>(0);
   const [styled, setStyled] = useState<boolean>(true);
   const codeSnippet = `import { Input, useInput } from "input-master";
-  
-export const TextInput = () => {
+
+const emailValidation: CustomValidation = {
+  func(value): boolean {
+    if (value === '') return true; // Allow empty values
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value.toString());
+  },
+  error: 'Please enter a valid email address',
+};
+
+const englishOnlyValidation: CustomValidation = {
+  func(value): boolean {
+    if (value === '') return true; // Allow empty values
+    const englishOnlyRegex = /^[a-zA-Z0-9@.\-_]+$/;
+    return englishOnlyRegex.test(value.toString());
+  },
+  error: 'Only English characters are allowed',
+};
+
+export const Form = () => {
   const { useRegister, submit } = useInput();
   
   return (
     <>
       <Input
+        {...inputConfigs(styled)}
         type="text"
-        title="First Name *"
+        title="Email"
         required
-        minLength={2}
-        name="firstName"
+        customValidations={[emailValidation, englishOnlyValidation]}
+        name="email"
         notValidClassName="border !border-rose-500/50"
         validationComponent={ValidationComponent}
-        validationOn="submit"
-        register={useRegister}
-      />
-      <Input
-        type="text"
-        title="Last Name"
-        name="lastName"
         validationOn="submit-blur-change"
         register={useRegister}
-        maxLength={7}
       />
-      <button
-        onClick={() =>
-          submit((formData) => // automatically checks validation and if is valid:
-            alert("firstName: " + formData.firstName + "lastName: " + formData.lastName)
-          )
-        }
-      >
-        submit
-      </button>
+      ...
     </>
   );
 };
@@ -109,25 +131,27 @@ export const TextInput = () => {
             <Input
               {...inputConfigs(styled)}
               type="text"
-              title="First Name *"
+              title="Email"
               required
-              minLength={2}
-              name="firstName"
+              customValidations={[emailValidation, englishOnlyValidation]}
+              name="email"
               notValidClassName="border !border-rose-500/50"
               validationComponent={ValidationComponent}
-              validationOn="submit"
-              register={useRegister}
-            />
-            <Input
-              {...inputConfigs(styled)}
-              type="text"
-              title="Last Name"
-              name="lastName"
               validationOn="submit-blur-change"
               register={useRegister}
-              maxLength={7}
             />
-            <Button variant="submit" className="mx-auto mt-3" onClick={() => submit((d) => alert(`firstName: ${d.firstName}, lastName: ${d.lastName}`))}>Sumbit</Button>
+            
+            <Button
+              variant="submit"
+              className="mx-auto mt-3"
+              onClick={() =>
+                submit((d) =>
+                  alert(`email: ${d.email}`)
+                )
+              }
+            >
+              Sumbit
+            </Button>
           </PreviewBox>
         </>
       ) : (
@@ -142,40 +166,79 @@ export const TextInput = () => {
       <br />
       <h2>Description</h2>
       <p>
-        The Text input type is perfect for capturing single-line text from
-        users, like names or short responses! It automatically includes all the
-        shared features available across our input types. If you're curious
-        about these shared properties, feel free to check them out here.
+        The<code>customValidations</code>prop allows you to add your own
+        validation logic to any input field. This prop accepts an array of
+        CustomValidation objects, each of which defines a custom validation
+        function and an associated error message. This feature gives you the
+        flexibility to enforce specific business rules or field-specific
+        requirements that go beyond the standard validation options provided by
+        the library.
+      </p>
+      <p>Each custom validation consists of two key properties:</p>
+
+      <ul>
+        <li>
+          <code>func</code>:A function that takes the input value as a parameter
+          and returns a boolean indicating whether the validation passed (true)
+          or failed (false).
+        </li>
+        <li>
+          <code>error</code>:A string that contains the error message to be
+          displayed when the validation fails.
+        </li>
+      </ul>
+
+      <p>
+        Here’s an example of a custom validation that checks if an input value
+        is a valid email address:
+      </p>
+
+      <CodeHighlighter
+        language="tsx"
+        className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
+        code={`import { CustomValidation } from 'input-master';
+
+// Custom validation for email format
+export const emailValidation: CustomValidation = {
+  func(value): boolean {
+    if (value === '') return true; // Allow empty values
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value.toString());
+  },
+  error: 'Please enter a valid email address',
+};
+
+// Custom validation to allow only English characters
+export const englishOnlyValidation: CustomValidation = {
+  func(value): boolean {
+    if (value === '') return true; // Allow empty values
+    const englishOnlyRegex = /^[a-zA-Z0-9@.\-_]+$/;
+    return englishOnlyRegex.test(value.toString());
+  },
+  error: 'Only English characters are allowed',
+};
+`}
+      />
+
+      <p>
+        In this case, the<code>emailCV</code>custom validation checks that the
+        input value matches both an email format and allows only English
+        characters.
       </p>
       <p>
-        Below is a table of specific properties unique to the Text input type:
+        To use custom validations, pass them as an array to the
+        customValidations prop when rendering your input field:
       </p>
-      <h2>Props</h2>
-      <table className="w-full text-center text-sm rounded-lg  border-1 border-red-400">
-        <thead>
-          <tr>
-            <th>Prop</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Default</th>
-          </tr>
-        </thead>
-        <tbody className="font-light">
-          <tr>
-            <td>MaxLength</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>MinLength</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          
-        </tbody>
-      </table>
+      <CodeHighlighter
+        language="tsx"
+        className="text-xs rounded-lg border bg-black shrink-0 h-full w-full"
+        code={`   <Input
+  ...
+  customValidations={[emailValidation, englishOnlyValidation]}
+  ...
+/>
+              `}
+      />
     </>
   );
 }
