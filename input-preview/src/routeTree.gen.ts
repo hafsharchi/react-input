@@ -20,6 +20,7 @@ import { Route as MainLayoutDocsTextareaIndexImport } from './routes/_main-layou
 import { Route as MainLayoutDocsTextIndexImport } from './routes/_main-layout/docs/text/index'
 import { Route as MainLayoutDocsSelectIndexImport } from './routes/_main-layout/docs/select/index'
 import { Route as MainLayoutDocsPasswordIndexImport } from './routes/_main-layout/docs/password/index'
+import { Route as MainLayoutDocsLoadingIndexImport } from './routes/_main-layout/docs/loading/index'
 import { Route as MainLayoutDocsIntroductionIndexImport } from './routes/_main-layout/docs/introduction/index'
 import { Route as MainLayoutDocsIntegerDecimalIndexImport } from './routes/_main-layout/docs/integer-decimal/index'
 import { Route as MainLayoutDocsCustomValidationsIndexImport } from './routes/_main-layout/docs/custom-validations/index'
@@ -76,6 +77,13 @@ const MainLayoutDocsPasswordIndexRoute =
     path: '/docs/password/',
     getParentRoute: () => MainLayoutRoute,
   } as any)
+
+const MainLayoutDocsLoadingIndexRoute = MainLayoutDocsLoadingIndexImport.update(
+  {
+    path: '/docs/loading/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any,
+)
 
 const MainLayoutDocsIntroductionIndexRoute =
   MainLayoutDocsIntroductionIndexImport.update({
@@ -147,6 +155,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MainLayoutDocsIntroductionIndexImport
       parentRoute: typeof MainLayoutImport
     }
+    '/_main-layout/docs/loading/': {
+      id: '/_main-layout/docs/loading/'
+      path: '/docs/loading'
+      fullPath: '/docs/loading'
+      preLoaderRoute: typeof MainLayoutDocsLoadingIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
     '/_main-layout/docs/password/': {
       id: '/_main-layout/docs/password/'
       path: '/docs/password'
@@ -208,6 +223,7 @@ export const routeTree = rootRoute.addChildren({
     MainLayoutDocsCustomValidationsIndexRoute,
     MainLayoutDocsIntegerDecimalIndexRoute,
     MainLayoutDocsIntroductionIndexRoute,
+    MainLayoutDocsLoadingIndexRoute,
     MainLayoutDocsPasswordIndexRoute,
     MainLayoutDocsSelectIndexRoute,
     MainLayoutDocsTextIndexRoute,
@@ -237,6 +253,7 @@ export const routeTree = rootRoute.addChildren({
         "/_main-layout/docs/custom-validations/",
         "/_main-layout/docs/integer-decimal/",
         "/_main-layout/docs/introduction/",
+        "/_main-layout/docs/loading/",
         "/_main-layout/docs/password/",
         "/_main-layout/docs/select/",
         "/_main-layout/docs/text/",
@@ -264,6 +281,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_main-layout/docs/introduction/": {
       "filePath": "_main-layout/docs/introduction/index.tsx",
+      "parent": "/_main-layout"
+    },
+    "/_main-layout/docs/loading/": {
+      "filePath": "_main-layout/docs/loading/index.tsx",
       "parent": "/_main-layout"
     },
     "/_main-layout/docs/password/": {
