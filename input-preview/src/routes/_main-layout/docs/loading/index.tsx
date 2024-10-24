@@ -84,43 +84,33 @@ export const TextInput = () => {
       </div>
       {activeTab == 0 ? (
         <>
-          <PreviewBox
-            settings={
-              <div className="flex absolute left-4 top-4 gap-1">
-                <Button
-                  active={styled}
-                  onClick={() => {
-                    setStyled(true);
-                  }}
-                >
-                  styled
-                </Button>
-                <Button
-                  active={!styled}
-                  onClick={() => {
-                    setStyled(false);
-                  }}
-                >
-                  default
-                </Button>
-              </div>
-            }
-          >
+          <PreviewBox>
             <Input
-              {...inputConfigs(styled)}
+              {...inputConfigs()}
               type="text"
               title="First Name *"
               required
               minLength={2}
               name="firstName"
               loading
+              loadingObject=""
               notValidClassName="border !border-rose-500/50"
               validationComponent={ValidationComponent}
               validationOn="submit"
               register={useRegister}
             />
-           
-            <Button variant="submit" className="mx-auto mt-3" onClick={() => submit((d) => alert(`firstName: ${d.firstName}, lastName: ${d.lastName}`))}>Sumbit</Button>
+
+            <Button
+              variant="submit"
+              className="mx-auto mt-3"
+              onClick={() =>
+                submit((d) =>
+                  alert(`firstName: ${d.firstName}, lastName: ${d.lastName}`)
+                )
+              }
+            >
+              Sumbit
+            </Button>
           </PreviewBox>
         </>
       ) : (
@@ -166,7 +156,6 @@ export const TextInput = () => {
             <td>-</td>
             <td>-</td>
           </tr>
-          
         </tbody>
       </table>
     </>
