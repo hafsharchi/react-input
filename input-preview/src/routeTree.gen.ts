@@ -25,6 +25,7 @@ import { Route as MainLayoutDocsIntroductionIndexImport } from './routes/_main-l
 import { Route as MainLayoutDocsIntegerDecimalIndexImport } from './routes/_main-layout/docs/integer-decimal/index'
 import { Route as MainLayoutDocsCustomValidationsIndexImport } from './routes/_main-layout/docs/custom-validations/index'
 import { Route as MainLayoutDocsCalendarIndexImport } from './routes/_main-layout/docs/calendar/index'
+import { Route as MainLayoutDocsBeforeAfterIndexImport } from './routes/_main-layout/docs/before-after/index'
 
 // Create/Update Routes
 
@@ -109,6 +110,12 @@ const MainLayoutDocsCalendarIndexRoute =
     getParentRoute: () => MainLayoutRoute,
   } as any)
 
+const MainLayoutDocsBeforeAfterIndexRoute =
+  MainLayoutDocsBeforeAfterIndexImport.update({
+    path: '/docs/before-after/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -125,6 +132,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof MainLayoutIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
+    '/_main-layout/docs/before-after/': {
+      id: '/_main-layout/docs/before-after/'
+      path: '/docs/before-after'
+      fullPath: '/docs/before-after'
+      preLoaderRoute: typeof MainLayoutDocsBeforeAfterIndexImport
       parentRoute: typeof MainLayoutImport
     }
     '/_main-layout/docs/calendar/': {
@@ -219,6 +233,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   MainLayoutRoute: MainLayoutRoute.addChildren({
     MainLayoutIndexRoute,
+    MainLayoutDocsBeforeAfterIndexRoute,
     MainLayoutDocsCalendarIndexRoute,
     MainLayoutDocsCustomValidationsIndexRoute,
     MainLayoutDocsIntegerDecimalIndexRoute,
@@ -249,6 +264,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_main-layout.tsx",
       "children": [
         "/_main-layout/",
+        "/_main-layout/docs/before-after/",
         "/_main-layout/docs/calendar/",
         "/_main-layout/docs/custom-validations/",
         "/_main-layout/docs/integer-decimal/",
@@ -265,6 +281,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_main-layout/": {
       "filePath": "_main-layout/index.tsx",
+      "parent": "/_main-layout"
+    },
+    "/_main-layout/docs/before-after/": {
+      "filePath": "_main-layout/docs/before-after/index.tsx",
       "parent": "/_main-layout"
     },
     "/_main-layout/docs/calendar/": {

@@ -30,7 +30,7 @@ export default function Sidebar({ className }: Props) {
       <SidebarLink to="/docs/loading">Loading</SidebarLink>
       <SidebarLink to="/">Disabled</SidebarLink>
       <SidebarLink to="/">Validation on</SidebarLink>
-      <SidebarLink to="/">After/Before</SidebarLink>
+      <SidebarLink to="/docs/before-after">Before & After</SidebarLink>
       <SidebarLink to="/">Update field valus</SidebarLink>
       <SidebarLink to="/">Default value</SidebarLink>
     </div>
