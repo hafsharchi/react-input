@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "jalali-moment": "^3.3.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-input": "file:",
     "react-multi-date-picker": "^4.3.5",
-    "react-select": "^5.8.1"
+    "react-select": "^5.8.1",
+    "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

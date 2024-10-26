@@ -37,7 +37,6 @@ export default function App({}: Props) {
         beforeClassName="before"
         loadingClassName="loading"
         validationComponent={ValidationComponent}
-        validationOn="submit"
         required
         className="input"
         title="Hello hdsjfk"

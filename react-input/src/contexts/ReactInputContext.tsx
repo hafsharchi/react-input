@@ -1,5 +1,9 @@
 import React, { createContext, ReactNode, useState } from "react";
-import { ErrorTypes, ReactInputContextProps } from "../components/types";
+import {
+  DefaultProps,
+  ErrorTypes,
+  ReactInputContextProps,
+} from "../components/types";
 
 export const ReactInputContext = createContext<
   ReactInputContextProps | undefined
@@ -8,12 +12,14 @@ export const ReactInputContext = createContext<
 interface ReactInputProviderProps {
   children: ReactNode;
   errors?: ErrorTypes;
+  defaultProps?: DefaultProps;
   onValidationFailedFunction?: Function;
 }
 
 export const ReactInputProvider = ({
   children,
   errors,
+  defaultProps,
   onValidationFailedFunction = () => {},
 }: ReactInputProviderProps) => {
   const [validationErrors, setValidationErrors] = useState<ErrorTypes>({
@@ -32,6 +38,7 @@ export const ReactInputProvider = ({
     validationErrors,
     setValidationErrors,
     onValidationFailed: onValidationFailed,
+    defaultProps: defaultProps,
   };
 
   return (

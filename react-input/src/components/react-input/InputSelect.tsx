@@ -9,7 +9,12 @@ import React, {
 } from "react";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
-import { CustomValidation, ReactInputContextProps, Select } from "../types";
+import {
+  ComponentDescriptor,
+  CustomValidation,
+  ReactInputContextProps,
+  Select,
+} from "../types";
 import { vRequired } from "../../utils";
 import ReactSelect, { GroupBase, OptionsOrGroups } from "react-select";
 import { renderComponent } from "../../utils/RenderComponent";
@@ -18,6 +23,7 @@ import { Before } from "../elements/Before";
 import { Loading } from "../elements/Loading";
 import { Title } from "../elements/Title";
 import { Wrapper } from "../elements/Wrapper";
+import { cn } from "../../utils/cn";
 
 export const InputSelect = memo(
   forwardRef((_: Select, ref: any) => {
@@ -26,13 +32,16 @@ export const InputSelect = memo(
     >(_?.defaultValue);
     const [inputValue, setInputValue] = React.useState<string>();
     const [isValid, setIsValid] = useState<boolean>(true);
-
     const inputRef = useRef<any>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
     const customized: ReactInputContextProps | undefined =
       useContext(ReactInputContext);
+
+    _.validationOn = _.validationOn
+      ? _.validationOn
+      : customized?.defaultProps?.validationOn ?? "submit";
 
     const [hasChanged, setHasChanged] = useState<boolean>(false);
     type ddd = { label: string; value: string };
@@ -158,6 +167,7 @@ export const InputSelect = memo(
       notValidClassName,
       ...rest
     } = _;
+
     const input: React.ReactNode = (
       <>
         <ReactSelect
@@ -165,18 +175,39 @@ export const InputSelect = memo(
             setInputValue(e);
             if (onInputChange) onInputChange;
           }}
-          menuPortalTarget={_.portal}
+          components={
+            _.components ? _.components : customized?.defaultProps?.components
+          }
+          menuPortalTarget={
+            _.portal ? _.portal : customized?.defaultProps?.portal
+          }
+          classNamePrefix={
+            _.classNamePrefix
+              ? _.classNamePrefix
+              : customized?.defaultProps?.classNamePrefix ?? ""
+          }
           ref={inputRef}
           isDisabled={_.disabled}
-          className={`${_.disabled ? _.disabledClassName : ""} ${
+          className={`${
+            _.disabled
+              ? _.disabledClassName
+                ? _.disabledClassName
+                : customized?.defaultProps?.disabledClassName ?? ""
+              : ""
+          } ${
             isValid
               ? ""
               : `${
-                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
+                  _.notValidClassName
+                    ? _.notValidClassName
+                    : customized?.defaultProps?.notValidClassName ?? ""
                 }`
-          } ${_.fullWidth ? "w-full" : ""}`}
+          }`}
           value={value}
           onChange={onChange}
+          noOptionsMessage={
+            customized?.defaultProps?.noOptionsMessage ?? _.noOptionsMessage
+          }
           onBlur={onBlur}
           isMulti={_.multiple}
           {...rest}
@@ -184,11 +215,14 @@ export const InputSelect = memo(
       </>
     );
 
-    if (!_.componentStructure)
+    if (!_.componentStructure && !customized?.defaultProps?.componentStructure)
       return (
         <>
           <Wrapper
-            className={`${_.wrapperClassName} ${
+            className={`${cn(
+              customized?.defaultProps?.wrapperClassName ?? "",
+              _.wrapperClassName ?? ""
+            )} ${
               (value && !_.multiple) ||
               (_.multiple && value && value.length != 0) ||
               inputValue
@@ -196,40 +230,93 @@ export const InputSelect = memo(
                 : ""
             }`}
           >
-            <Before className={_.beforeClassName} before={_.before} />
-            <Title title={_.title} className={_.titleClassName} />
+            <Before
+              className={cn(
+                customized?.defaultProps?.beforeClassName ?? "",
+                _.beforeClassName ?? ""
+              )}
+              before={_.before}
+            />
+            <Title
+              title={_.title}
+              className={cn(
+                customized?.defaultProps?.titleClassName ?? "",
+                _.titleClassName ?? ""
+              )}
+            />
             {input}
             <Loading
-              className={_.loadingClassName}
+              className={cn(
+                customized?.defaultProps?.loadingClassName ?? "",
+                _.loadingClassName ?? ""
+              )}
               isLoading={_.loading}
-              loadingObject={_.loadingObject}
+              loadingObject={
+                _.loadingObject
+                  ? _.loadingObject
+                  : customized?.defaultProps?.loadingObject ?? ""
+              }
             />
-            {_.validationComponent && _.validationComponent({ errors: errors })}
-            <After className={_.afterClassName} after={_.after} />
+            {_.validationComponent ? (
+              _.validationComponent({ errors: errors })
+            ) : customized?.defaultProps?.validationComponent ? (
+              customized?.defaultProps?.validationComponent({ errors: errors })
+            ) : (
+              <></>
+            )}
+            <After
+              className={cn(
+                customized?.defaultProps?.afterClassName ?? "",
+                _.afterClassName ?? ""
+              )}
+              after={_.after}
+            />
           </Wrapper>
         </>
       );
 
     return renderComponent(
-      _.componentStructure,
+      _.componentStructure
+        ? _.componentStructure
+        : (customized?.defaultProps?.componentStructure as ComponentDescriptor),
       input,
-      _.validationComponent,
+      _.validationComponent
+        ? _.validationComponent
+        : customized?.defaultProps?.validationComponent,
       _.title,
       _.before,
       _.after,
-      `${_.wrapperClassName} ${
+      `${cn(
+        customized?.defaultProps?.wrapperClassName ?? "",
+        _.wrapperClassName ?? ""
+      )} ${
         (value && !_.multiple) ||
         (_.multiple && value && value.length != 0) ||
         inputValue
           ? "has-value"
           : ""
       }`,
-      _.beforeClassName,
-      _.loadingClassName,
-      _.titleClassName,
-      _.afterClassName,
+      cn(
+        customized?.defaultProps?.beforeClassName ?? "",
+        _.beforeClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.loadingClassName ?? "",
+        _.loadingClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.titleClassName ?? "",
+        _.titleClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.afterClassName ?? "",
+        _.afterClassName ?? ""
+      ),
+
       _.loading,
-      _.loadingObject,
+      _.loadingObject
+        ? _.loadingObject
+        : customized?.defaultProps?.loadingObject,
       errors
     );
   })
