@@ -39,7 +39,7 @@ export const InputSelect = memo(
     const customized: ReactInputContextProps | undefined =
       useContext(ReactInputContext);
 
-    _.validationOn = _.validationOn
+    const validationOn = _.validationOn
       ? _.validationOn
       : customized?.defaultProps?.validationOn ?? "submit";
 
@@ -72,7 +72,7 @@ export const InputSelect = memo(
       ) => {
         if (inputRef.current) {
           setValue(newValue);
-          if (_.validationOn != "submit" || !isValid)
+          if (validationOn != "submit" || !isValid)
             setIsValid(checkValidation(newValue));
         }
       },
@@ -93,16 +93,13 @@ export const InputSelect = memo(
     useEffect(() => {
       if (hasChanged) {
         if (_.onChange && value) _.onChange(value);
-        if (_.validationOn == "submit-blur-change" || !isValid)
+        if (validationOn == "submit-blur-change" || !isValid)
           setIsValid(checkValidation(value));
       }
     }, [value]);
 
     const onBlur = (e?: any) => {
-      if (
-        _.validationOn == "submit-blur" ||
-        _.validationOn == "submit-blur-change"
-      )
+      if (validationOn == "submit-blur" || validationOn == "submit-blur-change")
         setIsValid(checkValidation(value));
       if (_.onBlur) _.onBlur(e);
     };
@@ -163,7 +160,7 @@ export const InputSelect = memo(
       componentStructure,
       wrapperClassName,
       validationComponent,
-      validationOn,
+      validationOn: v,
       notValidClassName,
       ...rest
     } = _;
@@ -190,19 +187,24 @@ export const InputSelect = memo(
           isDisabled={_.disabled}
           className={`${
             _.disabled
-              ? _.disabledClassName
-                ? _.disabledClassName
-                : customized?.defaultProps?.disabledClassName ?? ""
+              ? cn(
+                  customized?.defaultProps?.disabledClassName ?? "",
+                  _.disabledClassName ?? ""
+                )
               : ""
           } ${
             isValid
               ? ""
               : `${
                   _.notValidClassName
-                    ? _.notValidClassName
-                    : customized?.defaultProps?.notValidClassName ?? ""
+                    ? cn(
+                        customized?.defaultProps?.notValidClassName ?? "",
+                        _.notValidClassName ?? ""
+                      )
+                    : ""
                 }`
-          }`}
+          }
+           ${cn(customized?.defaultProps?.className, _.className ?? "")}`}
           value={value}
           onChange={onChange}
           noOptionsMessage={
@@ -321,11 +323,3 @@ export const InputSelect = memo(
     );
   })
 );
-
-{
-  /* <div
-  className={`${_.wrapperClassName} ${
-    (value && value?.length > 0) || inputValue ? "value" : ""
-  } `}
-></div>; */
-}

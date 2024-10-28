@@ -23,15 +23,15 @@ export default function App({}: Props) {
 
   return (
     <div dir="ltr">
+      <div>dasdas</div>
       <Input
-        type="calendar"
-        locale="english"
+        type="select"
         name="test"
+        options={[{lable:"d", value:2}]}
         // disabled
         // fullWidth
-        editable={false}
         register={useRegister}
-        wrapperClassName=""
+        wrapperClassName="border"
         titleClassName="title"
         afterClassName="after"
         beforeClassName="before"

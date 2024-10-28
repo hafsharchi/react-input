@@ -7,7 +7,11 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Calendar, ReactInputContextProps } from "../types";
+import {
+  Calendar,
+  ComponentDescriptor,
+  ReactInputContextProps,
+} from "../types";
 import { ReactInputContext } from "../../contexts/ReactInputContext";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
@@ -19,6 +23,7 @@ import { After } from "../elements/After";
 import { Before } from "../elements/Before";
 import { Loading } from "../elements/Loading";
 import { Title } from "../elements/Title";
+import { cn } from "../../utils/cn";
 
 export const InputDate = memo(
   forwardRef((_: Calendar, ref: any) => {
@@ -91,11 +96,14 @@ export const InputDate = memo(
 
       return res;
     };
-    
+    const portal = _.portal != undefined && _.portal != false;
+    const defaultPortal =
+      customized?.defaultProps?.portal != undefined &&
+      customized?.defaultProps?.portal != false;
     const input: React.ReactNode = (
       <>
         <DatePicker
-          portal={_.portal != undefined && _.portal != false}
+          portal={_.portal == undefined ? defaultPortal : portal}
           ref={inputRef}
           id={_.id}
           disabled={_.disabled == true ? true : false}
@@ -104,16 +112,17 @@ export const InputDate = memo(
           calendar={_?.locale == "persian" ? persian : undefined}
           locale={_?.locale == "persian" ? persian_fa : undefined}
           onOpenPickNewDate={false}
-          inputClass={`${_.className ? _.className : ""} ${
-            _.fullWidth ? "w-full" : ""
-          } dsds ${
-            _.disabled && _.disabledClassName ? _.disabledClassName : ""
+          inputClass={`${cn(
+            customized?.defaultProps?.className ?? "",
+            _.className ?? ""
+          )} ${_.fullWidth ? "w-full" : ""} ${
+            _.disabled && _.disabledClassName
+              ? _.disabledClassName
+              : customized?.defaultProps?.disabledClassName ?? ""
           } ${
             isValid
               ? ""
-              : `${
-                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
-                }`
+              : `${_.notValidClassName ? _.notValidClassName : customized}`
           }`}
           minDate={_.minDate ?? undefined}
           maxDate={_.maxDate ?? undefined}
@@ -122,7 +131,7 @@ export const InputDate = memo(
           onlyMonthPicker={_.onlyMonth}
           editable={_.editable}
           range={_.range}
-          className={_.class}
+          className={cn(customized?.defaultProps?.class, _.class)}
           containerClassName={`${_.fullWidth && "w-full"} flex date-container`}
           rangeHover
           dateSeparator={_.dateSeparator}
@@ -130,41 +139,90 @@ export const InputDate = memo(
         />
       </>
     );
-    if (!_.componentStructure)
+    if (!_.componentStructure && !customized?.defaultProps?.componentStructure)
       return (
         <>
           <Wrapper
-            className={`${_.wrapperClassName} ${
-              value && value != "" ? "has-value" : ""
-            } `}
+            className={`${cn(
+              customized?.defaultProps?.wrapperClassName ?? "",
+              _.wrapperClassName ?? ""
+            )} ${value && value != "" ? "has-value" : ""} `}
           >
-            <Before className={_.beforeClassName} before={_.before} />
-            <Title title={_.title} className={_.titleClassName} />
+            <Before
+              className={cn(
+                customized?.defaultProps?.beforeClassName ?? "",
+                _.beforeClassName ?? ""
+              )}
+              before={_.before}
+            />
+            <Title
+              title={_.title}
+              className={cn(
+                customized?.defaultProps?.titleClassName ?? "",
+                _.titleClassName ?? ""
+              )}
+            />
             {input}
             <Loading
-              className={_.loadingClassName}
+              className={cn(
+                customized?.defaultProps?.loadingClassName ?? "",
+                _.loadingClassName
+              )}
               isLoading={_.loading}
-              loadingObject={_.loadingObject}
+              loadingObject={
+                _.loadingObject ?? customized?.defaultProps?.loadingObject
+              }
             />
-            {_.validationComponent && _.validationComponent({ errors: errors })}
-            <After className={_.afterClassName} after={_.after} />
+            {_.validationComponent ? (
+              _.validationComponent({ errors: errors })
+            ) : customized?.defaultProps?.validationComponent ? (
+              customized?.defaultProps?.validationComponent({ errors: errors })
+            ) : (
+              <></>
+            )}
+            <After
+              className={cn(
+                customized?.defaultProps?.afterClassName ?? "",
+                _.afterClassName ?? ""
+              )}
+              after={_.after}
+            />
           </Wrapper>
         </>
       );
     return renderComponent(
-      _.componentStructure,
+      _.componentStructure
+        ? _.componentStructure
+        : (customized?.defaultProps?.componentStructure as ComponentDescriptor),
       input,
-      _.validationComponent,
+      _.validationComponent
+        ? _.validationComponent
+        : customized?.defaultProps?.validationComponent,
       _.title,
       _.before,
       _.after,
-      `${_.wrapperClassName} ${value && value != "" ? "has-value" : ""} `,
-      _.beforeClassName,
-      _.loadingClassName,
-      _.titleClassName,
-      _.afterClassName,
+      `${cn(
+        customized?.defaultProps?.wrapperClassName ?? "",
+        _.wrapperClassName ?? ""
+      )} ${value && value != "" ? "has-value" : ""} `,
+      cn(
+        customized?.defaultProps?.beforeClassName ?? "",
+        _.beforeClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.loadingClassName ?? "",
+        _.loadingClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.titleClassName ?? "",
+        _.titleClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.afterClassName ?? "",
+        _.afterClassName ?? ""
+      ),
       _.loading,
-      _.loadingObject,
+      _.loadingObject ?? customized?.defaultProps?.loadingObject,
       errors
     );
   })
