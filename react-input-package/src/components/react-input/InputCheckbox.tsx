@@ -7,8 +7,12 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Checkbox, ReactInputContextProps } from "../types";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import {
+  Checkbox,
+  ComponentDescriptor,
+  InputMasterContextProps,
+} from "../types";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vRequired } from "../../utils";
 import { Title } from "../elements/Title";
 import { Wrapper } from "../elements/Wrapper";
@@ -16,6 +20,7 @@ import { Loading } from "../elements/Loading";
 import { Before } from "../elements/Before";
 import { After } from "../elements/After";
 import { renderComponent } from "../../utils/RenderComponent";
+import { cn } from "../../utils/cn";
 
 export const InputCheckbox = memo(
   forwardRef((_: Checkbox, ref: any) => {
@@ -29,9 +34,11 @@ export const InputCheckbox = memo(
         inputRef.current.checked = _.defaultValue;
     }, [_.defaultValue]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
-
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
+    const validationOn = _.validationOn
+      ? _.validationOn
+      : customized?.defaultProps?.validationOn ?? "submit";
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current) {
@@ -55,7 +62,7 @@ export const InputCheckbox = memo(
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
 
-      if (_.validationOn == "submit-blur-change" || !isValid)
+      if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef?.current?.checked ?? false));
     };
 
@@ -63,8 +70,8 @@ export const InputCheckbox = memo(
       if (_.onBlur) _.onBlur(e);
 
       if (
-        _.validationOn == "submit-blur-change" ||
-        _.validationOn == "submit-blur" ||
+        validationOn == "submit-blur-change" ||
+        validationOn == "submit-blur" ||
         !isValid
       )
         setIsValid(checkValidation(inputRef?.current?.checked ?? false));
@@ -93,10 +100,18 @@ export const InputCheckbox = memo(
         className={`${
           isValid
             ? ""
-            : `${_.notValidClassName ? _.notValidClassName : "input-not-valid"}`
-        }${_.disabled && _.disabledClassName ? _.disabledClassName : ""}${
-          _.className ? _.className : ""
-        }`}
+            : `${cn(
+                customized?.defaultProps?.notValidClassName ?? "",
+                _.notValidClassName
+              )}`
+        }${
+          _.disabled
+            ? cn(
+                customized?.defaultProps?.disabledClassName ?? "",
+                _.disabledClassName ?? ""
+              )
+            : ""
+        } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
         type="checkbox"
         title={_.title}
         placeholder={_?.placeholder ?? ""}
@@ -106,45 +121,95 @@ export const InputCheckbox = memo(
       />
     );
 
-    if (!_.componentStructure)
+    if (!_.componentStructure && !customized?.defaultProps?.componentStructure)
       return (
         <>
-          <Wrapper className={_.wrapperClassName}>
-            <Before className={_.beforeClassName} before={_.before} />
+          <Wrapper
+            className={cn(
+              customized?.defaultProps?.wrapperClassName,
+              _.wrapperClassName
+            )}
+          >
+            <Before
+              className={cn(
+                customized?.defaultProps?.beforeClassName,
+                _.beforeClassName
+              )}
+              before={_.before}
+            />
             <Title
               tag="label"
               htmlFor={
                 _.titleClickable ? _.id ?? `${_.name}_checkbox` : undefined
               }
               title={_.title}
-              className={_.titleClassName}
+              className={cn(
+                customized?.defaultProps?.titleClassName,
+                _.titleClassName
+              )}
             />
             {input}
             <Loading
-              className={_.loadingClassName}
               isLoading={_.loading}
-              loadingObject={_.loadingObject}
+              loadingObject={
+                _.loadingObject ?? customized?.defaultProps?.loadingObject
+              }
+              className={cn(
+                customized?.defaultProps?.loadingClassName,
+                _.loadingClassName
+              )}
             />
-            {_.validationComponent && _.validationComponent({ errors: errors })}
-            <After className={_.afterClassName} after={_.after} />
+            {_.validationComponent ? (
+              _.validationComponent({ errors: errors })
+            ) : customized?.defaultProps?.validationComponent ? (
+              customized?.defaultProps?.validationComponent({ errors: errors })
+            ) : (
+              <></>
+            )}
+            <After
+              className={cn(
+                customized?.defaultProps?.afterClassName,
+                _.afterClassName
+              )}
+              after={_.after}
+            />
           </Wrapper>
         </>
       );
 
     return renderComponent(
-      _.componentStructure,
+      _.componentStructure
+        ? _.componentStructure
+        : (customized?.defaultProps?.componentStructure as ComponentDescriptor),
       input,
-      _.validationComponent,
+      _.validationComponent
+        ? _.validationComponent
+        : customized?.defaultProps?.validationComponent,
       _.title,
       _.before,
       _.after,
-      _.wrapperClassName,
-      _.beforeClassName,
-      _.loadingClassName,
-      _.titleClassName,
-      _.afterClassName,
+      cn(
+        customized?.defaultProps?.wrapperClassName ?? "",
+        _.wrapperClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.beforeClassName ?? "",
+        _.beforeClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.loadingClassName ?? "",
+        _.loadingClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.titleClassName ?? "",
+        _.titleClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.afterClassName ?? "",
+        _.afterClassName ?? ""
+      ),
       _.loading,
-      _.loadingObject,
+      _.loadingObject ?? customized?.defaultProps?.loadingObject,
       errors
     );
   })

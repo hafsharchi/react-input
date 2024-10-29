@@ -10,9 +10,9 @@ import React, {
 import {
   Calendar,
   ComponentDescriptor,
-  ReactInputContextProps,
+  InputMasterContextProps,
 } from "../types";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
@@ -34,8 +34,8 @@ export const InputDate = memo(
 
     const [errors, setErrors] = React.useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
 
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
@@ -116,13 +116,19 @@ export const InputDate = memo(
             customized?.defaultProps?.className ?? "",
             _.className ?? ""
           )} ${_.fullWidth ? "w-full" : ""} ${
-            _.disabled && _.disabledClassName
-              ? _.disabledClassName
-              : customized?.defaultProps?.disabledClassName ?? ""
+            _.disabled
+              ? cn(
+                  customized?.defaultProps?.disabledClassName ?? "",
+                  _.disabledClassName ?? ""
+                )
+              : ""
           } ${
             isValid
               ? ""
-              : `${_.notValidClassName ? _.notValidClassName : customized}`
+              : `${cn(
+                  customized?.defaultProps?.notValidClassName ?? "",
+                  _.notValidClassName ?? ""
+                )}`
           }`}
           minDate={_.minDate ?? undefined}
           maxDate={_.maxDate ?? undefined}

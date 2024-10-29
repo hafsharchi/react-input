@@ -51,6 +51,7 @@ export type DefaultProps = {
   afterClassName?: string;
   class?: string;
   fullWidth?: boolean;
+  unstyled?: boolean;
   portal?: any;
   components?: SelectComponentsConfig<any, any, any>;
   classNamePrefix?: string;
@@ -157,7 +158,7 @@ export type ErrorTypes =
       etc: string;
     };
 
-export interface ReactInputContextProps {
+export interface InputMasterContextProps {
   validationErrors: ErrorTypes;
   defaultProps?: DefaultProps;
   setValidationErrors: React.Dispatch<React.SetStateAction<ErrorTypes>>;

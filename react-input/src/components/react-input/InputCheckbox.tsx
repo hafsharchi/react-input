@@ -10,9 +10,9 @@ import React, {
 import {
   Checkbox,
   ComponentDescriptor,
-  ReactInputContextProps,
+  InputMasterContextProps,
 } from "../types";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vRequired } from "../../utils";
 import { Title } from "../elements/Title";
 import { Wrapper } from "../elements/Wrapper";
@@ -34,8 +34,8 @@ export const InputCheckbox = memo(
         inputRef.current.checked = _.defaultValue;
     }, [_.defaultValue]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
     const validationOn = _.validationOn
       ? _.validationOn
       : customized?.defaultProps?.validationOn ?? "submit";
@@ -105,11 +105,12 @@ export const InputCheckbox = memo(
                 _.notValidClassName
               )}`
         }${
-          _.disabled &&
-          cn(
-            customized?.defaultProps?.disabledClassName ?? "",
-            _.disabledClassName ?? ""
-          )
+          _.disabled
+            ? cn(
+                customized?.defaultProps?.disabledClassName ?? "",
+                _.disabledClassName ?? ""
+              )
+            : ""
         } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
         type="checkbox"
         title={_.title}

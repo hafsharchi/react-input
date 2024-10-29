@@ -7,12 +7,12 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import {
   ComponentDescriptor,
   CustomValidation,
-  ReactInputContextProps,
+  InputMasterContextProps,
   Select,
 } from "../types";
 import { vRequired } from "../../utils";
@@ -36,8 +36,8 @@ export const InputSelect = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
 
     const validationOn = _.validationOn
       ? _.validationOn
@@ -156,7 +156,6 @@ export const InputSelect = memo(
       loadingClassName,
       loadingObject,
       multiple,
-      fullWidth,
       componentStructure,
       wrapperClassName,
       validationComponent,
@@ -207,6 +206,7 @@ export const InputSelect = memo(
            ${cn(customized?.defaultProps?.className, _.className ?? "")}`}
           value={value}
           onChange={onChange}
+          unstyled={_.unstyled ?? customized?.defaultProps?.unstyled ?? false}
           noOptionsMessage={
             customized?.defaultProps?.noOptionsMessage ?? _.noOptionsMessage
           }

@@ -1,6 +1,6 @@
 {
   "name": "input-master",
-  "version": "0.1.25",
+  "version": "0.1.30",
   "description": "A react input library",
   "scripts": {
     "rollup": "rollup -c"
@@ -36,6 +36,8 @@
   },
   "dependencies": {
     "@rollup/plugin-babel": "^6.0.4",
-    "input-master": "file:"
+    "clsx": "^2.1.1",
+    "input-master": "file:",
+    "tailwind-merge": "^2.5.4"
   }
 }

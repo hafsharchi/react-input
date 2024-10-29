@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { Input } from "./components";
 import { ComponentDescriptor } from "./components/types";
 import { useInput } from "./components/useInput";
 import "./index.css";
 import "./input.css";
 import ValidationComponent from "./ValidationComponent";
-import { ReactInputProvider } from "./contexts";
 
 type Props = {};
 
@@ -25,20 +23,21 @@ export default function App({}: Props) {
     <div dir="ltr">
       <div>dasdas</div>
       <Input
-        type="select"
+        type="text"
         name="test"
-        options={[{lable:"d", value:2}]}
+        // options={[{lable:"d", value:2}]}
         // disabled
         // fullWidth
         register={useRegister}
         wrapperClassName="border"
+        notValidClassName="baaaag"
         titleClassName="title"
         afterClassName="after"
         beforeClassName="before"
         loadingClassName="loading"
         validationComponent={ValidationComponent}
         required
-        className="input"
+        // className="input"
         title="Hello hdsjfk"
       />
       <div onClick={() => submit((p) => console.log(p))}>submit</div>

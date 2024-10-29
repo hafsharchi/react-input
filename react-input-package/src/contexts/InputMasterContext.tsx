@@ -2,26 +2,26 @@ import React, { createContext, ReactNode, useState } from "react";
 import {
   DefaultProps,
   ErrorTypes,
-  ReactInputContextProps,
+  InputMasterContextProps,
 } from "../components/types";
 
-export const ReactInputContext = createContext<
-  ReactInputContextProps | undefined
+export const InputMasterContext = createContext<
+  InputMasterContextProps | undefined
 >(undefined);
 
-interface ReactInputProviderProps {
+interface InputMasterProviderProps {
   children: ReactNode;
   errors?: ErrorTypes;
   defaultProps?: DefaultProps;
   onValidationFailedFunction?: Function;
 }
 
-export const ReactInputProvider = ({
+export const InputMasterProvider = ({
   children,
   errors,
   defaultProps,
   onValidationFailedFunction = () => {},
-}: ReactInputProviderProps) => {
+}: InputMasterProviderProps) => {
   const [validationErrors, setValidationErrors] = useState<ErrorTypes>({
     minValue: errors?.minValue ?? "Less than the minimum value",
     maxValue: errors?.maxValue ?? "More than the maximum value",
@@ -34,7 +34,7 @@ export const ReactInputProvider = ({
   });
   const onValidationFailed = onValidationFailedFunction;
 
-  const contextValue: ReactInputContextProps = {
+  const contextValue: InputMasterContextProps = {
     validationErrors,
     setValidationErrors,
     onValidationFailed: onValidationFailed,
@@ -42,8 +42,8 @@ export const ReactInputProvider = ({
   };
 
   return (
-    <ReactInputContext.Provider value={contextValue}>
+    <InputMasterContext.Provider value={contextValue}>
       {children}
-    </ReactInputContext.Provider>
+    </InputMasterContext.Provider>
   );
 };

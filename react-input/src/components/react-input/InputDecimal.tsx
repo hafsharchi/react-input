@@ -11,13 +11,13 @@ import { vMinValue } from "../../utils/vMinValue";
 import { vMaxValue } from "../../utils/vMaxValue";
 import { separate } from "../../utils/Separate";
 import { vDecimal } from "../../utils/vDecimal";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import {
   ComponentDescriptor,
   CustomValidation,
   Decimal,
-  ReactInputContextProps,
+  InputMasterContextProps,
 } from "../types";
 import { vRequired } from "../../utils";
 import { renderComponent } from "../../utils/RenderComponent";
@@ -35,8 +35,8 @@ export const InputDecimal = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
     const validationOn = _.validationOn
       ? _.validationOn
       : customized?.defaultProps?.validationOn ?? "submit";
@@ -155,12 +155,18 @@ export const InputDecimal = memo(
           className={`${
             isValid
               ? ""
-              : `${
-                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
-                }`
-          } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${
-            _.className ? _.className : ""
-          }`}
+              : `${cn(
+                  customized?.defaultProps?.notValidClassName ?? "",
+                  _.notValidClassName ?? ""
+                )}`
+          }${
+            _.disabled
+              ? cn(
+                  customized?.defaultProps?.disabledClassName ?? "",
+                  _.disabledClassName ?? ""
+                )
+              : ""
+          } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
           type="text"
           title={_.title}
           placeholder={_?.placeholder ?? ""}

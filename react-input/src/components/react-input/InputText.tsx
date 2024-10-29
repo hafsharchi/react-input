@@ -10,12 +10,12 @@ import React, {
 import {
   ComponentDescriptor,
   CustomValidation,
-  ReactInputContextProps,
+  InputMasterContextProps,
   Text,
 } from "../types";
 import { vMaxLength } from "../../utils/vMaxLength";
 import { vMinLength } from "../../utils/vMinLength";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
 import { Title } from "../elements/Title";
@@ -39,8 +39,8 @@ export const InputText = memo(
         inputRef.current.value = _.defaultValue;
     }, [_.defaultValue]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
 
     const validationOn = _.validationOn
       ? _.validationOn
@@ -139,14 +139,15 @@ export const InputText = memo(
             ? ""
             : `${cn(
                 customized?.defaultProps?.notValidClassName ?? "",
-                _.notValidClassName
+                _.notValidClassName ?? ""
               )}`
         }${
-          _.disabled &&
-          cn(
-            customized?.defaultProps?.disabledClassName ?? "",
-            _.disabledClassName ?? ""
-          )
+          _.disabled
+            ? cn(
+                customized?.defaultProps?.disabledClassName ?? "",
+                _.disabledClassName ?? ""
+              )
+            : ""
         } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
         // type="text"
         title={_.title}

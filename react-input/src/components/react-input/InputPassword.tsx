@@ -7,10 +7,15 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ComponentDescriptor, CustomValidation, Password, ReactInputContextProps } from "../types";
+import {
+  ComponentDescriptor,
+  CustomValidation,
+  Password,
+  InputMasterContextProps,
+} from "../types";
 import { vMaxLength } from "../../utils/vMaxLength";
 import { vMinLength } from "../../utils/vMinLength";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
 import { renderComponent } from "../../utils/RenderComponent";
@@ -74,8 +79,8 @@ export const InputPassword = memo(
     const togglePassword = () => {
       setShowPassword((prev: boolean) => !prev);
     };
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
 
     const validationOn = _.validationOn
       ? _.validationOn
@@ -175,10 +180,14 @@ export const InputPassword = memo(
           className={`${
             isValid
               ? ""
-              : `${
-                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
-                }`
-          } ${_.disabled ? _.disabledClassName : ""} ${_.className}`}
+              : `${cn(
+                  customized?.defaultProps?.notValidClassName,
+                  _.notValidClassName
+                )}`
+          } ${cn(
+            customized?.defaultProps?.disabledClassName,
+            _.disabledClassName
+          )} ${cn(customized?.defaultProps?.className, _.className)}`}
           type={showPassword ? "text" : "password"}
           title={_.title}
           placeholder={_?.placeholder ?? ""}
@@ -251,7 +260,7 @@ export const InputPassword = memo(
       _.title,
       _.before,
       _.after,
-cn(
+      cn(
         customized?.defaultProps?.wrapperClassName ?? "",
         _.wrapperClassName ?? ""
       ),

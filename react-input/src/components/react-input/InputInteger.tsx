@@ -7,12 +7,12 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import { ComponentDescriptor, CustomValidation, Integer, ReactInputContextProps } from "../types";
+import { ComponentDescriptor, CustomValidation, Integer, InputMasterContextProps } from "../types";
 import { vMinValue } from "../../utils/vMinValue";
 import { vMaxValue } from "../../utils/vMaxValue";
 import { vInteger } from "../../utils/vInteger";
 import { separate } from "../../utils/Separate";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vMaxLength, vMinLength, vRequired } from "../../utils";
 import { renderComponent } from "../../utils/RenderComponent";
@@ -29,8 +29,8 @@ export const InputInteger = memo(
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
 
     const validationOn = _.validationOn
       ? _.validationOn
@@ -161,12 +161,18 @@ export const InputInteger = memo(
           className={`${
             isValid
               ? ""
-              : `${
-                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
-                }`
-          } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${
-            _.className ? _.className : ""
-          }`}
+              : `${cn(
+                  customized?.defaultProps?.notValidClassName ?? "",
+                  _.notValidClassName ?? ""
+                )}`
+          }${
+            _.disabled
+              ? cn(
+                  customized?.defaultProps?.disabledClassName ?? "",
+                  _.disabledClassName ?? ""
+                )
+              : ""
+          } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
           type="text"
           title={_.title}
           placeholder={_?.placeholder ?? ""}

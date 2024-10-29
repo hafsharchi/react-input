@@ -10,12 +10,12 @@ import React, {
 import {
   ComponentDescriptor,
   CustomValidation,
-  ReactInputContextProps,
+  InputMasterContextProps,
   Textarea,
 } from "../types";
 import { vMaxLength } from "../../utils/vMaxLength";
 import { vMinLength } from "../../utils/vMinLength";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
 import { vRequired } from "../../utils";
 import { Title } from "../elements/Title";
@@ -33,8 +33,8 @@ export const InputTextArea = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
 
     const validationOn = _.validationOn
       ? _.validationOn
@@ -132,14 +132,15 @@ export const InputTextArea = memo(
             ? ""
             : `${cn(
                 customized?.defaultProps?.notValidClassName ?? "",
-                _.notValidClassName
+                _.notValidClassName ?? ""
               )}`
         }${
-          _.disabled &&
-          cn(
-            customized?.defaultProps?.disabledClassName ?? "",
-            _.disabledClassName ?? ""
-          )
+          _.disabled
+            ? cn(
+                customized?.defaultProps?.disabledClassName ?? "",
+                _.disabledClassName ?? ""
+              )
+            : ""
         } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
         title={_.title}
         placeholder={_?.placeholder ?? ""}

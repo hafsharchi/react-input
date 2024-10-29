@@ -1,4 +1,3 @@
-import { components } from "react-select";
 
 export * from "./components/react-input";
 export * from "./components/elements";
@@ -11,7 +10,7 @@ export {
   ErrorTypes,
   File,
   Integer,
-  ReactInputContextProps,
+  InputMasterContextProps,
   Select,
   Password,
   Text,
@@ -21,11 +20,11 @@ export {
   ValidationComponentProps,
   ValidationPatterns,
   ComponentDescriptor,
+  DefaultProps,
 } from "./components/types";
 export { useInput } from "./components/useInput";
 export { useOnClickOutside } from "./components/useOutside";
 export { VALIDATION_ERROR } from "./constants";
 export * from "./utils";
-export { ReactInputContext, ReactInputProvider } from "./contexts";
+export { InputMasterContext, InputMasterProvider } from "./contexts";
 export { components } from "react-select";
-import "react-multi-date-picker/styles/backgrounds/bg-gray.css"
