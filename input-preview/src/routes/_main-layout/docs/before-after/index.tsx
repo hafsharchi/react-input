@@ -7,7 +7,7 @@ import { Button } from "../../../../components/Button";
 import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
-import { Calendar, CalendarFold } from "lucide-react";
+import { Calendar, CalendarFold, DollarSign, DollarSignIcon } from "lucide-react";
 
 export const Route = createFileRoute("/_main-layout/docs/before-after/")({
   component: Text,
@@ -115,8 +115,8 @@ export const TextInput = () => {
               minLength={2}
               // maxLength={20}
               name="price"
-              after={"$"}
-              afterClassName="absolute right-4 top-1.5"
+              after={<DollarSign strokeWidth={0.5} className="text-foreground/80" size={18}/>}
+              afterClassName="absolute right-3 top-3"
               className="!pr-10"
               notValidClassName="border !border-rose-500/50"
               validationComponent={ValidationComponent}
@@ -126,14 +126,14 @@ export const TextInput = () => {
 
             <Input
               {...inputConfigs(styled)}
-              type="text"
+              type="calendar"
+              locale="english"
               title="Price"
-              minLength={2}
               name="price"              
-              before={<Calendar strokeWidth={2} className="text-foreground/30" size={18}/>}
+              before={<Calendar strokeWidth={0.3} className="text-foreground/80" size={18}/>}
               beforeClassName="absolute left-3 top-3 z-20"
-              className="!px-36"
-              titleClassName="default-input-title !pl-9"
+              className="!pl-10"
+              titleClassName="default-input-title !pl-10"
               notValidClassName="border !border-rose-500/50"
               validationComponent={ValidationComponent}
               validationOn="submit"
