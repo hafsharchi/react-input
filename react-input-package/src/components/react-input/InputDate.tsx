@@ -115,7 +115,7 @@ export const InputDate = memo(
           inputClass={`${cn(
             customized?.defaultProps?.className ?? "",
             _.className ?? ""
-          )} ${_.fullWidth ? "w-full" : ""} ${
+          )} ${
             _.disabled
               ? cn(
                   customized?.defaultProps?.disabledClassName ?? "",
@@ -138,7 +138,7 @@ export const InputDate = memo(
           editable={_.editable}
           range={_.range}
           className={cn(customized?.defaultProps?.class, _.class)}
-          containerClassName={`${_.fullWidth && "w-full"} flex date-container`}
+          containerClassName={`date-container`}
           rangeHover
           dateSeparator={_.dateSeparator}
           arrow={false}

@@ -25,20 +25,25 @@ export default function App({}: Props) {
       <Input
         type="text"
         name="test"
-        // options={[{lable:"d", value:2}]}
-        // disabled
-        // fullWidth
+        
         register={useRegister}
-        wrapperClassName="border"
-        notValidClassName="baaaag"
-        titleClassName="title"
-        afterClassName="after"
-        beforeClassName="before"
-        loadingClassName="loading"
+        wrapperClassName="wrapperClassName"
+        className="className"
+        notValidClassName="notValidClassName(when the validation is set to false)"
+        titleClassName="titleClassName"
+        afterClassName="afterClassName"
+        beforeClassName="beforeClassName"
+        loadingClassName="loadingClassName"
+        disabled
+        after={'After ...'}
+        before={'Before ...'}
+        loadingObject={'Loading ...'}
+
+        disabledClassName="disabledClassName(when disabled prop is true) "
         validationComponent={ValidationComponent}
+        loading
         required
-        // className="input"
-        title="Hello hdsjfk"
+        title="Title ..."
       />
       <div onClick={() => submit((p) => console.log(p))}>submit</div>
       <div onClick={() => update("test", null)}>update</div>

@@ -14,12 +14,12 @@ const err = {
     etc:"sdasdasdasd",
   };
 
-  const defaultValues: DefaultProps = {
-    wrapperClassName:"bg-red-500"
-  };
+  // const defaultValues: DefaultProps = {
+  //   wrapperClassName:"bg-red-500"
+  // };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <InputMasterProvider errors={err} defaultProps={defaultValues}>
+  <InputMasterProvider errors={err}>
     <App />
   </InputMasterProvider>
 );

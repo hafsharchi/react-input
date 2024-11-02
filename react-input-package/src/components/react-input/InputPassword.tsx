@@ -166,9 +166,10 @@ export const InputPassword = memo(
     const input: React.ReactNode = (
       <>
         <div
-          className={`toggle-password-visibility ${
-            _.togglePasswordVisibilityClassName ?? ""
-          }`}
+          className={cn(
+            customized?.defaultProps?.togglePasswordVisibilityClassName ?? "",
+            _.togglePasswordVisibilityClassName
+          )}
           onClick={togglePassword}
         >
           {showPassword ? hideIcon : showIcon}

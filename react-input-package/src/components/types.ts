@@ -49,8 +49,8 @@ export type DefaultProps = {
   loadingObject?: React.ReactNode;
   beforeClassName?: string;
   afterClassName?: string;
+  togglePasswordVisibilityClassName?: string;
   class?: string;
-  fullWidth?: boolean;
   unstyled?: boolean;
   portal?: any;
   components?: SelectComponentsConfig<any, any, any>;
@@ -109,7 +109,6 @@ export type Calendar = BaseInput & {
   format?: string;
   dateSeparator?: string;
   class?: string;
-  fullWidth?: boolean;
   portal?: any;
   editable?: boolean;
 };
@@ -119,7 +118,6 @@ export type Select = BaseInput &
     type: "select";
     multiple?: boolean;
     disabled?: boolean;
-    fullWidth?: boolean;
     portal?: any;
   };
 

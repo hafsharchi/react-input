@@ -72,7 +72,7 @@ export const TextInput = () => {
           <PreviewBox>
             <Input
               {...inputConfigs()}
-              type="password"
+              type="text"
               title="First Name *"
               required
               minLength={2}
@@ -80,7 +80,7 @@ export const TextInput = () => {
               disabled
               disabledClassName="!bg-foreground/10 cursor-not-allowed"
               register={useRegister}
-              notValidClassName="!border !border-rose-500/50"
+              notValidClassName="border !border-rose-500/50"
             />
 
             <Button
