@@ -1,7 +1,8 @@
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import { ReactInputProvider } from "./contexts/ReactInputContext.tsx";
+import { InputMasterProvider } from "./contexts/InputMasterContext.tsx";
+import { DefaultProps } from "./components/types.ts";
 const err = {
     minValue:"minValue",
     maxValue:"maxValue",
@@ -13,8 +14,12 @@ const err = {
     etc:"sdasdasdasd",
   };
 
+  // const defaultValues: DefaultProps = {
+  //   wrapperClassName:"bg-red-500"
+  // };
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <ReactInputProvider errors={err}>
+  <InputMasterProvider errors={err}>
     <App />
-  </ReactInputProvider>
+  </InputMasterProvider>
 );

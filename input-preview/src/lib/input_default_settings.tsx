@@ -1,28 +1,5 @@
 import { ComponentDescriptor } from "input-master";
 
-const cs: ComponentDescriptor = {
-  type: "wrapper",
-  children: [
-    {
-      type: "before",
-    },
-    {
-      type: "input",
-    },
-    {
-      type: "title",
-    },
-    {
-      type: "loading",
-    },
-    {
-      type: "after",
-    },
-    {
-      type: "validation",
-    },
-  ],
-};
 
 const checkboxCs: ComponentDescriptor = {
   type: "wrapper",
@@ -59,19 +36,7 @@ const checkboxCs: ComponentDescriptor = {
 export const inputConfigs = (styled?: boolean) => {
   if (styled == false) return {};
   return {
-    fullWidth: true,
-    unstyled: true,
-    loadingClassName: "default-input-loading",
-    disabledClassName: "default-input-disabled",
-    wrapperClassName: "default-input-wrapper",
-    notValidClassName: "default-input-not-valid",
-    afterClassName: "default-input-after",
-    beforeClassName: "default-input-before",
-    titleClassName: "default-input-title",
-    componentStructure: cs,
-    classNamePrefix:"filter",
-    validationOn: "submit",
-    portal: document.querySelector("body"),
+    
   };
 };
 

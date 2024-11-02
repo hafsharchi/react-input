@@ -1,11 +1,9 @@
-import { useState } from "react";
 import { Input } from "./components";
 import { ComponentDescriptor } from "./components/types";
 import { useInput } from "./components/useInput";
 import "./index.css";
 import "./input.css";
 import ValidationComponent from "./ValidationComponent";
-import { ReactInputProvider } from "./contexts";
 
 type Props = {};
 
@@ -23,24 +21,29 @@ export default function App({}: Props) {
 
   return (
     <div dir="ltr">
+      <div>dasdas</div>
       <Input
-        type="calendar"
-        locale="english"
+        type="text"
         name="test"
-        // disabled
-        // fullWidth
-        editable={false}
+        
         register={useRegister}
-        wrapperClassName=""
-        titleClassName="title"
-        afterClassName="after"
-        beforeClassName="before"
-        loadingClassName="loading"
+        wrapperClassName="wrapperClassName"
+        className="className"
+        notValidClassName="notValidClassName(when the validation is set to false)"
+        titleClassName="titleClassName"
+        afterClassName="afterClassName"
+        beforeClassName="beforeClassName"
+        loadingClassName="loadingClassName"
+        disabled
+        after={'After ...'}
+        before={'Before ...'}
+        loadingObject={'Loading ...'}
+
+        disabledClassName="disabledClassName(when disabled prop is true) "
         validationComponent={ValidationComponent}
-        validationOn="submit"
+        loading
         required
-        className="input"
-        title="Hello hdsjfk"
+        title="Title ..."
       />
       <div onClick={() => submit((p) => console.log(p))}>submit</div>
       <div onClick={() => update("test", null)}>update</div>

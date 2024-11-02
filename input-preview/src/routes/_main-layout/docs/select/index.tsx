@@ -126,7 +126,6 @@ export const TextInput = () => {
             }
           >
             <Input
-              {...inputConfigs(styled)}
               type="select"
               options={[
                 { label: "Blue", value: 1 },
@@ -134,41 +133,27 @@ export const TextInput = () => {
                 { label: "Green", value: 3 },
               ]}
               name="color"
-              classNamePrefix="filter"
-              fullWidth
               placeholder=""
               title="Color *"
               required
               notValidClassName="select-not-valid"
-              validationComponent={ValidationComponent}
               validationOn="submit"
               register={useRegister}
-              components={{
-                DropdownIndicator,
-                ClearIndicator,
-              }}
+              
             />
             <Input
-              {...inputConfigs(styled)}
               type="select"
               options={[
                 { label: "Blue", value: 1 },
                 { label: "Red", value: 2 },
                 { label: "Green", value: 3 },
-              ]}
-              components={{
-                DropdownIndicator,
-                ClearIndicator,
-                MultiValueRemove,
-              }}
+              ]}              
               placeholder=""
               name="colors"
               multiple
-              fullWidth
               title="Colors *"
               required
               notValidClassName="select-not-valid"
-              validationComponent={ValidationComponent}
               validationOn="submit"
               register={useRegister}
             />
@@ -262,39 +247,3 @@ export const TextInput = () => {
   );
 }
 
-const DropdownIndicator = (props: any) => {
-  console.log(props);
-  return (
-    components.DropdownIndicator && (
-      <components.DropdownIndicator {...props}>
-        <ChevronDown
-          strokeWidth={1}
-          className={`${props.selectProps.menuIsOpen ? "-rotate-180" : ""} transition-transform duration-300`}
-          size={20}
-        />
-      </components.DropdownIndicator>
-    )
-  );
-};
-
-const ClearIndicator = (props: any) => {
-  console.log(props);
-  return (
-    components.ClearIndicator && (
-      <components.ClearIndicator {...props}>
-        <X strokeWidth={0.8} size={18} />
-      </components.ClearIndicator>
-    )
-  );
-};
-
-const MultiValueRemove = (props: any) => {
-  console.log(props);
-  return (
-    components.MultiValueRemove && (
-      <components.MultiValueRemove {...props}>
-        <X strokeWidth={1} size={15} className="cursor-pointer" />
-      </components.MultiValueRemove>
-    )
-  );
-};

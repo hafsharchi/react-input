@@ -1,7 +1,7 @@
 /** ---------- Input Styles ---------- **/
 .default-input-wrapper,
 .date-container {
-  @apply relative;
+  @apply relative w-full;
 }
 
 .default-input-wrapper > input,

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { ReactInputContextProps, Type } from "./types";
+import { InputMasterContextProps, Type } from "./types";
 import { useRef } from "react";
-import { ReactInputContext } from "../contexts";
+import { InputMasterContext } from "../contexts";
 
 type Input = {
   type: Type;
@@ -10,7 +10,7 @@ type Input = {
 };
 
 export const useInput = () => {
-  const context = useContext(ReactInputContext);
+  const context = useContext(InputMasterContext);
 
   var inputs: Array<Input> = [];
 

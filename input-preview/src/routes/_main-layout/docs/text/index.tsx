@@ -107,15 +107,11 @@ export const TextInput = () => {
             }
           >
             <Input
-              {...inputConfigs(styled)}
               type="text"
               title="First Name *"
               required
               minLength={2}
               name="firstName"
-              notValidClassName="border !border-rose-500/50"
-              validationComponent={ValidationComponent}
-              validationOn="submit"
               register={useRegister}
             />
             <Input

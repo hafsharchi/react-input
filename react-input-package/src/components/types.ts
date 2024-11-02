@@ -1,7 +1,7 @@
 // import { GroupBase, OptionsOrGroups } from "react-select";
 
 import React from "react";
-import { GroupBase, OptionsOrGroups } from "react-select";
+import { SelectComponentsConfig } from "react-select";
 import { Props as SelectProps } from "react-select";
 
 export type ValidationPatterns = "email" | "website" | string;
@@ -9,7 +9,6 @@ export type ValidationPatterns = "email" | "website" | string;
 export type BaseInput = {
   id?: string;
   title?: string;
-  titleAfter?: boolean;
   type: Type;
   name: string;
   register: any;
@@ -37,6 +36,28 @@ export type BaseInput = {
   componentStructure?: ComponentDescriptor;
   disabledClassName?: string;
   wrapInside?: boolean;
+};
+
+export type DefaultProps = {
+  componentStructure?: ComponentDescriptor;
+  disabledClassName?: string;
+  notValidClassName?: string;
+  className?: string;
+  wrapperClassName?: string;
+  titleClassName?: string;
+  loadingClassName?: string;
+  loadingObject?: React.ReactNode;
+  beforeClassName?: string;
+  afterClassName?: string;
+  togglePasswordVisibilityClassName?: string;
+  class?: string;
+  unstyled?: boolean;
+  portal?: any;
+  components?: SelectComponentsConfig<any, any, any>;
+  classNamePrefix?: string;
+  noOptionsMessage?: (obj: { inputValue: string }) => React.ReactNode;
+  validationOn?: "submit-blur-change" | "submit-blur" | "submit";
+  validationComponent?: React.FC<ValidationComponentProps>;
 };
 
 export type Text = BaseInput & {
@@ -88,7 +109,6 @@ export type Calendar = BaseInput & {
   format?: string;
   dateSeparator?: string;
   class?: string;
-  fullWidth?: boolean;
   portal?: any;
   editable?: boolean;
 };
@@ -98,7 +118,6 @@ export type Select = BaseInput &
     type: "select";
     multiple?: boolean;
     disabled?: boolean;
-    fullWidth?: boolean;
     portal?: any;
   };
 
@@ -137,8 +156,9 @@ export type ErrorTypes =
       etc: string;
     };
 
-export interface ReactInputContextProps {
+export interface InputMasterContextProps {
   validationErrors: ErrorTypes;
+  defaultProps?: DefaultProps;
   setValidationErrors: React.Dispatch<React.SetStateAction<ErrorTypes>>;
   onValidationFailed: Function;
 }

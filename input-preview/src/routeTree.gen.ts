@@ -23,6 +23,7 @@ import { Route as MainLayoutDocsPasswordIndexImport } from './routes/_main-layou
 import { Route as MainLayoutDocsLoadingIndexImport } from './routes/_main-layout/docs/loading/index'
 import { Route as MainLayoutDocsIntroductionIndexImport } from './routes/_main-layout/docs/introduction/index'
 import { Route as MainLayoutDocsIntegerDecimalIndexImport } from './routes/_main-layout/docs/integer-decimal/index'
+import { Route as MainLayoutDocsDisabledIndexImport } from './routes/_main-layout/docs/disabled/index'
 import { Route as MainLayoutDocsCustomValidationsIndexImport } from './routes/_main-layout/docs/custom-validations/index'
 import { Route as MainLayoutDocsCalendarIndexImport } from './routes/_main-layout/docs/calendar/index'
 import { Route as MainLayoutDocsBeforeAfterIndexImport } from './routes/_main-layout/docs/before-after/index'
@@ -98,6 +99,12 @@ const MainLayoutDocsIntegerDecimalIndexRoute =
     getParentRoute: () => MainLayoutRoute,
   } as any)
 
+const MainLayoutDocsDisabledIndexRoute =
+  MainLayoutDocsDisabledIndexImport.update({
+    path: '/docs/disabled/',
+    getParentRoute: () => MainLayoutRoute,
+  } as any)
+
 const MainLayoutDocsCustomValidationsIndexRoute =
   MainLayoutDocsCustomValidationsIndexImport.update({
     path: '/docs/custom-validations/',
@@ -153,6 +160,13 @@ declare module '@tanstack/react-router' {
       path: '/docs/custom-validations'
       fullPath: '/docs/custom-validations'
       preLoaderRoute: typeof MainLayoutDocsCustomValidationsIndexImport
+      parentRoute: typeof MainLayoutImport
+    }
+    '/_main-layout/docs/disabled/': {
+      id: '/_main-layout/docs/disabled/'
+      path: '/docs/disabled'
+      fullPath: '/docs/disabled'
+      preLoaderRoute: typeof MainLayoutDocsDisabledIndexImport
       parentRoute: typeof MainLayoutImport
     }
     '/_main-layout/docs/integer-decimal/': {
@@ -236,6 +250,7 @@ export const routeTree = rootRoute.addChildren({
     MainLayoutDocsBeforeAfterIndexRoute,
     MainLayoutDocsCalendarIndexRoute,
     MainLayoutDocsCustomValidationsIndexRoute,
+    MainLayoutDocsDisabledIndexRoute,
     MainLayoutDocsIntegerDecimalIndexRoute,
     MainLayoutDocsIntroductionIndexRoute,
     MainLayoutDocsLoadingIndexRoute,
@@ -267,6 +282,7 @@ export const routeTree = rootRoute.addChildren({
         "/_main-layout/docs/before-after/",
         "/_main-layout/docs/calendar/",
         "/_main-layout/docs/custom-validations/",
+        "/_main-layout/docs/disabled/",
         "/_main-layout/docs/integer-decimal/",
         "/_main-layout/docs/introduction/",
         "/_main-layout/docs/loading/",
@@ -293,6 +309,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_main-layout/docs/custom-validations/": {
       "filePath": "_main-layout/docs/custom-validations/index.tsx",
+      "parent": "/_main-layout"
+    },
+    "/_main-layout/docs/disabled/": {
+      "filePath": "_main-layout/docs/disabled/index.tsx",
       "parent": "/_main-layout"
     },
     "/_main-layout/docs/integer-decimal/": {

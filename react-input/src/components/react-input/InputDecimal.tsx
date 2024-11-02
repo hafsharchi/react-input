@@ -11,9 +11,14 @@ import { vMinValue } from "../../utils/vMinValue";
 import { vMaxValue } from "../../utils/vMaxValue";
 import { separate } from "../../utils/Separate";
 import { vDecimal } from "../../utils/vDecimal";
-import { ReactInputContext } from "../../contexts/ReactInputContext";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
-import { CustomValidation, Decimal, ReactInputContextProps } from "../types";
+import {
+  ComponentDescriptor,
+  CustomValidation,
+  Decimal,
+  InputMasterContextProps,
+} from "../types";
 import { vRequired } from "../../utils";
 import { renderComponent } from "../../utils/RenderComponent";
 import { Wrapper } from "../elements/Wrapper";
@@ -21,6 +26,7 @@ import { After } from "../elements/After";
 import { Before } from "../elements/Before";
 import { Loading } from "../elements/Loading";
 import { Title } from "../elements/Title";
+import { cn } from "../../utils/cn";
 
 export const InputDecimal = memo(
   forwardRef((_: Decimal, ref: any) => {
@@ -29,8 +35,11 @@ export const InputDecimal = memo(
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
-    const customized: ReactInputContextProps | undefined =
-      useContext(ReactInputContext);
+    const customized: InputMasterContextProps | undefined =
+      useContext(InputMasterContext);
+    const validationOn = _.validationOn
+      ? _.validationOn
+      : customized?.defaultProps?.validationOn ?? "submit";
 
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
@@ -41,7 +50,9 @@ export const InputDecimal = memo(
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current && inputRef.current.value) {
-          return inputRef.current?.value?.replaceAll(_.separator ?? "", "") ?? "";
+          return (
+            inputRef.current?.value?.replaceAll(_.separator ?? "", "") ?? ""
+          );
         }
         return "";
       },
@@ -64,7 +75,7 @@ export const InputDecimal = memo(
       vDecimal({ ref: inputRef });
       if (_.separator) separate({ ref: inputRef, seperator: _.separator });
 
-      if (_.validationOn == "submit-blur-change" || !isValid)
+      if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
     };
 
@@ -72,8 +83,8 @@ export const InputDecimal = memo(
       if (_.onBlur) _.onBlur(e);
 
       if (
-        _.validationOn == "submit-blur-change" ||
-        _.validationOn == "submit-blur" ||
+        validationOn == "submit-blur-change" ||
+        validationOn == "submit-blur" ||
         !isValid
       )
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
@@ -144,12 +155,18 @@ export const InputDecimal = memo(
           className={`${
             isValid
               ? ""
-              : `${
-                  _.notValidClassName ? _.notValidClassName : "input-not-valid"
-                }`
-          } ${_.disabled && _.disabledClassName ? _.disabledClassName : ""} ${
-            _.className ? _.className : ""
-          }`}
+              : `${cn(
+                  customized?.defaultProps?.notValidClassName ?? "",
+                  _.notValidClassName ?? ""
+                )}`
+          } ${
+            _.disabled
+              ? cn(
+                  customized?.defaultProps?.disabledClassName ?? "",
+                  _.disabledClassName ?? ""
+                )
+              : ""
+          } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
           type="text"
           title={_.title}
           placeholder={_?.placeholder ?? ""}
@@ -159,38 +176,89 @@ export const InputDecimal = memo(
         />
       </>
     );
-    if (!_.componentStructure)
+    if (!_.componentStructure && !customized?.defaultProps?.componentStructure)
       return (
         <>
-          <Wrapper className={_.wrapperClassName}>
-            <Before className={_.beforeClassName} before={_.before} />
-            <Title title={_.title} className={_.titleClassName} />
+          <Wrapper
+            className={`${cn(
+              customized?.defaultProps?.wrapperClassName ?? "",
+              _.wrapperClassName ?? ""
+            )}`}
+          >
+            <Before
+              className={cn(
+                customized?.defaultProps?.beforeClassName ?? "",
+                _.beforeClassName ?? ""
+              )}
+              before={_.before}
+            />
+            <Title
+              title={_.title}
+              className={cn(
+                customized?.defaultProps?.titleClassName ?? "",
+                _.titleClassName ?? ""
+              )}
+            />
             {input}
             <Loading
-              className={_.loadingClassName}
+              className={cn(
+                customized?.defaultProps?.loadingClassName ?? "",
+                _.loadingClassName
+              )}
               isLoading={_.loading}
-              loadingObject={_.loadingObject}
+              loadingObject={
+                _.loadingObject ?? customized?.defaultProps?.loadingObject
+              }
             />
-            {_.validationComponent && _.validationComponent({ errors: errors })}
-            <After className={_.afterClassName} after={_.after} />
+            {_.validationComponent ? (
+              _.validationComponent({ errors: errors })
+            ) : customized?.defaultProps?.validationComponent ? (
+              customized?.defaultProps?.validationComponent({ errors: errors })
+            ) : (
+              <></>
+            )}
+            <After
+              className={cn(
+                customized?.defaultProps?.afterClassName ?? "",
+                _.afterClassName ?? ""
+              )}
+              after={_.after}
+            />
           </Wrapper>
         </>
       );
 
     return renderComponent(
-      _.componentStructure,
+      _.componentStructure
+        ? _.componentStructure
+        : (customized?.defaultProps?.componentStructure as ComponentDescriptor),
       input,
       _.validationComponent,
       _.title,
       _.before,
       _.after,
-      _.wrapperClassName,
-      _.beforeClassName,
-      _.loadingClassName,
-      _.titleClassName,
-      _.afterClassName,
+      cn(
+        customized?.defaultProps?.wrapperClassName ?? "",
+        _.wrapperClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.beforeClassName ?? "",
+        _.beforeClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.loadingClassName ?? "",
+        _.loadingClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.titleClassName ?? "",
+        _.titleClassName ?? ""
+      ),
+      cn(
+        customized?.defaultProps?.afterClassName ?? "",
+        _.afterClassName ?? ""
+      ),
       _.loading,
-      _.loadingObject,
+      _.loadingObject ?? customized?.defaultProps?.loadingObject,
       errors
     );
   })
