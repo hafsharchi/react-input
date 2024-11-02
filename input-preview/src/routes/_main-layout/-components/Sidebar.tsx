@@ -28,7 +28,7 @@ export default function Sidebar({ className }: Props) {
       <h1 className="font-semibold text-foreground mt-4">Other Features</h1>
       <SidebarLink to="/">Styling</SidebarLink>
       <SidebarLink to="/docs/loading">Loading</SidebarLink>
-      <SidebarLink to="/">Disabled</SidebarLink>
+      <SidebarLink to="/docs/disabled">Disabled</SidebarLink>
       <SidebarLink to="/">Validation on</SidebarLink>
       <SidebarLink to="/docs/before-after">Before & After</SidebarLink>
       <SidebarLink to="/">Update field valus</SidebarLink>

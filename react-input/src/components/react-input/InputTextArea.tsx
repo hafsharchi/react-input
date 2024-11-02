@@ -134,7 +134,7 @@ export const InputTextArea = memo(
                 customized?.defaultProps?.notValidClassName ?? "",
                 _.notValidClassName ?? ""
               )}`
-        }${
+        } ${
           _.disabled
             ? cn(
                 customized?.defaultProps?.disabledClassName ?? "",

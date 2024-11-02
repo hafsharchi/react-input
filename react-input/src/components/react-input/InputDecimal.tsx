@@ -159,7 +159,7 @@ export const InputDecimal = memo(
                   customized?.defaultProps?.notValidClassName ?? "",
                   _.notValidClassName ?? ""
                 )}`
-          }${
+          } ${
             _.disabled
               ? cn(
                   customized?.defaultProps?.disabledClassName ?? "",

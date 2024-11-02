@@ -202,8 +202,7 @@ export const InputSelect = memo(
                       )
                     : ""
                 }`
-          }
-           ${cn(customized?.defaultProps?.className, _.className ?? "")}`}
+          } ${cn(customized?.defaultProps?.className, _.className ?? "")}`}
           value={value}
           onChange={onChange}
           unstyled={_.unstyled ?? customized?.defaultProps?.unstyled ?? false}
