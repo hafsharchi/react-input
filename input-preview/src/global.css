@@ -149,10 +149,10 @@ body {
     @apply text-foreground/70 font-light my-4 leading-loose;
   }
   li {
-    @apply text-foreground/80 list-disc py-1.5;
+    @apply text-foreground/70 font-light my-2 list-disc leading-loose text-sm;
   }
   b {
-    @apply pr-1 text-foreground font-semibold;
+    @apply pr-1 text-foreground/80 font-bold;
   }
 
   td{

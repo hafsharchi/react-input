@@ -26,10 +26,9 @@ export default function Sidebar({ className }: Props) {
       <SidebarLink to="/docs/validation-on">Validation on</SidebarLink>
 
       <h1 className="font-semibold text-foreground mt-4">Other Features</h1>
-      <SidebarLink to="/">Styling</SidebarLink>
+      <SidebarLink to="/docs/styling">Styling</SidebarLink>
       <SidebarLink to="/docs/loading">Loading</SidebarLink>
       <SidebarLink to="/docs/disabled">Disabled</SidebarLink>
-      <SidebarLink to="/">Validation on</SidebarLink>
       <SidebarLink to="/docs/before-after">Before & After</SidebarLink>
       <SidebarLink to="/">Update field valus</SidebarLink>
       <SidebarLink to="/">Default value</SidebarLink>
