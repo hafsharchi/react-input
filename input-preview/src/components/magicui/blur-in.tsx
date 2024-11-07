@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { cn } from "../../lib/utils";
 
-import { cn } from "@/lib/utils";
 
 interface BlurIntProps {
-  word: string;
+  word: React.ReactNode;
   className?: string;
   variant?: {
     hidden: { filter: string; opacity: number };
@@ -28,7 +28,7 @@ const BlurIn = ({ word, className, variant, duration = 1 }: BlurIntProps) => {
       variants={combinedVariants}
       className={cn(
         className,
-        "font-display text-center text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]",
+        "text-center tracking-[-0.02em]"
       )}
     >
       {word}
