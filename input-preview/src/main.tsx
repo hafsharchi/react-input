@@ -4,7 +4,12 @@ import { routeTree } from "./routeTree.gen";
 import "./global.css";
 import "./input.css";
 import { ThemeProvider } from "./routes/_main-layout/-contexts/ThemeContext";
-import { ComponentDescriptor, components, DefaultProps, InputMasterProvider } from "input-master";
+import {
+  ComponentDescriptor,
+  components,
+  DefaultProps,
+  InputMasterProvider,
+} from "input-master";
 import { ChevronDown, X } from "lucide-react";
 import ValidationComponent from "./ValidationComponent";
 
@@ -26,31 +31,29 @@ declare module "@tanstack/react-router" {
 
 const rootElement = document.getElementById("app")!;
 
-
-  const cs: ComponentDescriptor = {
-    type: "wrapper",
-    children: [
-      {
-        type: "before",
-      },
-      {
-        type: "input",
-      },
-      {
-        type: "title",
-      },
-      {
-        type: "loading",
-      },
-      {
-        type: "after",
-      },
-      {
-        type: "validation",
-      },
-    ],
-  };
-
+const cs: ComponentDescriptor = {
+  type: "wrapper",
+  children: [
+    {
+      type: "before",
+    },
+    {
+      type: "input",
+    },
+    {
+      type: "title",
+    },
+    {
+      type: "loading",
+    },
+    {
+      type: "after",
+    },
+    {
+      type: "validation",
+    },
+  ],
+};
 
 const DropdownIndicator = (props: any) => {
   console.log(props);
