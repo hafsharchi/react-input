@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as MainLayoutImport } from './routes/_main-layout'
+import { Route as IndexImport } from './routes/index'
 import { Route as MainLayoutIndexImport } from './routes/_main-layout/index'
 import { Route as MainLayoutDocsValidationOnIndexImport } from './routes/_main-layout/docs/validation-on/index'
 import { Route as MainLayoutDocsValidationDefaultsIndexImport } from './routes/_main-layout/docs/validation-defaults/index'
@@ -33,6 +34,11 @@ import { Route as MainLayoutDocsBeforeAfterIndexImport } from './routes/_main-la
 
 const MainLayoutRoute = MainLayoutImport.update({
   id: '/_main-layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRoute = IndexImport.update({
+  path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -135,6 +141,13 @@ const MainLayoutDocsBeforeAfterIndexRoute =
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     '/_main-layout': {
       id: '/_main-layout'
       path: ''
@@ -260,6 +273,7 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
+  IndexRoute,
   MainLayoutRoute: MainLayoutRoute.addChildren({
     MainLayoutIndexRoute,
     MainLayoutDocsBeforeAfterIndexRoute,
@@ -288,8 +302,12 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
+        "/",
         "/_main-layout"
       ]
+    },
+    "/": {
+      "filePath": "index.tsx"
     },
     "/_main-layout": {
       "filePath": "_main-layout.tsx",

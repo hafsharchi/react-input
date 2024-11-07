@@ -24,6 +24,7 @@ export const renderComponent = (
   loading?: boolean,
   loadingObject?: React.ReactNode,
   errors?: Array<string>,
+  hasValue?: boolean,
   key?: number
 ): React.ReactNode => {
   switch (descriptor.type) {
@@ -47,6 +48,7 @@ export const renderComponent = (
               loading,
               loadingObject,
               errors,
+              hasValue,
               index
             )
           )
@@ -54,7 +56,13 @@ export const renderComponent = (
 
       return React.createElement(
         descriptor.tag ?? "div",
-        { ...{ className: wrapperClassName } },
+        {
+          ...{
+            className: `${wrapperClassName} ${
+              hasValue ? descriptor.hasValueClassName ?? "" : ""
+            }`,
+          },
+        },
         key,
         ...(wrapperChildren ?? "")
       );
@@ -76,10 +84,15 @@ export const renderComponent = (
               loading,
               loadingObject,
               errors,
+              hasValue,
               index
             )
           )
         : null;
+      if (descriptor?.props?.className)
+        descriptor.props.className += ` ${
+          hasValue ? descriptor.hasValueClassName ?? "" : ""
+        }`;
       return React.createElement(
         descriptor.tag ?? "div",
         { ...descriptor.props, key },
@@ -92,7 +105,9 @@ export const renderComponent = (
           key={key}
           title={title}
           tag={descriptor.tag}
-          className={titleClassName}
+          className={`${titleClassName} ${
+            hasValue ? descriptor.hasValueClassName ?? "" : ""
+          }`}
         />
       );
     case "before":
@@ -100,7 +115,9 @@ export const renderComponent = (
         <Before
           key={key}
           tag={descriptor.tag}
-          className={beforeClassName}
+          className={`${beforeClassName} ${
+            hasValue ? descriptor.hasValueClassName ?? "" : ""
+          }`}
           before={before}
         />
       );
@@ -109,7 +126,9 @@ export const renderComponent = (
         <After
           key={key}
           tag={descriptor.tag}
-          className={afterClassName}
+          className={`${afterClassName} ${
+            hasValue ? descriptor.hasValueClassName ?? "" : ""
+          }`}
           after={after}
         />
       );
@@ -118,7 +137,9 @@ export const renderComponent = (
         <Loading
           key={key}
           tag={descriptor.tag}
-          className={loadingClassName}
+          className={`${loadingClassName} ${
+            hasValue ? descriptor.hasValueClassName ?? "" : ""
+          }`}
           loadingObject={loadingObject}
           isLoading={loading}
         />

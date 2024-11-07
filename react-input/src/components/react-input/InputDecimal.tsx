@@ -166,7 +166,10 @@ export const InputDecimal = memo(
                   _.disabledClassName ?? ""
                 )
               : ""
-          } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
+          } ${cn(
+            customized?.defaultProps?.className ?? "",
+            _.className ?? ""
+          )}`}
           type="text"
           title={_.title}
           placeholder={_?.placeholder ?? ""}
@@ -259,7 +262,8 @@ export const InputDecimal = memo(
       ),
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
-      errors
+      errors,
+      value && value != ""
     );
   })
 );

@@ -233,7 +233,8 @@ export const InputTextArea = memo(
       ),
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
-      errors
+      errors,
+      value && value != ""
     );
   })
 );

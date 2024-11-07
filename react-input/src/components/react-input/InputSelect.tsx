@@ -318,7 +318,8 @@ export const InputSelect = memo(
       _.loadingObject
         ? _.loadingObject
         : customized?.defaultProps?.loadingObject,
-      errors
+      errors,
+      value && value != ""
     );
   })
 );
