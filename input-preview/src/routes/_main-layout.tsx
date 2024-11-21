@@ -9,7 +9,6 @@ export const Route = createFileRoute("/_main-layout")({
 });
 
 function MainLayout() {
-
   return (
     <>
       <Header />
@@ -24,4 +23,3 @@ function MainLayout() {
     </>
   );
 }
-

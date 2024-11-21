@@ -112,6 +112,7 @@ const defaultProps: DefaultProps = {
   validationComponent: ValidationComponent,
   portal: document.querySelector("body"),
 };
+
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(

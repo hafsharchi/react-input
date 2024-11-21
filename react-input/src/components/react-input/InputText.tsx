@@ -33,6 +33,7 @@ export const InputText = memo(
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
+    const [value, setValue] = useState<any>();
 
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
@@ -68,7 +69,7 @@ export const InputText = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
-
+      if (inputRef.current) setValue(inputRef.current?.value.toString);
       applyMask({
         ref: inputRef,
         mask: _.mask,
