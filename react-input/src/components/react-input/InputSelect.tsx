@@ -319,7 +319,7 @@ export const InputSelect = memo(
         ? _.loadingObject
         : customized?.defaultProps?.loadingObject,
       errors,
-      value && value != ""
+      value && value.length > 0
     );
   })
 );

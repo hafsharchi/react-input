@@ -32,7 +32,7 @@ export const InputDecimal = memo(
   forwardRef((_: Decimal, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
-
+    const [value, setValue] = useState();
     const [errors, setErrors] = useState<Array<string>>([]);
 
     const customized: InputMasterContextProps | undefined =
@@ -72,6 +72,7 @@ export const InputDecimal = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
+      setValue(value);
       vDecimal({ ref: inputRef });
       if (_.separator) separate({ ref: inputRef, seperator: _.separator });
 
