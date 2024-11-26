@@ -30,7 +30,7 @@ export const InputTextArea = memo(
   forwardRef((_: Textarea, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLTextAreaElement>(null);
-    const [value, setValue] = useState<any>();
+    const [value, setValue] = useState<any>(_?.defaultValue.toString());
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
@@ -68,7 +68,7 @@ export const InputTextArea = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLTextAreaElement>) => {
       if (_.onChange) _.onChange(e);
-      if (inputRef.current) setValue(inputRef.current?.value.toString);
+      setValue(e?.target.value);
 
       if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
 
@@ -236,7 +236,7 @@ export const InputTextArea = memo(
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
       errors,
-      value && value != ""
+      Boolean(value)
     );
   })
 );

@@ -12,11 +12,14 @@ export default function App({}: Props) {
   const componentStructure: ComponentDescriptor = {
     type: "wrapper",
     props: { className: "inside-wrapper" },
-    hasValueClassName:"ihavevalue",
+    hasValueClassName: "ihavevalue",
     children: [
       {
+        hasValueClassName: "ihavevalueandimtitle",
+        type: "title",
+      },
+      {
         type: "input",
-        hasValueClassName:"ihavevalue",
       },
     ],
   };
@@ -25,27 +28,29 @@ export default function App({}: Props) {
     <div dir="ltr">
       <div>dasdas</div>
       <Input
-        type="calendar"
-        name="test"
-        locale="persian"
+        type="select"
+        name="email"
+        options={[
+          { label: "myName", value: 2 },
+          { label: "myLastName", value: 3 },
+        ]}
         register={useRegister}
         wrapperClassName="wrapperClassName"
         className="className"
-        // defaultValue={2}
         notValidClassName="notValidClassName(when the validation is set to false)"
         titleClassName="titleClassName"
         afterClassName="afterClassName"
         beforeClassName="beforeClassName"
         loadingClassName="loadingClassName"
-        after={'After ...'}
-        before={'Before ...'}
-        loadingObject={'Loading ...'}
+        after={"After ..."}
+        before={"Before ..."}
+        loadingObject={"Loading ..."}
         componentStructure={componentStructure}
         disabledClassName="disabledClassName(when disabled prop is true) "
         validationComponent={ValidationComponent}
         loading
         required
-        title="Title ..."
+        title="email"
       />
       <div onClick={() => submit((p) => console.log(p))}>submit</div>
       <div onClick={() => update("test", null)}>update</div>

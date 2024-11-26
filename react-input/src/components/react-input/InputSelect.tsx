@@ -223,13 +223,7 @@ export const InputSelect = memo(
             className={`${cn(
               customized?.defaultProps?.wrapperClassName ?? "",
               _.wrapperClassName ?? ""
-            )} ${
-              (value && !_.multiple) ||
-              (_.multiple && value && value.length != 0) ||
-              inputValue
-                ? "has-value"
-                : ""
-            }`}
+            )} `}
           >
             <Before
               className={cn(
@@ -290,13 +284,7 @@ export const InputSelect = memo(
       `${cn(
         customized?.defaultProps?.wrapperClassName ?? "",
         _.wrapperClassName ?? ""
-      )} ${
-        (value && !_.multiple) ||
-        (_.multiple && value && value.length != 0) ||
-        inputValue
-          ? "has-value"
-          : ""
-      }`,
+      )}`,
       cn(
         customized?.defaultProps?.beforeClassName ?? "",
         _.beforeClassName ?? ""
@@ -319,7 +307,11 @@ export const InputSelect = memo(
         ? _.loadingObject
         : customized?.defaultProps?.loadingObject,
       errors,
-      value && value.length > 0
+      Boolean(
+        (value && !_.multiple) ||
+          (_.multiple && value && value.length != 0) ||
+          inputValue
+      )
     );
   })
 );

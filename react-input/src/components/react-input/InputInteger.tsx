@@ -32,7 +32,7 @@ export const InputInteger = memo(
   forwardRef((_: Integer, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [value, setValue] = useState<any>();
+    const [value, setValue] = useState<any>(_?.defaultValue.toString());
 
     const [errors, setErrors] = useState<Array<string>>([]);
     const customized: InputMasterContextProps | undefined =
@@ -74,7 +74,7 @@ export const InputInteger = memo(
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
 
-      if (inputRef.current) setValue(inputRef.current?.value.toString);
+      setValue(e?.target.value);
 
       vInteger({ ref: inputRef });
       if (_.separator) separate({ ref: inputRef, seperator: _.separator });
@@ -278,7 +278,7 @@ export const InputInteger = memo(
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
       errors,
-      value && value != ""
+      Boolean(value)
     );
   })
 );
