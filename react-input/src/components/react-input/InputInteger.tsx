@@ -32,7 +32,7 @@ export const InputInteger = memo(
   forwardRef((_: Integer, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [value, setValue] = useState<any>(_?.defaultValue.toString());
+    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
 
     const [errors, setErrors] = useState<Array<string>>([]);
     const customized: InputMasterContextProps | undefined =

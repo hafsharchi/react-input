@@ -8,7 +8,7 @@ import ValidationComponent from "./ValidationComponent";
 type Props = {};
 
 export default function App({}: Props) {
-  const { useRegister, submit, update } = useInput();
+  const { useRegister, submit, update, checkValidation } = useInput();
   const componentStructure: ComponentDescriptor = {
     type: "wrapper",
     props: { className: "inside-wrapper" },
@@ -28,12 +28,8 @@ export default function App({}: Props) {
     <div dir="ltr">
       <div>dasdas</div>
       <Input
-        type="select"
-        name="email"
-        options={[
-          { label: "myName", value: 2 },
-          { label: "myLastName", value: 3 },
-        ]}
+        type="text"
+        name="dd"
         register={useRegister}
         wrapperClassName="wrapperClassName"
         className="className"
@@ -42,17 +38,49 @@ export default function App({}: Props) {
         afterClassName="afterClassName"
         beforeClassName="beforeClassName"
         loadingClassName="loadingClassName"
-        after={"After ..."}
-        before={"Before ..."}
-        loadingObject={"Loading ..."}
         componentStructure={componentStructure}
         disabledClassName="disabledClassName(when disabled prop is true) "
         validationComponent={ValidationComponent}
-        loading
         required
-        title="email"
+        title="dd"
       />
+      <Input
+        type="text"
+        name="ff"
+        register={useRegister}
+        wrapperClassName="wrapperClassName"
+        className="className"
+        notValidClassName="notValidClassName(when the validation is set to false)"
+        titleClassName="titleClassName"
+        afterClassName="afterClassName"
+        beforeClassName="beforeClassName"
+        loadingClassName="loadingClassName"
+        componentStructure={componentStructure}
+        disabledClassName="disabledClassName(when disabled prop is true) "
+        validationComponent={ValidationComponent}
+        required
+        title="ff"
+      />
+      <Input
+        type="text"
+        name="ss"
+        register={useRegister}
+        wrapperClassName="wrapperClassName"
+        className="className"
+        notValidClassName="notValidClassName(when the validation is set to false)"
+        titleClassName="titleClassName"
+        afterClassName="afterClassName"
+        beforeClassName="beforeClassName"
+        loadingClassName="loadingClassName"
+        componentStructure={componentStructure}
+        disabledClassName="disabledClassName(when disabled prop is true) "
+        validationComponent={ValidationComponent}
+        required
+        title="ss"
+      />
+
       <div onClick={() => submit((p) => console.log(p))}>submit</div>
+      <div onClick={() => checkValidation(['ff','ss'])}>checkValidation</div>
       <div onClick={() => update("test", null)}>update</div>
     </div>
   );

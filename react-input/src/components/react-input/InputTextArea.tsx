@@ -30,7 +30,7 @@ export const InputTextArea = memo(
   forwardRef((_: Textarea, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLTextAreaElement>(null);
-    const [value, setValue] = useState<any>(_?.defaultValue.toString());
+    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
 
     const [errors, setErrors] = useState<Array<string>>([]);
 

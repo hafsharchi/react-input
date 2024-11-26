@@ -30,7 +30,7 @@ export const InputPassword = memo(
   forwardRef((_: Password, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [value, setValue] = useState<any>(_?.defaultValue.toString());
+    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
 
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)

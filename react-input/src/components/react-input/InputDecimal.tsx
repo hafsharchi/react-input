@@ -32,7 +32,7 @@ export const InputDecimal = memo(
   forwardRef((_: Decimal, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [value, setValue] = useState<any>(_?.defaultValue.toString());
+    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
 
     const [errors, setErrors] = useState<Array<string>>([]);
 

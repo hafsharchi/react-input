@@ -33,7 +33,7 @@ export const InputText = memo(
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
-    const [value, setValue] = useState<any>(_?.defaultValue.toString());
+    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
 
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
