@@ -28,7 +28,7 @@ export default function App({}: Props) {
     <div dir="ltr">
       <div>dasdas</div>
       <Input
-        type="text"
+        type="integer"
         name="dd"
         register={useRegister}
         wrapperClassName="wrapperClassName"
