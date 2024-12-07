@@ -1,6 +1,6 @@
-
 export * from "./components/react-input";
 export * from "./components/elements";
+export { components, Props as SelectProps } from "react-select";
 export {
   BaseInput,
   CustomValidation,
@@ -27,4 +27,3 @@ export { useOnClickOutside } from "./components/useOutside";
 export { VALIDATION_ERROR } from "./constants";
 export * from "./utils";
 export { InputMasterContext, InputMasterProvider } from "./contexts";
-export { components } from "react-select";

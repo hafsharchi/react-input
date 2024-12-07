@@ -32,6 +32,7 @@ export const InputDecimal = memo(
   forwardRef((_: Decimal, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
+    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
@@ -72,6 +73,8 @@ export const InputDecimal = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
+      setValue(e?.target.value);
+
       vDecimal({ ref: inputRef });
       if (_.separator) separate({ ref: inputRef, seperator: _.separator });
 
@@ -166,7 +169,10 @@ export const InputDecimal = memo(
                   _.disabledClassName ?? ""
                 )
               : ""
-          } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
+          } ${cn(
+            customized?.defaultProps?.className ?? "",
+            _.className ?? ""
+          )}`}
           type="text"
           title={_.title}
           placeholder={_?.placeholder ?? ""}
@@ -259,7 +265,8 @@ export const InputDecimal = memo(
       ),
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
-      errors
+      errors,
+      Boolean(value)
     );
   })
 );

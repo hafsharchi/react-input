@@ -7,7 +7,12 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import { ComponentDescriptor, CustomValidation, Integer, InputMasterContextProps } from "../types";
+import {
+  ComponentDescriptor,
+  CustomValidation,
+  Integer,
+  InputMasterContextProps,
+} from "../types";
 import { vMinValue } from "../../utils/vMinValue";
 import { vMaxValue } from "../../utils/vMaxValue";
 import { vInteger } from "../../utils/vInteger";
@@ -27,6 +32,7 @@ export const InputInteger = memo(
   forwardRef((_: Integer, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
+    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
 
     const [errors, setErrors] = useState<Array<string>>([]);
     const customized: InputMasterContextProps | undefined =
@@ -67,6 +73,9 @@ export const InputInteger = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
+
+      setValue(e?.target.value);
+
       vInteger({ ref: inputRef });
       if (_.separator) separate({ ref: inputRef, seperator: _.separator });
 
@@ -172,7 +181,10 @@ export const InputInteger = memo(
                   _.disabledClassName ?? ""
                 )
               : ""
-          } ${cn(customized?.defaultProps?.className ?? "", _.className ?? "")}`}
+          } ${cn(
+            customized?.defaultProps?.className ?? "",
+            _.className ?? ""
+          )}`}
           type="text"
           title={_.title}
           placeholder={_?.placeholder ?? ""}
@@ -265,7 +277,8 @@ export const InputInteger = memo(
       ),
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
-      errors
+      errors,
+      Boolean(value)
     );
   })
 );

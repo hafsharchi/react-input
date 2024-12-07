@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import PreviewBox from "../../-components/PreviewBox";
 import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { Input, useInput } from "input-master";
-import ValidationComponent from "../../../../ValidationComponent";
+import ValidationComponent from "../../../../components/ValidationComponent";
 import { Button } from "../../../../components/Button";
 import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";

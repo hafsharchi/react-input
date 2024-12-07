@@ -210,7 +210,7 @@ export const InputDate = memo(
       `${cn(
         customized?.defaultProps?.wrapperClassName ?? "",
         _.wrapperClassName ?? ""
-      )} ${value && value != "" ? "has-value" : ""} `,
+      )}`,
       cn(
         customized?.defaultProps?.beforeClassName ?? "",
         _.beforeClassName ?? ""
@@ -229,7 +229,8 @@ export const InputDate = memo(
       ),
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
-      errors
+      errors,
+      Boolean(value)
     );
   })
 );

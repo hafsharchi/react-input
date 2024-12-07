@@ -30,6 +30,7 @@ export const InputPassword = memo(
   forwardRef((_: Password, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
+    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
 
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
@@ -108,7 +109,7 @@ export const InputPassword = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
-
+      setValue(e?.target.value);
       if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
 
       if (validationOn == "submit-blur-change" || !isValid)
@@ -283,7 +284,8 @@ export const InputPassword = memo(
       ),
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
-      errors
+      errors,
+      Boolean(value)
     );
   })
 );
