@@ -230,7 +230,7 @@ export const InputDate = memo(
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
       errors,
-      value && value != ""
+      Boolean(value)
     );
   })
 );

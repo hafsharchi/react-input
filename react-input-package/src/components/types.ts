@@ -186,6 +186,7 @@ export type ComponentDescriptor =
         | "loading"
         | "other";
       tag?: keyof JSX.IntrinsicElements;
+      hasValueClassName?: string;
       props?: { [key: string]: any };
       children?: ComponentDescriptor[];
       content?: React.ReactNode;
@@ -195,6 +196,7 @@ export type InputComponent = {
   type: "input";
   props?: { [key: string]: any };
   content?: React.ReactNode;
+  hasValueClassName?: string;
 };
 
 export type ErrorState = {

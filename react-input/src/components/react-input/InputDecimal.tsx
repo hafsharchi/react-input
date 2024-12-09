@@ -27,12 +27,13 @@ import { Before } from "../elements/Before";
 import { Loading } from "../elements/Loading";
 import { Title } from "../elements/Title";
 import { cn } from "../../utils/cn";
+import { toEnglishNubmer } from "../../utils/pa2e";
 
 export const InputDecimal = memo(
   forwardRef((_: Decimal, ref: any) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [value, setValue] = useState<any>();
+    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
@@ -73,7 +74,10 @@ export const InputDecimal = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
-      if (inputRef.current) setValue(inputRef.current?.value.toString);
+
+      toEnglishNubmer({ ref: inputRef });
+
+      setValue(e?.target.value);
 
       vDecimal({ ref: inputRef });
       if (_.separator) separate({ ref: inputRef, seperator: _.separator });
@@ -266,7 +270,7 @@ export const InputDecimal = memo(
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
       errors,
-      value && value != ""
+      Boolean(value)
     );
   })
 );
