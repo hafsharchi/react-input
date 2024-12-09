@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { InputMasterContextProps, Type } from "./types";
+import { Type } from "./types";
 import { useRef } from "react";
 import { InputMasterContext } from "../contexts";
 
@@ -55,16 +55,24 @@ export const useInput = () => {
   };
 
   const submit = (func: (data: any) => any) => {
-    var res: boolean = true;
-    inputs.map((input) => {
-      res = input.ref.current.checkValidation() && res;
-    });
-    if (!res) {
-      context?.onValidationFailed();
-      return false;
+    if (checkValidation()) {
+      func(get());
     }
-    func(get());
   };
 
-  return { useRegister, inputs, update, get, submit };
+  const checkValidation = (names?: string[]) => {
+    let res: boolean = true;
+    //  if user does not define any name, validations must get checked for all inputs
+    inputs.map((input) => {
+      if (!names || names.includes(input.name))
+        res = input.ref.current.checkValidation() && res;
+    });
+
+    if (!res) {
+      context?.onValidationFailed();
+    }
+    return res;
+  };
+
+  return { useRegister, inputs, update, get, submit, checkValidation };
 };

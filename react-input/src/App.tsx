@@ -12,11 +12,11 @@ export default function App({}: Props) {
   const componentStructure: ComponentDescriptor = {
     type: "wrapper",
     props: { className: "inside-wrapper" },
-    hasValueClassName:"ihavevalue",
+    hasValueClassName: "ihavevalue",
     children: [
       {
         type: "input",
-        hasValueClassName:"ihavevalue",
+        hasValueClassName: "ihavevalue",
       },
     ],
   };
@@ -25,10 +25,11 @@ export default function App({}: Props) {
     <div dir="ltr">
       <div>dasdas</div>
       <Input
-        type="calendar"
+        type="select"
         name="test"
-        locale="persian"
+        // locale="persian"
         register={useRegister}
+        onInputChange={(e) => console.log(e)}
         wrapperClassName="wrapperClassName"
         className="className"
         // defaultValue={2}
@@ -37,9 +38,9 @@ export default function App({}: Props) {
         afterClassName="afterClassName"
         beforeClassName="beforeClassName"
         loadingClassName="loadingClassName"
-        after={'After ...'}
-        before={'Before ...'}
-        loadingObject={'Loading ...'}
+        after={"After ..."}
+        before={"Before ..."}
+        loadingObject={"Loading ..."}
         componentStructure={componentStructure}
         disabledClassName="disabledClassName(when disabled prop is true) "
         validationComponent={ValidationComponent}

@@ -167,9 +167,9 @@ export const InputSelect = memo(
     const input: React.ReactNode = (
       <>
         <ReactSelect
-          onInputChange={(e) => {
+          onInputChange={(e, x) => {
             setInputValue(e);
-            if (onInputChange) onInputChange;
+            if (onInputChange) onInputChange(e, x);
           }}
           components={
             _.components ? _.components : customized?.defaultProps?.components
@@ -318,7 +318,8 @@ export const InputSelect = memo(
       _.loadingObject
         ? _.loadingObject
         : customized?.defaultProps?.loadingObject,
-      errors
+      errors,
+      value && value.length > 0
     );
   })
 );
