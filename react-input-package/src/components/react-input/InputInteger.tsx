@@ -27,6 +27,7 @@ import { Loading } from "../elements/Loading";
 import { Title } from "../elements/Title";
 import { Wrapper } from "../elements/Wrapper";
 import { cn } from "../../utils/cn";
+import { toEnglishNubmer } from "../../utils/pa2e";
 
 export const InputInteger = memo(
   forwardRef((_: Integer, ref: any) => {
@@ -73,6 +74,8 @@ export const InputInteger = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
+
+      toEnglishNubmer({ ref: inputRef });
 
       setValue(e?.target.value);
 

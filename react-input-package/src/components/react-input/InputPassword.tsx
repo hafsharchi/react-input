@@ -111,12 +111,11 @@ export const InputPassword = memo(
       if (_.onChange) _.onChange(e);
       setValue(e?.target.value);
       if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
-      
+
       if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
-      setValue(e?.target.value)
     };
-    
+
     const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onBlur) _.onBlur(e);
 

@@ -27,6 +27,7 @@ import { Before } from "../elements/Before";
 import { Loading } from "../elements/Loading";
 import { Title } from "../elements/Title";
 import { cn } from "../../utils/cn";
+import { toEnglishNubmer } from "../../utils/pa2e";
 
 export const InputDecimal = memo(
   forwardRef((_: Decimal, ref: any) => {
@@ -73,6 +74,9 @@ export const InputDecimal = memo(
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
       if (_.onChange) _.onChange(e);
+
+      toEnglishNubmer({ ref: inputRef });
+
       setValue(e?.target.value);
 
       vDecimal({ ref: inputRef });
