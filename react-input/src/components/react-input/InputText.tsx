@@ -97,9 +97,10 @@ export const InputText = memo(
 
     const checkValidation = (currentValue: string): boolean => {
       var res = true;
+
       if (
-        _.required &&
         !vRequired({
+          required: _.required,
           currentValue: currentValue,
           setErrors: setErrors,
           error: customized?.validationErrors?.required,
@@ -117,6 +118,7 @@ export const InputText = memo(
         )
           res = false;
       });
+      
       if (
         _.minLength &&
         !vMinLength({

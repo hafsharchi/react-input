@@ -80,8 +80,8 @@ export const InputCheckbox = memo(
     const checkValidation = (currentValue: boolean): boolean => {
       var res = true;
       if (
-        _.required &&
         !vRequired({
+          required: _.required,
           currentValue: currentValue,
           setErrors: setErrors,
           error: customized?.validationErrors?.required,
