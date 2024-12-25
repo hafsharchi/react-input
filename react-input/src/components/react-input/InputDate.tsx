@@ -85,8 +85,8 @@ export const InputDate = memo(
     const checkValidation = (currentValue: string): boolean => {
       var res = true;
       if (
-        _.required &&
         !vRequired({
+          required: _.required,
           currentValue: currentValue,
           setErrors: setErrors,
           error: customized?.validationErrors?.required,

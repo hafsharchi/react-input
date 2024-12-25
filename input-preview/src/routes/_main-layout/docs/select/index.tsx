@@ -139,7 +139,7 @@ export const TextInput = () => {
               notValidClassName="select-not-valid"
               validationOn="submit"
               register={useRegister}
-              
+              isClearable
             />
             <Input
               type="select"

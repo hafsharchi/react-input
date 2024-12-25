@@ -1,11 +1,11 @@
 {
-  "name": "input-master",
-  "version": "0.1.33",
+  "name": "test",
+  "version": "0.1.0",
   "description": "A react input library",
   "scripts": {
     "rollup": "rollup -c"
   },
-  "author": "Hosein Afsharchi",
+  "author": "Moein Rouhani",
   "license": "ISC",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.3",

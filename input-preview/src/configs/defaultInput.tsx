@@ -27,7 +27,7 @@ const componentStructure: ComponentDescriptor = {
   ],
 };
 
-const DropdownIndicator = (props: any) => {
+export const DropdownIndicator = (props: any) => {
   console.log(props);
   return (
     components.DropdownIndicator && (
@@ -42,7 +42,7 @@ const DropdownIndicator = (props: any) => {
   );
 };
 
-const ClearIndicator = (props: any) => {
+export const ClearIndicator = (props: any) => {
   console.log(props);
   return (
     components.ClearIndicator && (
@@ -53,7 +53,7 @@ const ClearIndicator = (props: any) => {
   );
 };
 
-const MultiValueRemove = (props: any) => {
+export const MultiValueRemove = (props: any) => {
   console.log(props);
   return (
     components.MultiValueRemove && (
