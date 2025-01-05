@@ -35,9 +35,11 @@ export default function App({}: Props) {
     <div dir="ltr">
       <div>dasdas</div>
       <Input
-        type="integer"
+        type="text"
         name="dd"
         register={useRegister}
+        maxLength={2}
+        onChange={(e) => {console.log(e)}}
         wrapperClassName="wrapperClassName"
         className="className"
         notValidClassName="notValidClassName(when the validation is set to false)"
@@ -51,7 +53,7 @@ export default function App({}: Props) {
         required
         title="dd"
       />
-      <Input
+      {/* <Input
         type="select"
         // onInputChange={(e) => console.log(e)}
         name="ff"
@@ -95,7 +97,7 @@ export default function App({}: Props) {
         validationComponent={ValidationComponent}
         required
         title="ss"
-      />
+      /> */}
 
       <div onClick={() => submit((p) => console.log(p))}>submit</div>
       <div onClick={() => checkValidation(["ff", "ss"])}>checkValidation</div>
