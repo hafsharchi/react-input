@@ -5,13 +5,19 @@ import {
 } from "./StateArray";
 
 type VRequired = {
+  required?: boolean;
   currentValue: any;
   setErrors: React.Dispatch<React.SetStateAction<Array<string>>>;
   error: string | undefined;
 };
 
-export const vRequired = ({ currentValue, setErrors, error }: VRequired) => {
-  if (currentValue) {
+export const vRequired = ({
+  required = false,
+  currentValue,
+  setErrors,
+  error,
+}: VRequired) => {
+  if (currentValue || !required) {
     removeFromStateArrayByValue<string>(
       setErrors,
       error ?? VALIDATION_ERROR.REQUIRED

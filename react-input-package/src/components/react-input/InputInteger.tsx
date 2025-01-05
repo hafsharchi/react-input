@@ -107,8 +107,8 @@ export const InputInteger = memo(
       var res = true;
 
       if (
-        _.required &&
         !vRequired({
+          required: _.required,
           currentValue: currentValue,
           setErrors: setErrors,
           error: customized?.validationErrors?.required,

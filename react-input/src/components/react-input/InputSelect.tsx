@@ -94,8 +94,7 @@ export const InputSelect = memo(
       if (hasChanged) {
         if (validationOn == "submit-blur-change" || !isValid)
           setIsValid(checkValidation(value));
-
-        if (_.onChange && value) _.onChange(value);
+        if (_.onChange) _.onChange(value);
       }
     }, [value]);
 

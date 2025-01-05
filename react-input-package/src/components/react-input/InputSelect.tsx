@@ -29,7 +29,7 @@ export const InputSelect = memo(
   forwardRef((_: Select, ref: any) => {
     const [value, setValue] = React.useState<
       OptionsOrGroups<unknown, GroupBase<unknown>> | undefined
-    >(_?.defaultValue);
+    >(_?.defaultValue ?? undefined);
     const [inputValue, setInputValue] = React.useState<string>();
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<any>(null);
@@ -43,9 +43,8 @@ export const InputSelect = memo(
       ? _.validationOn
       : customized?.defaultProps?.validationOn ?? "submit";
 
-    const [hasChanged, setHasChanged] = useState<boolean>(false);
-    type ddd = { label: string; value: string };
-    const prevDefaultValueRef = useRef<ddd>();
+    type SelectDataType = { label: string; value: string };
+    const prevDefaultValueRef = useRef<SelectDataType>();
 
     useEffect(() => {
       if (
@@ -84,17 +83,19 @@ export const InputSelect = memo(
       },
     }));
 
+    const [hasChanged, setHasChanged] = useState(false);
+
     const onChange = (e?: any) => {
       setHasChanged(true);
-      if (_.onChange) _.onChange(e);
-      setValue(e);
+      setValue(e ? e : undefined);
     };
 
     useEffect(() => {
       if (hasChanged) {
-        if (_.onChange && value) _.onChange(value);
         if (validationOn == "submit-blur-change" || !isValid)
           setIsValid(checkValidation(value));
+
+        if (_.onChange) _.onChange(value);
       }
     }, [value]);
 
@@ -112,8 +113,8 @@ export const InputSelect = memo(
       var res = true;
 
       if (
-        _.required &&
         !vRequired({
+          required: _.required,
           currentValue: currentValue,
           setErrors: setErrors,
           error: customized?.validationErrors?.required,

@@ -64,7 +64,7 @@ export default function App({}: Props) {
           { label: 3, value: 3 },
         ]}
         onChange={(e) => {
-          setFirst(e.value);
+          console.log(e)
         }}
         wrapperClassName="wrapperClassName"
         className="className"
