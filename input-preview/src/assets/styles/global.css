@@ -155,17 +155,8 @@ body {
     @apply pr-1 text-foreground/80 font-bold;
   }
 
-  td{
-    @apply border p-2 text-left;
-  }
 
-  tr{
-    @apply text-foreground/80;
-  }
 
-  th {
-    @apply text-foreground/40 py-1 font-light border;
-  }
 
   code{
     @apply bg-foreground/10 dark:bg-foreground/20 px-1 text-xs rounded-md py-0.5 mx-1;
