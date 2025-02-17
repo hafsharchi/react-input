@@ -8,6 +8,7 @@ import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
 import { ChevronDown, X } from "lucide-react";
+import Table from "../../../../components/Table";
 
 export const Route = createFileRoute("/_main-layout/docs/select/")({
   component: Text,
@@ -77,7 +78,6 @@ export const TextInput = () => {
   return (
     <>
       <DocsBreadcrumb page="Text Type" />
-
       <div className="relative  my-4">
         <div className="flex gap-2">
           <Button
@@ -147,7 +147,7 @@ export const TextInput = () => {
                 { label: "Blue", value: 1 },
                 { label: "Red", value: 2 },
                 { label: "Green", value: 3 },
-              ]}              
+              ]}
               placeholder=""
               name="colors"
               multiple
@@ -182,68 +182,30 @@ export const TextInput = () => {
         </>
       )}
       <br />
-      <h2>Description</h2>
-      <p>
-        The Select input type provides a dropdown menu for selecting from a list
-        of options, offering a streamlined way to handle multiple-choice fields.
-        This component uses the popular<code>react-select</code>library under
-        the hood, bringing along all the powerful features and configuration
-        options that<code>react-select</code>provides.
-      </p>
-      <p>
-        With the Select input, you get the best of both worlds: all the
-        customization and accessibility enhancements from
-        <code>react-select</code>, combined with the added flexibility and
-        features of our input library. You can apply any
-        <code>react-select</code>prop to the Select input, along with our
-        library's unique props, giving you a highly customizable and efficient
-        selection component.
-      </p>
-      <p>
-        Explore the full range of options available in<code>react-select</code>
-        here, and refer to our Base Props Documentation for additional
-        customization options provided by our library. However, due to some
-        conflicts with our library’s BaseProps, a few key props are slightly
-        different. These props have been adjusted to align with our library's
-        conventions:
-        <ul>
-          <li>
-            multiple: similar to isMulti in<code>react-select</code>
-          </li>
-          <li>
-            disabled: similar to isDisabled in<code>react-select</code>
-          </li>
-          <li>
-            portal: similar to menuPortalTarget<code>react-select</code>
-          </li>
-        </ul>
-      </p>
       <h2>Props</h2>
-      <table className="w-full text-center text-sm rounded-lg  border-1 border-red-400">
-        <thead>
-          <tr>
-            <th>Prop</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Default</th>
-          </tr>
-        </thead>
-        <tbody className="font-light">
-          <tr>
-            <td>MaxLength</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>MinLength</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-        </tbody>
-      </table>
+      <p>
+        This component uses <code>react-select</code> under the hood, and all
+        props of <code>react-select</code> are available here.
+      </p>
+
+      <Table
+        columns={["Prop", "Type", "Description"]}
+        data={[
+          [
+            <code>multiple</code>,
+            <code>boolean</code>,
+            "Allows multiple selections if true.",
+          ],
+          [
+            <code>portal</code>,
+            <code>ReactNode</code>,
+            "Renders the dropdown list into a portal element.",
+          ],
+        ]}
+      />
+      <p className="italic">
+        Note: Inherits additional settings from <code>react-select</code>.
+      </p>
     </>
   );
 }
-

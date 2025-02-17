@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import PreviewBox from "../../-components/PreviewBox";
 import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { Input, useInput } from "input-master";
-import ValidationComponent from "../../../../components/ValidationComponent";
 import { Button } from "../../../../components/Button";
 import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
@@ -85,28 +84,7 @@ export const TextInput = () => {
       </div>
       {activeTab == 0 ? (
         <>
-          <PreviewBox
-            settings={
-              <div className="flex absolute left-4 top-4 gap-1">
-                <Button
-                  active={styled}
-                  onClick={() => {
-                    setStyled(true);
-                  }}
-                >
-                  styled
-                </Button>
-                <Button
-                  active={!styled}
-                  onClick={() => {
-                    setStyled(false);
-                  }}
-                >
-                  default
-                </Button>
-              </div>
-            }
-          >
+          <PreviewBox>
             <Input
               type="text"
               title="First Name *"
@@ -151,13 +129,20 @@ export const TextInput = () => {
       <h2>Props</h2>
 
       <Table
-        columns={["Prop", "Type", "Description", "Default"]}
+        columns={["Prop", "Type", "Description"]}
         data={[
-          ["MaxLength", "number", "-", "-"],
-          ["MinLength", "number", "-", "-"],
+          [
+            <code>maxLength</code>,
+            <code>number</code>,
+            "Maximum number of characters allowed.",
+          ],
+          [
+            <code>minLength</code>,
+            <code>number</code>,
+            "Minimum number of characters required.",
+          ],
         ]}
       />
-    
     </>
   );
 }

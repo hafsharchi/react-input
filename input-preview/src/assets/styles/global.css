@@ -159,6 +159,6 @@ body {
 
 
   code{
-    @apply bg-foreground/10 dark:bg-foreground/20 px-1 text-xs rounded-md py-0.5 mx-1;
+    @apply bg-foreground/[0.08] dark:bg-foreground/10 px-1 text-xs rounded-md py-1 tracking-tight mx-1;
   }
 }

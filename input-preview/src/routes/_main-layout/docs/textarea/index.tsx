@@ -7,6 +7,7 @@ import { Button } from "../../../../components/Button";
 import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
+import Table from "../../../../components/Table";
 
 export const Route = createFileRoute("/_main-layout/docs/textarea/")({
   component: TextArea,
@@ -117,9 +118,7 @@ export const Form = () => {
               variant="submit"
               className="mx-auto mt-3"
               onClick={() =>
-                submit((d) =>
-                  alert(`description: ${d.description}`)
-                )
+                submit((d) => alert(`description: ${d.description}`))
               }
             >
               Sumbit
@@ -136,41 +135,23 @@ export const Form = () => {
         </>
       )}
       <br />
-      <h2>Description</h2>
-      <p>
-        The Textarea input type is perfect for capturing longer, multi-line text
-        entries, like comments, descriptions, or messages. Just like the Text
-        input, it includes all the standard features of our library and is fully
-        customizable!
-      </p>
-      <p>
-        Below is a table of specific properties unique to the Textarea input type:
-      </p>
+
       <h2>Props</h2>
-      <table className="w-full text-center text-sm rounded-lg  border-1 border-red-400">
-        <thead>
-          <tr>
-            <th>Prop</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Default</th>
-          </tr>
-        </thead>
-        <tbody className="font-light">
-          <tr>
-            <td>MaxLength</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>MinLength</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-        </tbody>
-      </table>
+      <Table
+        columns={["Prop", "Type", "Description"]}
+        data={[
+          [
+            <code>maxLength</code>,
+            <><code>number</code> </>,
+            "Enforces length restrictions on the password.",
+          ],
+          [
+            <code>minLength</code>,
+            <><code>number</code> </>,
+            "Enforces length restrictions on the password.",
+          ],
+        ]}
+      />
     </>
   );
 }
