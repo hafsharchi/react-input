@@ -6,7 +6,7 @@ type Props = {
 
 export default function Sidebar({ className }: Props) {
   return (
-    <div className={`${className} p-5 leading-loose text-sm hidden md:block`}>
+    <div className={`${className} p-5 leading-loose text-sm hidden md:block border-r`}>
       <h1 className="font-semibold text-foreground ">Getting Started</h1>
       <SidebarLink to="/docs/introduction">Introduction</SidebarLink>
       <SidebarLink to="/">Installation</SidebarLink>

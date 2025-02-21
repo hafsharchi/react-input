@@ -113,16 +113,28 @@ export const Form = () => {
         The Calendar input type provides a user-friendly interface for selecting
         dates and is perfect for date-specific fields like birthdates,
         appointment scheduling, or event planning. This component leverages the
-        powerful <code>react-multidate-picker</code> library, ensuring smooth
-        performance and a wide range of features for date picking and
-        customization.
+        powerful{" "}
+        <a
+          href="https://shahabyazdi.github.io/react-multi-date-picker/"
+          className="hover:underline code"
+        >
+          react-multidate-picker
+        </a>{" "}
+        library, ensuring smooth performance and a wide range of features for
+        date picking and customization.
       </p>
       <p>
         While the Calendar input supports most features from
-        <code>react-multidate-picker</code>, we’re continuously enhancing it,
-        and some additional features will be included in future updates.
-        However, all key functionalities are already in place, making it fully
-        usable and customizable in your current projects.
+        <a
+          href="https://shahabyazdi.github.io/react-multi-date-picker/"
+          className="hover:underline code"
+        >
+          react-multidate-picker
+        </a>
+        , we’re continuously enhancing it, and some additional features will be
+        included in future updates. However, all key functionalities are already
+        in place, making it fully usable and customizable in your current
+        projects.
       </p>
 
       <p>
@@ -133,17 +145,29 @@ export const Form = () => {
       </p>
 
       <p>
-        In addition to all the features of <code>react-multidate-picker</code>,
-        we’ve integrated our library’s BaseProps, so you can take full advantage
-        of customization, validation, and styling options provided by our
-        system. This ensures consistency across all your input components.
+        In addition to all the features of{" "}
+        <a
+          href="https://shahabyazdi.github.io/react-multi-date-picker/"
+          className="hover:underline code"
+        >
+          react-multidate-picker
+        </a>
+        , we’ve integrated our library’s BaseProps, so you can take full
+        advantage of customization, validation, and styling options provided by
+        our system. This ensures consistency across all your input components.
       </p>
 
       <p>
         For a full list of the supported features and configurations, refer to
-        the <code>react-multidate-picker</code> documentation, as our Calendar
-        input retains most of these features while adding our library’s extended
-        capabilities.
+        the{" "}
+        <a
+          href="https://shahabyazdi.github.io/react-multi-date-picker/"
+          className="hover:underline code"
+        >
+          react-multidate-picker
+        </a>{" "}
+        documentation, as our Calendar input retains most of these features
+        while adding our library’s extended capabilities.
       </p>
 
       <h2>Props</h2>

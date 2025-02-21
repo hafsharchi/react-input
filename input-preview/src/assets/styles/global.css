@@ -140,7 +140,7 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-geist font-normal
+    @apply bg-background text-foreground font-geist font-normal;
   }
   h2 {
     @apply font-bold text-2xl my-2;
@@ -155,10 +155,24 @@ body {
     @apply pr-1 text-foreground/80 font-bold;
   }
 
-
-
-
-  code{
+  code {
     @apply bg-foreground/[0.08] dark:bg-foreground/10 px-1 text-xs rounded-md py-1 tracking-tight mx-1;
   }
+  .code {
+    @apply bg-foreground/[0.08] dark:bg-foreground/10 px-1 text-xs rounded-md py-1 tracking-tight mx-1 font-mono;
+  }
+
+  @keyframes spin-once {
+    from {
+      transform: rotate(-45deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  .spin-once {
+    animation: spin-once 500ms ease-out;
+  }
 }
+
