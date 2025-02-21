@@ -50,8 +50,9 @@ export const TextInput = () => {
     <>
       <Header />
     <PreviewBox className="w-3/4 h-auto mx-auto my-5">
-    <BlurIn word={ <h1 className="text-9xl text-center mt-40 w-3/4 mx-auto font-black">Input Master</h1>}></BlurIn>
-    <BlurIn word={ <p className="text-lg font-thin mb-40">All in one Input for react</p>}></BlurIn>
+    <BlurIn word={ <h1 className="text-9xl text-center mx-auto font-bold text-foreground mt-40">Input</h1>}></BlurIn>
+    <BlurIn word={ <h1 className="text-9xl text-center mx-auto font-bold text-foreground">Master</h1>}></BlurIn>
+    <BlurIn word={ <p className="text-lg font-thin mb-40 tracking-widest text-foreground">All in one Input for react</p>}></BlurIn>
     </PreviewBox>
       <div className="flex w-3/4 overflow-hidden mx-auto gap-20">
         <div className=" w-full grid gap-5 grid-cols-11">
