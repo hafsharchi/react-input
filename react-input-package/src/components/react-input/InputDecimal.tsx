@@ -73,8 +73,6 @@ export const InputDecimal = memo(
     }));
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
-      if (_.onChange) _.onChange(e);
-
       toEnglishNubmer({ ref: inputRef });
 
       setValue(e?.target.value);
@@ -84,6 +82,8 @@ export const InputDecimal = memo(
 
       if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
+
+      if (_.onChange) _.onChange(e);
     };
 
     const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {

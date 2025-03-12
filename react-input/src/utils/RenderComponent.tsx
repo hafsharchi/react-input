@@ -1,13 +1,12 @@
 import React from "react";
+import { After } from "../components/elements/After";
+import { Before } from "../components/elements/Before";
+import { Loading } from "../components/elements/Loading";
+import { Title } from "../components/elements/Title";
 import {
   ComponentDescriptor,
   ValidationComponentProps,
 } from "../components/types";
-import { Wrapper } from "../components/elements/Wrapper";
-import { Title } from "../components/elements/Title";
-import { Before } from "../components/elements/Before";
-import { After } from "../components/elements/After";
-import { Loading } from "../components/elements/Loading";
 
 export const renderComponent = (
   descriptor: ComponentDescriptor,
@@ -62,6 +61,7 @@ export const renderComponent = (
               hasValue ? descriptor.hasValueClassName ?? "" : ""
             }`,
           },
+          ...descriptor.props
         },
         key,
         ...(wrapperChildren ?? "")

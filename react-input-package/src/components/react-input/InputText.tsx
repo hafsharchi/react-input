@@ -68,7 +68,6 @@ export const InputText = memo(
     }));
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
-      if (_.onChange) _.onChange(e);
       setValue(e?.target.value);
       applyMask({
         ref: inputRef,
@@ -80,6 +79,8 @@ export const InputText = memo(
 
       if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
+
+      if (_.onChange) _.onChange(e);
     };
 
     const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +119,7 @@ export const InputText = memo(
         )
           res = false;
       });
-      
+
       if (
         _.minLength &&
         !vMinLength({

@@ -14,7 +14,7 @@ export default function App({}: Props) {
   const [first, setFirst] = useState();
   const componentStructure: ComponentDescriptor = {
     type: "wrapper",
-    props: { className: "inside-wrapper" },
+    props: { 'data-test':"hello-world"},
     hasValueClassName: "ihavevalue",
     children: [
       {
@@ -37,6 +37,25 @@ export default function App({}: Props) {
       <Input
         type="text"
         name="dd"
+        register={useRegister}
+        maxLength={2}
+        onChange={(e) => {console.log(e)}}
+        wrapperClassName="wrapperClassName"
+        className="className"
+        notValidClassName="notValidClassName(when the validation is set to false)"
+        titleClassName="titleClassName"
+        afterClassName="afterClassName"
+        beforeClassName="beforeClassName"
+        loadingClassName="loadingClassName"
+        componentStructure={componentStructure}
+        disabledClassName="disabledClassName(when disabled prop is true) "
+        validationComponent={ValidationComponent}
+        required
+        title="dd"
+      />
+            <Input
+        type="text"
+        name="ddsd"
         register={useRegister}
         maxLength={2}
         onChange={(e) => {console.log(e)}}

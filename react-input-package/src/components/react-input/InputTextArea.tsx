@@ -67,13 +67,14 @@ export const InputTextArea = memo(
     }));
 
     const onChange = (e?: React.ChangeEvent<HTMLTextAreaElement>) => {
-      if (_.onChange) _.onChange(e);
       setValue(e?.target.value);
 
       if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
 
       if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
+
+      if (_.onChange) _.onChange(e);
     };
 
     const onBlur = (e?: React.ChangeEvent<HTMLTextAreaElement>) => {
