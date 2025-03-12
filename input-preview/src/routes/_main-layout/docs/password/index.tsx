@@ -7,6 +7,7 @@ import { Button } from "../../../../components/Button";
 import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
+import Table from "../../../../components/Table";
 
 export const Route = createFileRoute("/_main-layout/docs/password/")({
   component: Password,
@@ -132,13 +133,7 @@ export const Form = () => {
         </>
       )}
       <br />
-      <h2>Description</h2>
-      <p>
-        The Password input type is ideal for securely capturing sensitive
-        information, like passwords, with options to toggle visibility for easy
-        user experience. It comes with all the standard features of our input
-        library and can be fully customized to suit your needs!
-      </p>
+
       <p>
         <b>Note: </b> To ensure a consistent design and prevent the browser's
         default eye icon from displaying on password fields, add the following
@@ -153,55 +148,37 @@ input[type="password"]::-ms-clear {
 }
 `}
       />
-      <p>
-        Below is a table of specific properties unique to the Password input
-        type:
-      </p>
       <h2>Props</h2>
-      <table className="w-full text-center text-sm">
-        <thead>
-          <tr>
-            <th>Prop</th>
-            <th>Type</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody className="font-light">
-          <tr>
-            <td>showIcon</td>
-            <td className="whitespace-nowrap">React Node</td>
-            <td>The icon used to toggle and show the password.</td>
-          </tr>
-          <tr>
-            <td>hideIcon</td>
-            <td>React Node</td>
-            <td>The icon used to toggle and hide the password.</td>
-          </tr>
-          <tr>
-            <td>togglePasswordVisibilityClassName</td>
-            <td>string</td>
-            <td>The icon used to toggle and hide the password.</td>
-          </tr>
-          <tr>
-            <td>maxLength</td>
-            <td>number</td>
-            <td>Specifies the maximum number of characters allowed.</td>
-          </tr>
-          <tr>
-            <td>minLength</td>
-            <td>number</td>
-            <td>Specifies the minimum number of characters required.</td>
-          </tr>
-          <tr>
-            <td>...other props </td>
-            <td>-</td>
-            <td>
-              Includes all common props, which you can explore further in the
-              common props documentation.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <Table
+        columns={["Prop", "Type", "Description"]}
+        data={[
+          [
+            <code>showIcon</code>,
+            <code>ReactNode</code>,
+            "Custom icon to show the password",
+          ],
+          [
+            <code>hideIcon</code>,
+            <code>ReactNode</code>,
+            "Custom icon to hide the password",
+          ],
+          [
+            <code>togglePasswordVisibilityClassName</code>,
+            <code>string</code>,
+            "Custom CSS class for the visibility toggle button.",
+          ],
+          [
+            <code>maxLength</code>,
+            <code>number</code>,
+            "Enforces length restrictions on the password.",
+          ],
+          [
+            <code>minLength</code>,
+            <code>number</code>,
+            "Enforces length restrictions on the password.",
+          ],
+        ]}
+      />
     </>
   );
 }

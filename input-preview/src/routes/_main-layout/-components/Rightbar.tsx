@@ -6,6 +6,6 @@ type Props = {
 
 export default function Rightbar({className}: Props) {
   return (
-    <div className={cn(className,"shrink-0 ")}>Rightbar</div>
+    <div className={cn(className,"shrink-0 border-l")}></div>
   )
 }

@@ -103,7 +103,7 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-geist font-normal
+    @apply bg-background text-foreground font-geist font-normal;
   }
   h2 {
     @apply font-bold text-2xl my-2;
@@ -118,19 +118,24 @@ body {
     @apply pr-1 text-foreground/80 font-bold;
   }
 
-  td{
-    @apply border p-2 text-left;
+  code {
+    @apply bg-foreground/[0.08] dark:bg-foreground/10 px-1 text-xs rounded-md py-1 tracking-tight mx-1;
+  }
+  .code {
+    @apply bg-foreground/[0.08] dark:bg-foreground/10 px-1 text-xs rounded-md py-1 tracking-tight mx-1 font-mono;
   }
 
-  tr{
-    @apply text-foreground/80;
+  @keyframes spin-once {
+    from {
+      transform: rotate(-45deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
   }
 
-  th {
-    @apply text-foreground/40 py-1 font-light border;
-  }
-
-  code{
-    @apply bg-foreground/10 dark:bg-foreground/20 px-1 text-xs rounded-md py-0.5 mx-1;
+  .spin-once {
+    animation: spin-once 500ms ease-out;
   }
 }
+

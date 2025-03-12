@@ -75,8 +75,8 @@ export type Checkbox = BaseInput & {
 
 export type Password = BaseInput & {
   type: "password";
-  showIcon?: any;
-  hideIcon?: any;
+  showIcon?: React.ReactNode;
+  hideIcon?: React.ReactNode;
   togglePasswordVisibilityClassName?: string;
   maxLength?: number;
   minLength?: number;

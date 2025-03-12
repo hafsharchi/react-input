@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import PreviewBox from "../../-components/PreviewBox";
 import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { Input, useInput } from "input-master";
-import ValidationComponent from "../../../../components/ValidationComponent";
 import { Button } from "../../../../components/Button";
 import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
+import Table from "../../../../components/Table";
 
 export const Route = createFileRoute("/_main-layout/docs/text/")({
   component: Text,
@@ -84,28 +84,7 @@ export const TextInput = () => {
       </div>
       {activeTab == 0 ? (
         <>
-          <PreviewBox
-            settings={
-              <div className="flex absolute left-4 top-4 gap-1">
-                <Button
-                  active={styled}
-                  onClick={() => {
-                    setStyled(true);
-                  }}
-                >
-                  styled
-                </Button>
-                <Button
-                  active={!styled}
-                  onClick={() => {
-                    setStyled(false);
-                  }}
-                >
-                  default
-                </Button>
-              </div>
-            }
-          >
+          <PreviewBox>
             <Input
               type="text"
               title="First Name *"
@@ -122,7 +101,17 @@ export const TextInput = () => {
               register={useRegister}
               maxLength={7}
             />
-            <Button variant="submit" className="mx-auto mt-3" onClick={() => submit((d) => alert(`firstName: ${d.firstName}, lastName: ${d.lastName}`))}>Sumbit</Button>
+            <Button
+              variant="submit"
+              className="mx-auto mt-3"
+              onClick={() =>
+                submit((d) =>
+                  alert(`firstName: ${d.firstName}, lastName: ${d.lastName}`)
+                )
+              }
+            >
+              Sumbit
+            </Button>
           </PreviewBox>
         </>
       ) : (
@@ -135,42 +124,24 @@ export const TextInput = () => {
         </>
       )}
       <br />
-      <h2>Description</h2>
-      <p>
-        The Text input type is perfect for capturing single-line text from
-        users, like names or short responses! It automatically includes all the
-        shared features available across our input types. If you're curious
-        about these shared properties, feel free to check them out here.
-      </p>
-      <p>
-        Below is a table of specific properties unique to the Text input type:
-      </p>
+
       <h2>Props</h2>
-      <table className="w-full text-center text-sm rounded-lg  border-1 border-red-400">
-        <thead>
-          <tr>
-            <th>Prop</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Default</th>
-          </tr>
-        </thead>
-        <tbody className="font-light">
-          <tr>
-            <td>MaxLength</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          <tr>
-            <td>MinLength</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-          </tr>
-          
-        </tbody>
-      </table>
+
+      <Table
+        columns={["Prop", "Type", "Description"]}
+        data={[
+          [
+            <code>maxLength</code>,
+            <code>number</code>,
+            "Maximum number of characters allowed.",
+          ],
+          [
+            <code>minLength</code>,
+            <code>number</code>,
+            "Minimum number of characters required.",
+          ],
+        ]}
+      />
     </>
   );
 }
