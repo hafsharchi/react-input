@@ -115,7 +115,6 @@ export const TextInput = () => {
               register={useRegister}
             />
             <Input
-              {...inputConfigs(styled)}
               type="text"
               title="Last Name"
               name="lastName"

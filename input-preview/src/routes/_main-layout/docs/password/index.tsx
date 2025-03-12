@@ -102,7 +102,6 @@ export const Form = () => {
             }
           >
             <Input
-              {...inputConfigs(styled)}
               type="password"
               title="Password *"
               required
@@ -110,7 +109,6 @@ export const Form = () => {
               name="password"
               className="pr-5"
               togglePasswordVisibilityClassName="absolute z-10 top-2.5 right-2 cursor-pointer opacity-50"
-              notValidClassName="border !border-rose-500/50"
               validationComponent={ValidationComponent}
               validationOn="submit"
               register={useRegister}

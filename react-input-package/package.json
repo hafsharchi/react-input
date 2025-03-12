@@ -1,6 +1,6 @@
 {
-  "name": "input-master",
-  "version": "0.1.36",
+  "name": "ha-dd-react-input",
+  "version": "0.0.15",
   "description": "A react input library",
   "scripts": {
     "rollup": "rollup -c"
