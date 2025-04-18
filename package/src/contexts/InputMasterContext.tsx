@@ -1,10 +1,11 @@
-import React, { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useState } from "react";
 import {
   DefaultProps,
   ErrorTypes,
   InputMasterContextProps,
 } from "../components/types";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const InputMasterContext = createContext<
   InputMasterContextProps | undefined
 >(undefined);
@@ -13,7 +14,7 @@ interface InputMasterProviderProps {
   children: ReactNode;
   errors?: ErrorTypes;
   defaultProps?: DefaultProps;
-  onValidationFailedFunction?: Function;
+  onValidationFailedFunction?: () => void;
 }
 
 export const InputMasterProvider = ({

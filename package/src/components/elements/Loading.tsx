@@ -1,7 +1,7 @@
 import React from "react";
 
 type Props = {
-  tag?: keyof JSX.IntrinsicElements;
+  tag?: React.ElementType;
   isLoading?: boolean;
   loadingObject: React.ReactNode;
   className?: string;

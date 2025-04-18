@@ -26,7 +26,7 @@ import { cn } from "../../utils/cn";
 
 
 export const InputCheckbox = memo(
-  forwardRef<InputRef, Checkbox>((_, ref) => {
+  forwardRef<InputRef<boolean>, Checkbox>((_, ref) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,9 +45,9 @@ export const InputCheckbox = memo(
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current) {
-          return inputRef.current?.checked ?? "";
+          return inputRef.current?.checked ?? false;
         }
-        return "";
+        return false;
       },
       updateValue: (newValue: boolean) => {
         if (inputRef.current) {
@@ -65,14 +65,14 @@ export const InputCheckbox = memo(
       },
     }));
 
-    const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
-      if (_.onChange) _.onChange(e);
+    const onChange = () => {
+      if (_.onChange && inputRef.current) _.onChange(inputRef.current.checked);
 
       if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef?.current?.checked ?? false));
     };
 
-    const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const onBlur = (e?: React.FocusEvent<HTMLInputElement>) => {
       if (_.onBlur) _.onBlur(e);
 
       if (
@@ -100,7 +100,7 @@ export const InputCheckbox = memo(
 
     const input: React.ReactNode = (
       <input
-        defaultValue={_.defaultValue}
+        defaultChecked={_.defaultValue}
         id={_.id ? _.id : `${_.name}_checkbox`}
         ref={inputRef}
         className={`${
@@ -121,7 +121,7 @@ export const InputCheckbox = memo(
         type="checkbox"
         title={_.title}
         placeholder={_?.placeholder ?? ""}
-        onChange={(e) => onChange(e)}
+        onChange={onChange}
         onBlur={(e) => onBlur(e)}
         disabled={_.disabled}
       />

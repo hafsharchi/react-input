@@ -29,7 +29,7 @@ export const renderComponent = (
   switch (descriptor.type) {
     case "input":
       return InputComponent;
-    case "wrapper":
+    case "wrapper": {
       const wrapperChildren = descriptor.children
         ? descriptor.children.map((child, index) =>
             renderComponent(
@@ -66,7 +66,8 @@ export const renderComponent = (
         key,
         ...(wrapperChildren ?? "")
       );
-    case "other":
+    }
+    case "other": {
       const otherChildren = descriptor.children
         ? descriptor.children.map((child, index) =>
             renderComponent(
@@ -99,6 +100,7 @@ export const renderComponent = (
         descriptor.content,
         ...(otherChildren ?? "")
       );
+    }
     case "title":
       return (
         <Title

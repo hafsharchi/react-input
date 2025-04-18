@@ -10,7 +10,7 @@ export const vDecimal = ({ ref }: VDecimal) => {
     let value = ref.current.value;
     value = value.replaceAll(/[^0-9-.]/g, "");
 
-    let splittedValue = value.split(".");
+    const splittedValue = value.split(".");
     const dotCount = splittedValue.length - 1;
     if (dotCount > 1) {
       value =

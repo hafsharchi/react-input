@@ -6,7 +6,7 @@ import {
 
 type VRequired = {
   required?: boolean;
-  currentValue: any;
+  currentValue: unknown;
   setErrors: React.Dispatch<React.SetStateAction<Array<string>>>;
   error: string | undefined;
 };

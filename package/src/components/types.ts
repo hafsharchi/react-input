@@ -1,21 +1,31 @@
 // import { GroupBase, OptionsOrGroups } from "react-select";
 
-import React from "react";
-import { SelectComponentsConfig } from "react-select";
-import { Props as SelectProps } from "react-select";
+import React, { RefObject } from "react";
+import {
+  SelectComponentsConfig,
+  GroupBase,
+  Props as SelectProps,
+  SingleValue,
+  MultiValue,
+} from "react-select";
 
 export type ValidationPatterns = "email" | "website" | string;
+
+export type OptionType = { label: string; value: string };
+export type SelectValue =
+  | SingleValue<OptionType>
+  | MultiValue<OptionType>
+  | undefined;
 
 export type BaseInput<T> = {
   id?: string;
   title?: string;
   type: Type;
   name: string;
-  register: any;
   loading?: boolean;
   disabled?: boolean;
-  onChange?: (e?: any) => any;
-  onBlur?: (e?: any) => any;
+  onChange?: (value?: T) => void;
+  onBlur?: (e?: React.FocusEvent) => void;
   placeholder?: string;
   required?: boolean;
   className?: string;
@@ -25,8 +35,8 @@ export type BaseInput<T> = {
   validationComponent?: React.FC<ValidationComponentProps>;
   validationOn?: "submit-blur-change" | "submit-blur" | "submit";
   notValidClassName?: string;
-  before?: any;
-  after?: any;
+  before?: React.ReactNode;
+  after?: React.ReactNode;
   beforeClassName?: string;
   afterClassName?: string;
   defaultValue?: T;
@@ -36,6 +46,7 @@ export type BaseInput<T> = {
   componentStructure?: ComponentDescriptor;
   disabledClassName?: string;
   wrapInside?: boolean;
+  register: (name: string, type: Type) => Input;
 };
 
 export type DefaultProps = {
@@ -52,8 +63,8 @@ export type DefaultProps = {
   togglePasswordVisibilityClassName?: string;
   class?: string;
   unstyled?: boolean;
-  portal?: any;
-  components?: SelectComponentsConfig<any, any, any>;
+  portal?: HTMLElement | null;
+  components?: SelectComponentsConfig<unknown, boolean, GroupBase<unknown>>;
   classNamePrefix?: string;
   noOptionsMessage?: (obj: { inputValue: string }) => React.ReactNode;
   validationOn?: "submit-blur-change" | "submit-blur" | "submit";
@@ -82,13 +93,12 @@ export type Password = BaseInput<string> & {
   minLength?: number;
 };
 
-export type Decimal = BaseInput<number> & {
+export type Decimal = BaseInput<string> & {
   type: "decimal";
   maxValue?: number;
   minValue?: number;
   separator?: string;
 };
-
 
 export type Integer = BaseInput<number> & {
   type: "integer";
@@ -99,7 +109,7 @@ export type Integer = BaseInput<number> & {
   minLength?: number;
 };
 
-export type CalendarValue = string | Date | null;
+export type CalendarValue = string | undefined;
 export type Calendar = BaseInput<CalendarValue> & {
   type: "calendar";
   locale: "persian" | "english";
@@ -111,17 +121,19 @@ export type Calendar = BaseInput<CalendarValue> & {
   format?: string;
   dateSeparator?: string;
   class?: string;
-  portal?: unknown;
+  portal?: HTMLElement;
   editable?: boolean;
 };
 
-export type SelectValue = any;
-export type Select = BaseInput<SelectValue> &
-  Omit<SelectProps, "isDisabled" | "isMulti" | "defaultValue" | "value"> & {
+export type Select = Omit<
+  SelectProps<OptionType, boolean, GroupBase<OptionType>>,
+  "isDisabled" | "isMulti" | "defaultValue" | "value"
+> &
+  BaseInput<SelectValue> & {
     type: "select";
     multiple?: boolean;
     disabled?: boolean;
-    portal?: any;
+    portal?: HTMLElement | null;
   };
 
 export type Textarea = BaseInput<string> & {
@@ -164,7 +176,7 @@ export interface InputMasterContextProps {
   validationErrors: ErrorTypes;
   defaultProps?: DefaultProps;
   setValidationErrors: React.Dispatch<React.SetStateAction<ErrorTypes>>;
-  onValidationFailed: Function;
+  onValidationFailed: () => void;
 }
 
 export type ValidationComponentProps = {
@@ -172,7 +184,7 @@ export type ValidationComponentProps = {
 };
 
 export type CustomValidation = {
-  func: (value: any) => boolean;
+  func: (value: unknown) => boolean;
   error?: string;
 };
 
@@ -189,16 +201,16 @@ export type ComponentDescriptor =
         | "validation"
         | "loading"
         | "other";
-      tag?: keyof JSX.IntrinsicElements;
+      tag?: keyof React.JSX.IntrinsicElements;
       hasValueClassName?: string;
-      props?: { [key: string]: any };
+      props?: Record<string, unknown>;
       children?: ComponentDescriptor[];
       content?: React.ReactNode;
     };
 
 export type InputComponent = {
   type: "input";
-  props?: { [key: string]: any };
+  props?: Record<string, unknown>;
   content?: React.ReactNode;
   hasValueClassName?: string;
 };
@@ -207,9 +219,14 @@ export type ErrorState = {
   [key: string]: string[];
 };
 
+export type InputRef<T> = {
+  getValue: () => T;
+  updateValue: (newValue: T) => void;
+  checkValidation: () => boolean;
+};
 
-export type InputRef = {
-  getValue: () => boolean | "" | string;
-  updateValue: (newValue: unknown) => void;
-  checkValidation: () => boolean | undefined;
+export type Input = {
+  type: Type;
+  name: string;
+  ref: RefObject<InputRef<unknown>>;
 };

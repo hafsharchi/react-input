@@ -15,7 +15,7 @@ import {
   InputRef,
 } from "../types";
 import { InputMasterContext } from "../../contexts/InputMasterContext";
-import DatePicker from "react-multi-date-picker";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
 import { vRequired } from "../../utils";
@@ -27,10 +27,8 @@ import { Loading } from "../elements/Loading";
 import { Title } from "../elements/Title";
 import { cn } from "../../utils/cn";
 
-
-
 export const InputDate = memo(
-  forwardRef<InputRef, Calendar>((_, ref) => {
+  forwardRef<InputRef<CalendarValue>, Calendar>((_, ref) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const [value, setValue] = useState<CalendarValue>(_?.defaultValue);
 
@@ -68,7 +66,7 @@ export const InputDate = memo(
         }
         return "";
       },
-      updateValue: (newValue: unknown) => {
+      updateValue: (newValue: CalendarValue) => {
         setValue(newValue);
       },
       checkValidation: () => {
@@ -77,17 +75,18 @@ export const InputDate = memo(
       },
     }));
 
-    const onChange = (e?: any) => {
-      setValue(e);
-      setIsValid(checkValidation(e));
+    const onChange = (e?: DateObject) => {
+      setValue(e?.toString());
+      setIsValid(checkValidation(e?.toString()));
     };
 
     useEffect(() => {
       if (_.onChange) _.onChange(value);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
-    const checkValidation = (currentValue: string): boolean => {
-      var res = true;
+    const checkValidation = (currentValue?: string): boolean => {
+      let res = true;
       if (
         !vRequired({
           required: _.required,
@@ -100,10 +99,8 @@ export const InputDate = memo(
 
       return res;
     };
-    const portal = _.portal != undefined && _.portal != false;
-    const defaultPortal =
-      customized?.defaultProps?.portal != undefined &&
-      customized?.defaultProps?.portal != false;
+    const portal = _.portal != undefined;
+    const defaultPortal = customized?.defaultProps?.portal != undefined;
     const input: React.ReactNode = (
       <>
         <DatePicker
@@ -136,7 +133,7 @@ export const InputDate = memo(
           }`}
           minDate={_.minDate ?? undefined}
           maxDate={_.maxDate ?? undefined}
-          onChange={(e: any) => onChange(e)}
+          onChange={(e: DateObject) => onChange(e)}
           format={_.format}
           onlyMonthPicker={_.onlyMonth}
           editable={_.editable}
@@ -184,9 +181,9 @@ export const InputDate = memo(
               }
             />
             {_.validationComponent ? (
-              _.validationComponent({ errors: errors })
+              React.createElement(_.validationComponent, { errors: errors })
             ) : customized?.defaultProps?.validationComponent ? (
-              customized?.defaultProps?.validationComponent({ errors: errors })
+              React.createElement(customized.defaultProps.validationComponent, { errors: errors })
             ) : (
               <></>
             )}

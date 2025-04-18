@@ -7,18 +7,19 @@ import React, {
   useRef,
   useState,
 } from "react";
+import {
+  ComponentDescriptor,
+  CustomValidation,
+  Decimal,
+  InputMasterContextProps,
+  InputRef,
+} from "../types";
 import { vMinValue } from "../../utils/vMinValue";
 import { vMaxValue } from "../../utils/vMaxValue";
 import { separate } from "../../utils/Separate";
 import { vDecimal } from "../../utils/vDecimal";
 import { InputMasterContext } from "../../contexts/InputMasterContext";
 import { vCustomValidation } from "../../utils/vCustomValidation";
-import {
-  ComponentDescriptor,
-  CustomValidation,
-  Decimal,
-  InputMasterContextProps,
-} from "../types";
 import { vRequired } from "../../utils";
 import { renderComponent } from "../../utils/RenderComponent";
 import { Wrapper } from "../elements/Wrapper";
@@ -30,10 +31,12 @@ import { cn } from "../../utils/cn";
 import { toEnglishNubmer } from "../../utils/pa2e";
 
 export const InputDecimal = memo(
-  forwardRef((_: Decimal, ref: any) => {
+  forwardRef<InputRef<string>, Decimal>((_, ref) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
+    const [value, setValue] = useState<string>(
+      _?.defaultValue?.toString() ?? ""
+    );
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
@@ -46,8 +49,10 @@ export const InputDecimal = memo(
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
         inputRef.current.value = _.defaultValue;
-      separate({ ref: inputRef, seperator: _.separator ?? "" });
-    }, [_.defaultValue, _.updateDefaultValueOnChange]);
+      if (inputRef.current) {
+        separate({ ref: inputRef as React.RefObject<HTMLInputElement>, seperator: _.separator ?? "" });
+      }
+    }, [_.defaultValue, _.updateDefaultValueOnChange, _.separator]);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -66,27 +71,31 @@ export const InputDecimal = memo(
       },
       checkValidation: () => {
         if (inputRef.current) {
-          setIsValid(checkValidation(inputRef.current.value ?? ""));
-          return checkValidation(inputRef.current.value ?? "");
+          const result = checkValidation(inputRef.current.value ?? "");
+          setIsValid(result);
+          return result;
         }
+        return false;
       },
     }));
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
-      toEnglishNubmer({ ref: inputRef });
+      if (inputRef.current) {
+        toEnglishNubmer({ ref: inputRef as React.RefObject<HTMLInputElement> });
+      }
 
-      setValue(e?.target.value);
+      setValue(e?.target.value ?? "");
 
-      vDecimal({ ref: inputRef });
-      if (_.separator) separate({ ref: inputRef, seperator: _.separator });
+      if (inputRef.current) {
+        vDecimal({ ref: inputRef as React.RefObject<HTMLInputElement> });
+        if (_.separator) separate({ ref: inputRef as React.RefObject<HTMLInputElement>, seperator: _.separator });
+      }
 
       if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
-
-      if (_.onChange) _.onChange(e);
     };
 
-    const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const onBlur = (e?: React.FocusEvent<HTMLInputElement>) => {
       if (_.onBlur) _.onBlur(e);
 
       if (
@@ -104,7 +113,7 @@ export const InputDecimal = memo(
         currentValue[currentValue.length - 1] == "."
       )
         return false;
-      var res = true;
+      const res = true;
 
       if (
         !vRequired({
@@ -114,7 +123,7 @@ export const InputDecimal = memo(
           error: customized?.validationErrors?.required,
         })
       )
-        res = false;
+        return false;
 
       _.customValidations?.forEach((customValidation: CustomValidation) => {
         if (
@@ -124,7 +133,7 @@ export const InputDecimal = memo(
             customValidation: customValidation,
           })
         )
-          res = false;
+          return false;
       });
       if (
         _.minValue != undefined &&
@@ -136,7 +145,7 @@ export const InputDecimal = memo(
           error: customized?.validationErrors?.minValue ?? undefined,
         })
       )
-        res = false;
+        return false;
 
       if (
         _.maxValue != undefined &&
@@ -148,7 +157,7 @@ export const InputDecimal = memo(
           error: customized?.validationErrors?.maxValue ?? undefined,
         })
       )
-        res = false;
+        return false;
 
       return res;
     };
@@ -221,9 +230,9 @@ export const InputDecimal = memo(
               }
             />
             {_.validationComponent ? (
-              _.validationComponent({ errors: errors })
+              React.createElement(_.validationComponent, { errors: errors })
             ) : customized?.defaultProps?.validationComponent ? (
-              customized?.defaultProps?.validationComponent({ errors: errors })
+              React.createElement(customized.defaultProps.validationComponent, { errors: errors })
             ) : (
               <></>
             )}
@@ -243,7 +252,9 @@ export const InputDecimal = memo(
         ? _.componentStructure
         : (customized?.defaultProps?.componentStructure as ComponentDescriptor),
       input,
-      _.validationComponent,
+      _.validationComponent
+        ? _.validationComponent
+        : customized?.defaultProps?.validationComponent,
       _.title,
       _.before,
       _.after,

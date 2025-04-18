@@ -1,3 +1,4 @@
-export function hello(thing: string): string {
+export function Hello(thing: string): string {
   return `hello ${thing}`;
 }
+

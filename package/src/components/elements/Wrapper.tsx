@@ -1,10 +1,10 @@
 import React from "react";
 
 type Props = {
-  tag?: keyof JSX.IntrinsicElements;
+  tag?: React.ElementType;
   className?: string;
   children?: React.ReactNode;
-  key?: any;
+  key?: React.Key;
 };
 
 export function Wrapper({ tag: Tag = "div", className = "", children, key }: Props) {

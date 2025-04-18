@@ -10,6 +10,8 @@ import {
   Select,
   Text,
   Textarea,
+  CalendarValue,
+  SelectValue,
 } from "../types";
 import { InputCheckbox } from "./InputCheckbox";
 import { InputDate } from "./InputDate";
@@ -20,23 +22,21 @@ import { InputSelect } from "./InputSelect";
 import { InputText } from "./InputText";
 import { InputTextArea } from "./InputTextArea";
 
-export const Input = memo(
-  (
-    _:
-      | Text
-      | Decimal
-      | Integer
-      | Calendar
-      | Select
-      | Textarea
-      | File
-      | Password
-      | Checkbox
-  ) => {
-    const baseInput: BaseInput = {
+type InputType =
+  | Text
+  | Decimal
+  | Integer
+  | Calendar
+  | Select
+  | Textarea
+  | File
+  | Password
+  | Checkbox;
+
+export const Input = memo((_: InputType) => {
+  const getBaseInput = () => {
+    const base = {
       id: _.id,
-      type: _.type,
-      name: _.name,
       register: _.register,
       title: _.title,
       disabled: _?.disabled,
@@ -65,39 +65,43 @@ export const Input = memo(
       ..._.register(_.name, _.type),
     };
 
-    switch (_.type) {
-      case "text":
-        return <InputText {...baseInput} {..._} />;
+    return base;
+  };
 
-      case "decimal":
-        return <InputDecimal {...baseInput} {..._} />;
+  const baseInput = getBaseInput();
 
-      case "integer":
-        return <InputInteger {...baseInput} {..._} />;
+  switch (_.type) {
+    case "text":
+      return <InputText {...(baseInput as BaseInput<string>)} {..._} />;
 
-      case "calendar":
-        return <InputDate {...baseInput} {..._} />;
+    case "decimal":
+      return <InputDecimal {...(baseInput as BaseInput<string>)} {..._} />;
 
-      case "select":
-        return <InputSelect {...baseInput} {..._} />;
-        
-      case "password":
-        return <InputPassword {...baseInput} {..._} />;
+    case "integer":
+      return <InputInteger {...(baseInput as BaseInput<number>)} {..._} />;
 
-      case "textarea":
-        return <InputTextArea {...baseInput} {..._} />;
+    case "calendar":
+      return <InputDate {...(baseInput as BaseInput<CalendarValue>)} {..._} />;
 
-      case "checkbox":
-        return (
-          <InputCheckbox
-            titleClickable={_.titleClickable}
-            {...baseInput}
-            type="checkbox"
-          />
-        );
+    case "select":
+      return <InputSelect {...(baseInput as BaseInput<SelectValue>)} {..._} />;
 
-      default:
-        return <InputText {...baseInput} type="text" />;
-    }
+    case "password":
+      return <InputPassword {...(baseInput as BaseInput<string>)} {..._} />;
+
+    case "textarea":
+      return <InputTextArea {...(baseInput as BaseInput<string>)} {..._} />;
+
+    case "checkbox":
+      return (
+        <InputCheckbox
+          titleClickable={_.titleClickable}
+          {...(baseInput as BaseInput<boolean>)}
+          type="checkbox"
+        />
+      );
+
+    default:
+      return <InputText {...(baseInput as BaseInput<string>)} type="text" />;
   }
-);
+});

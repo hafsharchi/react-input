@@ -12,6 +12,7 @@ import {
   CustomValidation,
   Integer,
   InputMasterContextProps,
+  InputRef,
 } from "../types";
 import { vMinValue } from "../../utils/vMinValue";
 import { vMaxValue } from "../../utils/vMaxValue";
@@ -30,10 +31,10 @@ import { cn } from "../../utils/cn";
 import { toEnglishNubmer } from "../../utils/pa2e";
 
 export const InputInteger = memo(
-  forwardRef((_: Integer, ref: any) => {
+  forwardRef<InputRef<number>, Integer>((_, ref) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
+    const [value, setValue] = useState<string>(_?.defaultValue?.toString() ?? "");
 
     const [errors, setErrors] = useState<Array<string>>([]);
     const customized: InputMasterContextProps | undefined =
@@ -45,65 +46,79 @@ export const InputInteger = memo(
 
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
-        inputRef.current.value = _.defaultValue;
-      separate({ ref: inputRef, seperator: _.separator ?? "" });
-    }, [_.defaultValue, _.updateDefaultValueOnChange]);
+        inputRef.current.value = _.defaultValue.toString();
+      if (inputRef.current) {
+        separate({ ref: inputRef as React.RefObject<HTMLInputElement>, seperator: _.separator ?? "" });
+      }
+    }, [_.defaultValue, _.updateDefaultValueOnChange, _.separator]);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current && inputRef.current.value) {
-          return (
-            inputRef.current?.value.replaceAll(_.separator ?? "", "") ?? ""
-          );
+          const value = inputRef.current.value.replaceAll(_.separator ?? "", "");
+          return value ? Number(value) : 0;
         }
-        return "";
+        return 0;
       },
-      updateValue: (newValue: string) => {
+      updateValue: (newValue: number) => {
         if (inputRef.current) {
-          inputRef.current.value = newValue;
+          inputRef.current.value = newValue.toString();
           onChange();
         }
       },
       checkValidation: () => {
         if (inputRef.current) {
-          setIsValid(checkValidation(inputRef.current.value ?? ""));
-          return checkValidation(inputRef.current.value ?? "");
+          const result = checkValidation(inputRef.current.value ?? "");
+          setIsValid(result);
+          return result;
         }
+        return false;
       },
     }));
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
-      toEnglishNubmer({ ref: inputRef });
+      if (inputRef.current) {
+        toEnglishNubmer({ ref: inputRef as React.RefObject<HTMLInputElement> });
+      }
 
-      setValue(e?.target.value);
+      setValue(e?.target.value ?? "");
 
-      vInteger({ ref: inputRef });
-      if (_.separator) separate({ ref: inputRef, seperator: _.separator });
+      if (inputRef.current) {
+        vInteger({ ref: inputRef as React.RefObject<HTMLInputElement> });
+        if (_.separator) separate({ ref: inputRef as React.RefObject<HTMLInputElement>, seperator: _.separator });
+      }
 
-      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
+      if (_.maxLength && inputRef.current) {
+        vMaxLength({ ref: inputRef as React.RefObject<HTMLInputElement>, maxLength: _.maxLength });
+      }
 
       if (validationOn == "submit-blur-change" || !isValid)
-        setIsValid(checkValidation(inputRef?.current?.value ?? ""));
-      if (_.onChange) _.onChange(e);
+        setIsValid(checkValidation(inputRef.current?.value ?? ""));
+      
+      if (_.onChange && inputRef.current) {
+        const numericValue = inputRef.current.value ? Number(inputRef.current.value.replaceAll(_.separator ?? "", "")) : undefined;
+        _.onChange(numericValue);
+      }
     };
 
-    const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const onBlur = (e?: React.FocusEvent<HTMLInputElement>) => {
       if (_.onBlur) _.onBlur(e);
-      vInteger({ ref: inputRef });
-
-      if (_.separator) separate({ ref: inputRef, seperator: _.separator });
+      if (inputRef.current) {
+        vInteger({ ref: inputRef as React.RefObject<HTMLInputElement> });
+        if (_.separator) separate({ ref: inputRef as React.RefObject<HTMLInputElement>, seperator: _.separator });
+      }
 
       if (
         validationOn == "submit-blur-change" ||
         validationOn == "submit-blur" ||
         !isValid
       )
-        setIsValid(checkValidation(inputRef?.current?.value ?? ""));
+        setIsValid(checkValidation(inputRef.current?.value ?? ""));
     };
 
     const checkValidation = (currentValue: string): boolean => {
       if (currentValue == "-") return false;
-      var res = true;
+      const res = true;
 
       if (
         !vRequired({
@@ -113,7 +128,7 @@ export const InputInteger = memo(
           error: customized?.validationErrors?.required,
         })
       )
-        res = false;
+        return false;
 
       _.customValidations?.forEach((customValidation: CustomValidation) => {
         if (
@@ -123,7 +138,7 @@ export const InputInteger = memo(
             customValidation: customValidation,
           })
         )
-          res = false;
+          return false;
       });
 
       if (
@@ -136,7 +151,7 @@ export const InputInteger = memo(
           error: customized?.validationErrors?.minValue ?? undefined,
         })
       )
-        res = false;
+        return false;
 
       if (
         _.maxValue != undefined &&
@@ -148,7 +163,7 @@ export const InputInteger = memo(
           error: customized?.validationErrors?.maxValue ?? undefined,
         })
       )
-        res = false;
+        return false;
 
       if (
         _.minLength &&
@@ -159,7 +174,7 @@ export const InputInteger = memo(
           error: customized?.validationErrors?.minLength ?? undefined,
         })
       )
-        res = false;
+        return false;
       return res;
     };
 
@@ -231,9 +246,9 @@ export const InputInteger = memo(
               }
             />
             {_.validationComponent ? (
-              _.validationComponent({ errors: errors })
+              React.createElement(_.validationComponent, { errors: errors })
             ) : customized?.defaultProps?.validationComponent ? (
-              customized?.defaultProps?.validationComponent({ errors: errors })
+              React.createElement(customized.defaultProps.validationComponent, { errors: errors })
             ) : (
               <></>
             )}
@@ -253,7 +268,9 @@ export const InputInteger = memo(
         ? _.componentStructure
         : (customized?.defaultProps?.componentStructure as ComponentDescriptor),
       input,
-      _.validationComponent,
+      _.validationComponent
+        ? _.validationComponent
+        : customized?.defaultProps?.validationComponent,
       _.title,
       _.before,
       _.after,

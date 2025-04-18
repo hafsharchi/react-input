@@ -1,4 +1,4 @@
-export { Input } from "./index2";
+export { Input } from "./middleware";
 export { InputDate } from "./InputDate";
 export { InputDecimal } from "./InputDecimal";
 export { InputInteger } from "./InputInteger";

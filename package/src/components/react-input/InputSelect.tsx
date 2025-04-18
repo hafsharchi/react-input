@@ -14,9 +14,17 @@ import {
   CustomValidation,
   InputMasterContextProps,
   Select,
+  InputRef,
+  SelectValue,
+  OptionType,
 } from "../types";
 import { vRequired } from "../../utils";
-import ReactSelect, { GroupBase, OptionsOrGroups } from "react-select";
+import ReactSelect, { 
+  GroupBase, 
+  SelectInstance,
+  SingleValue,
+  MultiValue,
+} from "react-select";
 import { renderComponent } from "../../utils/RenderComponent";
 import { After } from "../elements/After";
 import { Before } from "../elements/Before";
@@ -26,13 +34,11 @@ import { Wrapper } from "../elements/Wrapper";
 import { cn } from "../../utils/cn";
 
 export const InputSelect = memo(
-  forwardRef((_: Select, ref: any) => {
-    const [value, setValue] = React.useState<
-      OptionsOrGroups<unknown, GroupBase<unknown>> | undefined
-    >(_?.defaultValue ?? undefined);
+  forwardRef<InputRef<SelectValue>, Select>((_, ref) => {
+    const [value, setValue] = React.useState<SelectValue>(_?.defaultValue);
     const [inputValue, setInputValue] = React.useState<string>();
     const [isValid, setIsValid] = useState<boolean>(true);
-    const inputRef = useRef<any>(null);
+    const inputRef = useRef<SelectInstance<OptionType, boolean, GroupBase<OptionType>>>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
@@ -43,32 +49,30 @@ export const InputSelect = memo(
       ? _.validationOn
       : customized?.defaultProps?.validationOn ?? "submit";
 
-    type SelectDataType = { label: string; value: string };
-    const prevDefaultValueRef = useRef<SelectDataType>();
+    const prevDefaultValueRef = useRef<OptionType | undefined>(undefined);
 
     useEffect(() => {
       if (
         inputRef.current &&
         _.updateDefaultValueOnChange &&
         _.defaultValue &&
-        _.defaultValue?.value != prevDefaultValueRef.current?.value
+        Array.isArray(_.defaultValue) &&
+        _.defaultValue[0]?.value !== prevDefaultValueRef.current?.value
       ) {
         setValue(_.defaultValue);
-        prevDefaultValueRef.current = _.defaultValue;
+        prevDefaultValueRef.current = _.defaultValue[0] as OptionType;
       }
     }, [_.defaultValue, _.updateDefaultValueOnChange]);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (value) {
-          if (_.multiple && value.length <= 0) return "";
+          if (_.multiple && Array.isArray(value) && value.length <= 0) return undefined;
           return value;
         }
-        return "";
+        return undefined;
       },
-      updateValue: (
-        newValue: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined
-      ) => {
+      updateValue: (newValue: SelectValue) => {
         if (inputRef.current) {
           setValue(newValue);
           if (validationOn != "submit" || !isValid)
@@ -80,14 +84,17 @@ export const InputSelect = memo(
           setIsValid(checkValidation(value));
           return checkValidation(value);
         }
+        return false;
       },
     }));
 
     const [hasChanged, setHasChanged] = useState(false);
 
-    const onChange = (e?: any) => {
+    const onChange = (
+      newValue: SingleValue<OptionType> | MultiValue<OptionType>
+    ) => {
       setHasChanged(true);
-      setValue(e ? e : undefined);
+      setValue(newValue);
     };
 
     useEffect(() => {
@@ -96,84 +103,60 @@ export const InputSelect = memo(
           setIsValid(checkValidation(value));
         if (_.onChange) _.onChange(value);
       }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
-    const onBlur = (e?: any) => {
+    const onBlur = (e?: React.FocusEvent<HTMLDivElement>) => {
       if (validationOn == "submit-blur" || validationOn == "submit-blur-change")
         setIsValid(checkValidation(value));
       if (_.onBlur) _.onBlur(e);
     };
 
-    const checkValidation = (currentValue: any): boolean => {
+    const checkValidation = (currentValue: SelectValue): boolean => {
       if (Array.isArray(currentValue) && currentValue.length === 0) {
-        currentValue = null;
+        currentValue = undefined;
       }
 
-      var res = true;
+      const res = true;
 
       if (
         !vRequired({
           required: _.required,
-          currentValue: currentValue,
+          currentValue: currentValue ? String(currentValue) : "",
           setErrors: setErrors,
           error: customized?.validationErrors?.required,
         })
       )
-        res = false;
+        return false;
 
       _.customValidations?.forEach((customValidation: CustomValidation) => {
         if (
           !vCustomValidation({
-            currentValue: currentValue,
+            currentValue: currentValue ? String(currentValue) : "",
             setErrors: setErrors,
             customValidation: customValidation,
           })
         )
-          res = false;
+          return false;
       });
 
       return res;
     };
 
+    // Destructure only what we need
     const {
-      portal,
-      disabled,
-      disabledClassName,
-      onChange: _onChange,
-      onBlur: _onBlur,
       onInputChange,
-      register,
-      name,
-      type,
-      after,
-      afterClassName,
-      before,
-      beforeClassName,
-      className,
-      title,
-      titleClassName,
-      loading,
-      loadingClassName,
-      loadingObject,
-      multiple,
-      componentStructure,
-      wrapperClassName,
-      validationComponent,
-      validationOn: v,
-      notValidClassName,
       ...rest
     } = _;
 
     const input: React.ReactNode = (
       <>
-        <ReactSelect
+        <ReactSelect<OptionType, boolean, GroupBase<OptionType>>
           onInputChange={(e, x) => {
             setInputValue(e);
             if (onInputChange) onInputChange(e, x);
           }}
-          components={
-            _.components ? _.components : customized?.defaultProps?.components
-          }
+          components={_.components}
           menuPortalTarget={
             _.portal ? _.portal : customized?.defaultProps?.portal
           }
@@ -253,9 +236,9 @@ export const InputSelect = memo(
               }
             />
             {_.validationComponent ? (
-              _.validationComponent({ errors: errors })
+              React.createElement(_.validationComponent, { errors: errors })
             ) : customized?.defaultProps?.validationComponent ? (
-              customized?.defaultProps?.validationComponent({ errors: errors })
+              React.createElement(customized.defaultProps.validationComponent, { errors: errors })
             ) : (
               <></>
             )}
@@ -309,7 +292,7 @@ export const InputSelect = memo(
       errors,
       Boolean(
         (value && !_.multiple) ||
-          (_.multiple && value && value.length != 0) ||
+          (_.multiple && Array.isArray(value) && value.length > 0) ||
           inputValue
       )
     );

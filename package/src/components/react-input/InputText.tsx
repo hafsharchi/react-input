@@ -12,6 +12,7 @@ import {
   CustomValidation,
   InputMasterContextProps,
   Text,
+  InputRef,
 } from "../types";
 import { vMaxLength } from "../../utils/vMaxLength";
 import { vMinLength } from "../../utils/vMinLength";
@@ -28,12 +29,12 @@ import { applyMask } from "../../utils/Mask";
 import { cn } from "../../utils/cn";
 
 export const InputText = memo(
-  forwardRef((_: Text, ref: any) => {
+  forwardRef<InputRef<string>, Text>((_, ref) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
-    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
+    const [value, setValue] = useState<string>(_?.defaultValue?.toString() ?? "");
 
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
@@ -52,6 +53,7 @@ export const InputText = memo(
         if (inputRef.current) {
           return inputRef.current?.value ?? "";
         }
+        return "";
       },
       updateValue: (newValue: string) => {
         if (inputRef.current) {
@@ -64,29 +66,45 @@ export const InputText = memo(
           setIsValid(checkValidation(inputRef.current.value ?? ""));
           return checkValidation(inputRef.current.value ?? "");
         }
+        return false;
       },
     }));
 
     const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(e?.target.value);
-      applyMask({
-        ref: inputRef,
-        mask: _.mask,
-        maskChar: _.maskChar,
-      });
+      if (e?.target.value !== undefined) {
+        setValue(e.target.value);
+      }
+      
+      if (inputRef.current) {
+        applyMask({
+          ref: inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>,
+          mask: _.mask,
+          maskChar: _.maskChar,
+        });
 
-      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
+        if (_.maxLength) {
+          vMaxLength({ 
+            ref: inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>, 
+            maxLength: _.maxLength 
+          });
+        }
+      }
 
       if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
 
-      if (_.onChange) _.onChange(e);
+      if (_.onChange) _.onChange(inputRef.current?.value);
     };
 
-    const onBlur = (e?: React.ChangeEvent<HTMLInputElement>) => {
+    const onBlur = (e?: React.FocusEvent<HTMLInputElement>) => {
       if (_.onBlur) _.onBlur(e);
 
-      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
+      if (_.maxLength && inputRef.current) {
+        vMaxLength({ 
+          ref: inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>, 
+          maxLength: _.maxLength 
+        });
+      }
 
       if (
         validationOn == "submit-blur-change" ||
@@ -97,7 +115,7 @@ export const InputText = memo(
     };
 
     const checkValidation = (currentValue: string): boolean => {
-      var res = true;
+      const res = true;
 
       if (
         !vRequired({
@@ -107,7 +125,7 @@ export const InputText = memo(
           error: customized?.validationErrors?.required,
         })
       )
-        res = false;
+        return false;
 
       _.customValidations?.forEach((customValidation: CustomValidation) => {
         if (
@@ -117,7 +135,7 @@ export const InputText = memo(
             customValidation: customValidation,
           })
         )
-          res = false;
+          return false;
       });
 
       if (
@@ -129,7 +147,7 @@ export const InputText = memo(
           error: customized?.validationErrors?.minLength ?? undefined,
         })
       )
-        res = false;
+        return false;
       return res;
     };
 
@@ -197,9 +215,9 @@ export const InputText = memo(
               }
             />
             {_.validationComponent ? (
-              _.validationComponent({ errors: errors })
+              React.createElement(_.validationComponent, { errors: errors })
             ) : customized?.defaultProps?.validationComponent ? (
-              customized?.defaultProps?.validationComponent({ errors: errors })
+              React.createElement(customized.defaultProps.validationComponent, { errors: errors })
             ) : (
               <></>
             )}

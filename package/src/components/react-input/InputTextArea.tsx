@@ -12,6 +12,7 @@ import {
   CustomValidation,
   InputMasterContextProps,
   Textarea,
+  InputRef,
 } from "../types";
 import { vMaxLength } from "../../utils/vMaxLength";
 import { vMinLength } from "../../utils/vMinLength";
@@ -27,10 +28,10 @@ import { renderComponent } from "../../utils/RenderComponent";
 import { cn } from "../../utils/cn";
 
 export const InputTextArea = memo(
-  forwardRef((_: Textarea, ref: any) => {
+  forwardRef<InputRef<string>, Textarea>((_, ref) => {
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLTextAreaElement>(null);
-    const [value, setValue] = useState<any>(_?.defaultValue?.toString() ?? "");
+    const [value, setValue] = useState<string>(_?.defaultValue?.toString() ?? "");
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
@@ -51,6 +52,7 @@ export const InputTextArea = memo(
         if (inputRef.current) {
           return inputRef.current?.value ?? "";
         }
+        return "";
       },
       updateValue: (newValue: string) => {
         if (inputRef.current) {
@@ -63,24 +65,37 @@ export const InputTextArea = memo(
           setIsValid(checkValidation(inputRef.current.value ?? ""));
           return checkValidation(inputRef.current.value ?? "");
         }
+        return false;
       },
     }));
 
     const onChange = (e?: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setValue(e?.target.value);
+      if (e?.target.value !== undefined) {
+        setValue(e.target.value);
+      }
 
-      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
+      if (_.maxLength && inputRef.current) {
+        vMaxLength({ 
+          ref: inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>, 
+          maxLength: _.maxLength 
+        });
+      }
 
       if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
 
-      if (_.onChange) _.onChange(e);
+      if (_.onChange) _.onChange(inputRef.current?.value);
     };
 
-    const onBlur = (e?: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const onBlur = (e?: React.FocusEvent<HTMLTextAreaElement>) => {
       if (_.onBlur) _.onBlur(e);
 
-      if (_.maxLength) vMaxLength({ ref: inputRef, maxLength: _.maxLength });
+      if (_.maxLength && inputRef.current) {
+        vMaxLength({ 
+          ref: inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>, 
+          maxLength: _.maxLength 
+        });
+      }
 
       if (
         validationOn == "submit-blur-change" ||
@@ -91,7 +106,7 @@ export const InputTextArea = memo(
     };
 
     const checkValidation = (currentValue: string): boolean => {
-      var res = true;
+      const res = true;
       if (
         !vRequired({
           required: _.required,
@@ -100,7 +115,7 @@ export const InputTextArea = memo(
           error: customized?.validationErrors?.required,
         })
       )
-        res = false;
+        return false;
 
       _.customValidations?.forEach((customValidation: CustomValidation) => {
         if (
@@ -110,7 +125,7 @@ export const InputTextArea = memo(
             customValidation: customValidation,
           })
         )
-          res = false;
+          return false;
       });
       if (
         _.minLength &&
@@ -121,7 +136,7 @@ export const InputTextArea = memo(
           error: customized?.validationErrors?.minLength ?? undefined,
         })
       )
-        res = false;
+        return false;
       return res;
     };
 
@@ -188,9 +203,9 @@ export const InputTextArea = memo(
               }
             />
             {_.validationComponent ? (
-              _.validationComponent({ errors: errors })
+              React.createElement(_.validationComponent, { errors: errors })
             ) : customized?.defaultProps?.validationComponent ? (
-              customized?.defaultProps?.validationComponent({ errors: errors })
+              React.createElement(customized.defaultProps.validationComponent, { errors: errors })
             ) : (
               <></>
             )}
