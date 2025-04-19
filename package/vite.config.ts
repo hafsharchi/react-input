@@ -7,13 +7,11 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [
     react(),
-    dts({
-      tsconfigPath: resolve(__dirname, "tsconfig.lib.json"),
-    }),
+    dts({ include: ['lib'], rollupTypes: true, tsconfigPath: resolve(__dirname, "tsconfig.lib.json") }),
   ],
   build: {
     lib: {
-      entry: resolve(__dirname, "lib/main.ts"),
+      entry: resolve(__dirname, "lib/main.tsx"),
       formats: ["es"],
     },
     rollupOptions: {

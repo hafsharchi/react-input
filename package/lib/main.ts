@@ -1,4 +1,7 @@
-export function Hello(thing: string): string {
-  return `hello ${thing}`;
-}
+type Props = {
+  value: string;
+};
 
+export function How({ value }: Props) {
+  return "thing" + value;
+}
