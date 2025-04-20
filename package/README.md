@@ -1,54 +1,30 @@
-# React + TypeScript + Vite
+# InputMaster - Simplify Input Management in React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Note:** InputMaster is currently in **beta**. Documentation is being prepared, and the first preview will be published soon.
 
-Currently, two official plugins are available:
+[View on npm](https://www.npmjs.com/package/input-master)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Introduction
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Are you tired of wrestling with complex input logic, repetitive validation code, and excessive re-renders in your React applications? Say hello to **InputMaster**, the game-changing input management component that's about to revolutionize the way you handle inputs in React.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+InputMaster is a powerful, lightweight, and highly customizable solution designed to simplify your input development process. By leveraging the efficiency of refs and smart state management, InputMaster dramatically reduces unnecessary re-renders, resulting in smoother, more responsive user interfaces.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Key Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Optimized Performance:** Enjoy significantly fewer re-renders compared to traditional `useState` approaches.
+- **Comprehensive Input Types:** Seamlessly handle text, decimal, integer, calendar, and select inputs out of the box, with more types coming soon.
+- **Effortless Validation:** Implement complex validation rules with ease, saving you time and headaches.
+- **Flexible and Extensible:** Designed to grow with your needs, InputMaster is perfect for projects of all sizes.
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+Whether you're building a simple contact form or a complex multi-step wizard, InputMaster has got you covered. Its intuitive API makes input creation a breeze, allowing you to focus on what matters most – creating great user experiences.
+
+## Get Started
+
+Don't let input management slow you down. Upgrade your React toolkit with InputMaster and experience the joy of hassle-free input development today. Try it now and see why developers are calling it the missing piece in their React arsenal!
+
+---
+
+For more information and documentation, stay tuned for our upcoming releases.

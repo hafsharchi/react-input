@@ -1,7 +1,3 @@
-type Props = {
-  value: string;
-};
-
-export function How({ value }: Props) {
-  return "thing" + value;
-}
+export { Input } from "./components";
+export { useInput } from "./components/useInput";
+export { InputMasterProvider } from "./contexts/InputMasterContext";

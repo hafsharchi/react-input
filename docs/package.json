@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "testinputmaster": "^0.0.8"
+    "testinputmaster": "^0.0.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

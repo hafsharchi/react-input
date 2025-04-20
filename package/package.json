@@ -1,9 +1,9 @@
 {
-  "name": "testinputmaster",
+  "name": "input-master",
   "private": false,
-  "version": "0.0.8",
+  "version": "0.1.42",
   "type": "module",
-  "main": "dist/testinputmaster.js",
+  "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "files": [
     "dist"

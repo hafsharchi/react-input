@@ -151,7 +151,7 @@ export const renderComponent = (
         ValidationComponent && <ValidationComponent key={key} errors={errors} />
       );
     default:
-      console.log("not valid type in Component structure");
+      console.warn("not valid type in Component structure");
       return null;
   }
 };
