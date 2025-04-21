@@ -1,0 +1,155 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Geist";
+  src:
+    url("../fonts/Geist-Thin.woff2") format("woff2"),
+    url("../fonts/Geist-Thin.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Geist";
+  src:
+    url("../fonts/Geist-UltraLight.woff2") format("woff2"),
+    url("../fonts/Geist-UltraLight.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Geist";
+  src:
+    url("../fonts/Geist-Light.woff2") format("woff2"),
+    url("../fonts/Geist-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Geist";
+  src:
+    url("../fonts/Geist-Regular.woff2") format("woff2"),
+    url("../fonts/Geist-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Geist";
+  src:
+    url("../fonts/Geist-Medium.woff2") format("woff2"),
+    url("../fonts/Geist-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Geist";
+  src:
+    url("../fonts/Geist-SemiBold.woff2") format("woff2"),
+    url("../fonts/Geist-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Geist";
+  src:
+    url("../fonts/Geist-Bold.woff2") format("woff2"),
+    url("../fonts/Geist-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Geist";
+  src:
+    url("../fonts/Geist-Black.woff2") format("woff2"),
+    url("../fonts/Geist-Black.woff") format("woff");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Geist";
+  src:
+    url("../fonts/Geist-UltraBlack.woff2") format("woff2"),
+    url("../fonts/Geist-UltraBlack.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+
+body {
+  font-family: "Geist", sans-serif;
+}
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 6% 10%;
+    --subtext: 240 3% 64%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: #a1a1a760;
+    --input: 214.3 31.8% 91.4%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 240 11% 98%;
+    --subtext: 240 3% 54%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --input: 217.2 32.6% 17.5%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: #a1a1a720;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-geist font-normal;
+  }
+  h2 {
+    @apply font-bold text-2xl my-2;
+  }
+  p {
+    @apply text-foreground/70 font-light my-4 leading-loose;
+  }
+  li {
+    @apply text-foreground/70 font-light my-2 list-disc leading-loose text-sm;
+  }
+  b {
+    @apply pr-1 text-foreground/80 font-bold;
+  }
+
+  code {
+    @apply bg-foreground/[0.08] dark:bg-foreground/10 px-1 text-xs rounded-md py-1 tracking-tight mx-1;
+  }
+  .code {
+    @apply bg-foreground/[0.08] dark:bg-foreground/10 px-1 text-xs rounded-md py-1 tracking-tight mx-1 font-mono;
+  }
+
+  @keyframes spin-once {
+    from {
+      transform: rotate(-45deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  .spin-once {
+    animation: spin-once 500ms ease-out;
+  }
+}
