@@ -1,13 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import PreviewBox from "../../-components/PreviewBox";
-import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { Input, useInput } from "input-master";
-import ValidationComponent from "../../../../components/ValidationComponent";
-import { Button } from "../../../../components/Button";
-import { inputConfigs } from "../../../../lib/input_default_settings";
+import { Calendar, DollarSign } from "lucide-react";
 import { useState } from "react";
+import DocsBreadcrumb from "../-components/DocsBreadcrumb";
+import PreviewBox from "../../-components/PreviewBox";
+import { Button } from "../../../../components/Button";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
-import { Calendar, CalendarFold, DollarSign, DollarSignIcon } from "lucide-react";
+import ValidationComponent from "../../../../components/ValidationComponent";
 
 export const Route = createFileRoute("/_main-layout/docs/before-after/")({
   component: Text,
@@ -16,7 +15,6 @@ export const Route = createFileRoute("/_main-layout/docs/before-after/")({
 function Text() {
   const { useRegister, submit } = useInput();
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [styled, setStyled] = useState<boolean>(true);
   const codeSnippet = `import { Input, useInput } from "input-master";
   
 export const TextInput = () => {
@@ -85,35 +83,12 @@ export const TextInput = () => {
       </div>
       {activeTab == 0 ? (
         <>
-          <PreviewBox
-            settings={
-              <div className="flex absolute left-4 top-4 gap-1">
-                <Button
-                  active={styled}
-                  onClick={() => {
-                    setStyled(true);
-                  }}
-                >
-                  styled
-                </Button>
-                <Button
-                  active={!styled}
-                  onClick={() => {
-                    setStyled(false);
-                  }}
-                >
-                  default
-                </Button>
-              </div>
-            }
-          >
+          <PreviewBox          >
             <Input
-              {...inputConfigs(styled)}
               type="integer"
               separator=","
               title="Price"
               minLength={2}
-              // maxLength={20}
               name="price"
               after={<DollarSign strokeWidth={0.5} className="text-foreground/80" size={18}/>}
               afterClassName="absolute right-3 top-3"
@@ -125,7 +100,6 @@ export const TextInput = () => {
             />
 
             <Input
-              {...inputConfigs(styled)}
               type="calendar"
               locale="english"
               title="Price"

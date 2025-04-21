@@ -4,7 +4,6 @@ import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { Input, useInput } from "input-master";
 import ValidationComponent from "../../../../components/ValidationComponent";
 import { Button } from "../../../../components/Button";
-import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
 import Table from "../../../../components/Table";
@@ -16,7 +15,6 @@ export const Route = createFileRoute("/_main-layout/docs/password/")({
 function Password() {
   const { useRegister, submit } = useInput();
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [styled, setStyled] = useState<boolean>(true);
   const codeSnippet = `import { Input, useInput } from "input-master";
   
 export const Form = () => {
@@ -81,26 +79,7 @@ export const Form = () => {
       {activeTab == 0 ? (
         <>
           <PreviewBox
-            settings={
-              <div className="flex absolute left-4 top-4 gap-1">
-                <Button
-                  active={styled}
-                  onClick={() => {
-                    setStyled(true);
-                  }}
-                >
-                  styled
-                </Button>
-                <Button
-                  active={!styled}
-                  onClick={() => {
-                    setStyled(false);
-                  }}
-                >
-                  default
-                </Button>
-              </div>
-            }
+            
           >
             <Input
               type="password"

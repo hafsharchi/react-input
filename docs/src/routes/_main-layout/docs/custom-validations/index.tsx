@@ -4,7 +4,6 @@ import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { CustomValidation, Input, useInput } from "input-master";
 import ValidationComponent from "../../../../components/ValidationComponent";
 import { Button } from "../../../../components/Button";
-import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
 
@@ -14,21 +13,21 @@ export const Route = createFileRoute("/_main-layout/docs/custom-validations/")({
 
 export const emailValidation: CustomValidation = {
   func(value): boolean {
-    if (value === '') return true; // Allow empty values
+    if (value === "") return true; // Allow empty values
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(value.toString());
   },
-  error: 'Please enter a valid email address',
+  error: "Please enter a valid email address",
 };
 
 // Custom validation to allow only English characters
 export const englishOnlyValidation: CustomValidation = {
   func(value): boolean {
-    if (value === '') return true; // Allow empty values
+    if (value === "") return true; // Allow empty values
     const englishOnlyRegex = /^[a-zA-Z0-9@.\-_]+$/;
     return englishOnlyRegex.test(value.toString());
   },
-  error: 'Only English characters are allowed',
+  error: "Only English characters are allowed",
 };
 
 function Text() {
@@ -106,30 +105,8 @@ export const Form = () => {
       </div>
       {activeTab == 0 ? (
         <>
-          <PreviewBox
-            settings={
-              <div className="flex absolute left-4 top-4 gap-1">
-                <Button
-                  active={styled}
-                  onClick={() => {
-                    setStyled(true);
-                  }}
-                >
-                  styled
-                </Button>
-                <Button
-                  active={!styled}
-                  onClick={() => {
-                    setStyled(false);
-                  }}
-                >
-                  default
-                </Button>
-              </div>
-            }
-          >
+          <PreviewBox>
             <Input
-              {...inputConfigs(styled)}
               type="text"
               title="Email"
               required
@@ -140,15 +117,11 @@ export const Form = () => {
               validationOn="submit-blur-change"
               register={useRegister}
             />
-            
+
             <Button
               variant="submit"
               className="mx-auto mt-3"
-              onClick={() =>
-                submit((d) =>
-                  alert(`email: ${d.email}`)
-                )
-              }
+              onClick={() => submit((d) => alert(`email: ${d.email}`))}
             >
               Sumbit
             </Button>

@@ -33,12 +33,6 @@ const checkboxCs: ComponentDescriptor = {
   ],
 };
 
-export const inputConfigs = (styled?: boolean) => {
-  if (styled == false) return {};
-  return {
-    
-  };
-};
 
 export const checkboxConfigs = () => {
   return {

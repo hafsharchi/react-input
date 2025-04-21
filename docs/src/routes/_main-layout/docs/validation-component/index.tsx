@@ -4,7 +4,6 @@ import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { Input, useInput, ValidationComponentProps } from "input-master";
 import ValidationComponent from "../../../../components/ValidationComponent";
 import { Button } from "../../../../components/Button";
-import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
 
@@ -26,7 +25,6 @@ const AbsoluteValidationComponent = (_: ValidationComponentProps) => {
 function Text() {
   const { useRegister, submit } = useInput();
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [styled, setStyled] = useState<boolean>(true);
   const codeSnippet = `import { Input, useInput, ValidationComponentProps } from "input-master";
   
 
@@ -121,7 +119,6 @@ export const TextInput = () => {
         <>
           <PreviewBox>
             <Input
-              {...inputConfigs()}
               type="text"
               title="First Name *"
               required
@@ -133,7 +130,6 @@ export const TextInput = () => {
               register={useRegister}
             />
             <Input
-              {...inputConfigs()}
               type="text"
               title="Last Name *"
               required

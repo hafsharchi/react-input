@@ -4,7 +4,6 @@ import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { Input, useInput } from "input-master";
 import ValidationComponent from "../../../../components/ValidationComponent";
 import { Button } from "../../../../components/Button";
-import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
 
@@ -91,7 +90,6 @@ export const TextInput = () => {
         <>
           <PreviewBox className="h-[400px]">
             <Input
-              {...inputConfigs()}
               type="text"
               title="submit"
               required
@@ -103,7 +101,6 @@ export const TextInput = () => {
               register={useRegister}
             />
             <Input
-              {...inputConfigs()}
               type="text"
               title="submit-blur"
               required
@@ -115,7 +112,6 @@ export const TextInput = () => {
               register={useRegister}
             />
             <Input
-              {...inputConfigs()}
               type="text"
               title="submit-blur-change"
               required

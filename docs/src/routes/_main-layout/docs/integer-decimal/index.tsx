@@ -4,7 +4,6 @@ import DocsBreadcrumb from "../-components/DocsBreadcrumb";
 import { Input, useInput } from "input-master";
 import ValidationComponent from "../../../../components/ValidationComponent";
 import { Button } from "../../../../components/Button";
-import { inputConfigs } from "../../../../lib/input_default_settings";
 import { useState } from "react";
 import CodeHighlighter from "../../../../components/CodeHighlighter";
 import Table from "../../../../components/Table";
@@ -16,7 +15,6 @@ export const Route = createFileRoute("/_main-layout/docs/integer-decimal/")({
 function Text() {
   const { useRegister, submit } = useInput();
   const [activeTab, setActiveTab] = useState<number>(0);
-  const [styled, setStyled] = useState<boolean>(true);
   const codeSnippet = `import { Input, useInput } from "input-master";
   
   export const TextInput = () => {
@@ -101,7 +99,6 @@ function Text() {
         <>
           <PreviewBox>
             <Input
-              {...inputConfigs(styled)}
               type="integer"
               title="Age (integer)"
               minValue={0}
@@ -114,7 +111,6 @@ function Text() {
               register={useRegister}
             />
             <Input
-              {...inputConfigs(styled)}
               type="decimal"
               title="Percent (decimal)"
               minValue={0}
@@ -126,7 +122,6 @@ function Text() {
               register={useRegister}
             />
             <Input
-              {...inputConfigs(styled)}
               type="decimal"
               title="Price (with separator)"
               minValue={0}
