@@ -127,7 +127,7 @@ export type Calendar = BaseInput<CalendarValue> & {
 
 export type Select = Omit<
   SelectProps<OptionType, boolean, GroupBase<OptionType>>,
-  "isDisabled" | "isMulti" | "defaultValue" | "value"
+  "isDisabled" | "isMulti" | "defaultValue" | "value" | "isLoading"
 > &
   BaseInput<SelectValue> & {
     type: "select";
