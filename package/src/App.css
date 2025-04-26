@@ -1,0 +1,16 @@
+.input-date{
+ padding: 0;
+ width: min-content;
+ box-sizing: border-box;
+ outline: none;
+ border: 0;
+}
+.container{
+    display: flex;
+    justify-content: start;
+}
+.input-date:focus{
+    background-color: green;
+    color: #ffffff;
+    caret-color: #ffffff00;
+   }
