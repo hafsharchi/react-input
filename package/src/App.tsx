@@ -77,9 +77,9 @@ function DatePicker() {
   };
 
   return (
-    <div className="">
+    <div className="container">
       <input
-        className="input-date"
+        className="input-date w-4ch"
         size={1}
         type="text"
         onBlur={(e) => onBlur(e, "yyyy", 1, 2030)}
@@ -101,19 +101,19 @@ function DatePicker() {
       />
       <span>/</span>
       <input
-        className="input-date"
+        className="input-date w-2ch"
         size={1}
         type="text"
-        onKeyDown={(e) => calendarOnKeyDown(e, "mm", "1", 1, 12)}
-        onBlur={(e) => onBlur(e, "mm", 1, 12)}
+        onKeyDown={(e) => calendarOnKeyDown(e, "--", "1", 1, 12)}
+        onBlur={(e) => onBlur(e, "--", 1, 12)}
         onChange={(e) => {
-          onChange(e, "mm", 12);
+          onChange(e, "--", 12);
         }}
-        defaultValue={"mm"}
+        defaultValue={"--"}
       />
       <span>/</span>
       <input
-        className="input-date"
+        className="input-date w-2ch"
         size={1}
         type="text"
         onChange={(e) => {

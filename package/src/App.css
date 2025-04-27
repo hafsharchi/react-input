@@ -1,16 +1,34 @@
 .input-date{
- padding: 0;
- width: min-content;
- box-sizing: border-box;
- outline: none;
- border: 0;
+    min-width: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: 0;
+    text-align: center;
+    caret-color: #ffffff00;
+}
+.w-4ch{
+    width: 4ch;
+}
+.w-2ch{
+    width: 2ch;
 }
 .container{
     display: flex;
     justify-content: start;
 }
 .input-date:focus{
-    background-color: green;
-    color: #ffffff;
-    /* caret-color: #ffffff00; */
-   }
+    background-color: Highlight;
+    color: HighlightText;
+    -webkit-tap-highlight-color: Highlight;
+}
+::selection {
+    background-color: red;
+    color: white;
+}
+
+/* For Firefox */
+::-moz-selection {
+    background-color: red;
+    color: white;
+}
