@@ -12,5 +12,5 @@
 .input-date:focus{
     background-color: green;
     color: #ffffff;
-    caret-color: #ffffff00;
+    /* caret-color: #ffffff00; */
    }

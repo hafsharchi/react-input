@@ -20,7 +20,8 @@ function App() {
 function DatePicker() {
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    defaultValue: string
+    defaultValue: string,
+    maxValue: number
   ) => {
     let value = e.target.value.replaceAll(/[^0-9]/g, "");
     if (!e.target.value) {
@@ -35,7 +36,30 @@ function DatePicker() {
             "0".repeat(defaultValue.length - 1) + value[defaultValue.length];
         } else value = value.slice(-defaultValue.length);
       }
-      e.target.value = value;
+
+      if (
+        parseInt(parseInt(value).toString().padEnd(defaultValue.length, "0")) >=
+        maxValue
+      ) {
+        if (parseInt(value) > maxValue) {
+          e.target.value = value
+            .charAt(defaultValue.length - 1)
+            .padStart(defaultValue.length, "0");
+        } else e.target.value = value;
+        if (
+          parseInt(
+            parseInt(e.target.value).toString().padEnd(defaultValue.length, "0")
+          ) > maxValue
+        ) {
+          const nextInput = (e.target as HTMLElement).nextElementSibling
+            ?.nextElementSibling as HTMLInputElement;
+          if (nextInput) {
+            nextInput.focus();
+          }
+        }
+      } else {
+        e.target.value = value;
+      }
     }
   };
   const onBlur = (
@@ -64,12 +88,14 @@ function DatePicker() {
             e,
             "yyyy",
             new Date().getFullYear().toString(),
+            1,
+            2030,
             true,
             false
           )
         }
         onChange={(e) => {
-          onChange(e, "yyyy");
+          onChange(e, "yyyy", 2030);
         }}
         defaultValue={"yyyy"}
       />
@@ -78,11 +104,10 @@ function DatePicker() {
         className="input-date"
         size={1}
         type="text"
-        onKeyDown={(e) =>
-          calendarOnKeyDown(e, "mm", new Date().getUTCMonth().toString())
-        }
+        onKeyDown={(e) => calendarOnKeyDown(e, "mm", "1", 1, 12)}
+        onBlur={(e) => onBlur(e, "mm", 1, 12)}
         onChange={(e) => {
-          onChange(e, "mm");
+          onChange(e, "mm", 12);
         }}
         defaultValue={"mm"}
       />
@@ -92,11 +117,9 @@ function DatePicker() {
         size={1}
         type="text"
         onChange={(e) => {
-          onChange(e, "dd");
+          onChange(e, "dd", 31);
         }}
-        onKeyDown={(e) =>
-          calendarOnKeyDown(e, "dd", new Date().getDay().toString(), false)
-        }
+        onKeyDown={(e) => calendarOnKeyDown(e, "dd", "1", 1, 31, false)}
         defaultValue={"dd"}
       />
     </div>

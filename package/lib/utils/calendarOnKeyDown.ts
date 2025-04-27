@@ -2,6 +2,8 @@ export const calendarOnKeyDown = (
   e: React.KeyboardEvent<HTMLInputElement>,
   defaultValue: string,
   firstValue: string,
+  minValue: number,
+  maxValue: number,
   moveNext: boolean = true,
   movePrevious: boolean = true
 ) => {
@@ -35,10 +37,10 @@ export const calendarOnKeyDown = (
       } else {
         const currentValue = parseInt(e.target.value);
         if (!isNaN(currentValue)) {
-          e.target.value = String(currentValue + 1).padStart(
-            defaultValue.length,
-            "0"
-          );
+          let nextValue = currentValue;
+          if (nextValue >= maxValue) nextValue = minValue;
+          else nextValue++;
+          e.target.value = String(nextValue).padStart(defaultValue.length, "0");
         }
       }
     }
@@ -50,10 +52,11 @@ export const calendarOnKeyDown = (
       } else {
         const currentValue = parseInt(e.target.value);
         if (!isNaN(currentValue)) {
-          e.target.value = String(currentValue - 1).padStart(
-            defaultValue.length,
-            "0"
-          );
+          let nextValue = currentValue;
+          if (nextValue <= minValue) nextValue = maxValue;
+          else nextValue--;
+
+          e.target.value = String(nextValue).padStart(defaultValue.length, "0");
         }
       }
     }
