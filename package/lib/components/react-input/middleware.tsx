@@ -102,6 +102,6 @@ export const Input = memo((_: InputType) => {
       );
 
     default:
-      return <InputText {...(baseInput as BaseInput<string>)} type="text" />;
+      console.error("Input type not found");
   }
 });

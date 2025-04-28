@@ -13,6 +13,7 @@ import {
   InputMasterContextProps,
   Text,
   InputRef,
+  MaskPattern,
 } from "../types";
 import { vMaxLength } from "../../utils/vMaxLength";
 import { vMinLength } from "../../utils/vMinLength";
@@ -25,8 +26,9 @@ import { Loading } from "../elements/Loading";
 import { Before } from "../elements/Before";
 import { After } from "../elements/After";
 import { renderComponent } from "../../utils/RenderComponent";
-import { applyMask } from "../../utils/Mask";
 import { cn } from "../../utils/cn";
+import { formatValue } from "../../utils/FormatValue";
+import { extractRawValue } from "../../utils/ExtractRawValue";
 
 export const InputText = memo(
   forwardRef<InputRef<string>, Text>((_, ref) => {
@@ -34,12 +36,12 @@ export const InputText = memo(
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
-    const [value, setValue] = useState<string>(_?.defaultValue?.toString() ?? "");
+    const [value, setValue] = useState<string>(
+      _?.defaultValue?.toString() ?? ""
+    );
 
-    useEffect(() => {
-      if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
-        inputRef.current.value = _.defaultValue;
-    }, [_.defaultValue, _.updateDefaultValueOnChange]);
+    const [isFocused, setIsFocused] = useState(false);
+    const [caretPosition, setCaretPosition] = useState(0);
 
     const customized: InputMasterContextProps | undefined =
       useContext(InputMasterContext);
@@ -48,17 +50,29 @@ export const InputText = memo(
       ? _.validationOn
       : customized?.defaultProps?.validationOn ?? "submit";
 
+    const maskPattern: MaskPattern =
+      typeof _.mask === "string"
+        ? { pattern: _.mask, tokens: { "9": /\d/ } }
+        : _.mask ?? { pattern: "", tokens: { "9": /\d/ } };
+
+    const { pattern: maskText, tokens = { "9": /\d/ } } = maskPattern;
+
+    const maskArray = maskText.split("");
+
+    const [maskedValue, setMaskedValue] = useState(
+      formatValue(_?.defaultValue ?? "", maskArray, tokens)
+    );
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current) {
-          return inputRef.current?.value ?? "";
+          return inputRef.current?.value;
         }
         return "";
       },
       updateValue: (newValue: string) => {
         if (inputRef.current) {
           inputRef.current.value = newValue;
-          onChange();
+          // onChange();
         }
       },
       checkValidation: () => {
@@ -70,22 +84,31 @@ export const InputText = memo(
       },
     }));
 
-    const onChange = (e?: React.ChangeEvent<HTMLInputElement>) => {
-      if (e?.target.value !== undefined) {
-        setValue(e.target.value);
-      }
-      
-      if (inputRef.current) {
-        applyMask({
-          ref: inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>,
-          mask: _.mask,
-          maskChar: _.maskChar,
-        });
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const inputValue = e.target.value;
 
+      // Apply masking
+      if (_.mask) {
+        const newMaskedValue = formatValue(inputValue, maskArray, tokens);
+        const newRawValue = extractRawValue(newMaskedValue, maskArray, tokens);
+        setValue(newRawValue);
+        setMaskedValue(newMaskedValue);
+
+        if (inputRef.current) {
+          inputRef.current.value = newMaskedValue;
+        }
+      }
+
+      const newCaretPosition = e?.target.selectionStart || 0;
+      setCaretPosition(newCaretPosition);
+
+      if (inputRef.current) {
         if (_.maxLength) {
-          vMaxLength({ 
-            ref: inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>, 
-            maxLength: _.maxLength 
+          vMaxLength({
+            ref: inputRef as React.RefObject<
+              HTMLInputElement | HTMLTextAreaElement
+            >,
+            maxLength: _.maxLength,
           });
         }
       }
@@ -100,9 +123,11 @@ export const InputText = memo(
       if (_.onBlur) _.onBlur(e);
 
       if (_.maxLength && inputRef.current) {
-        vMaxLength({ 
-          ref: inputRef as React.RefObject<HTMLInputElement | HTMLTextAreaElement>, 
-          maxLength: _.maxLength 
+        vMaxLength({
+          ref: inputRef as React.RefObject<
+            HTMLInputElement | HTMLTextAreaElement
+          >,
+          maxLength: _.maxLength,
         });
       }
 
@@ -114,6 +139,10 @@ export const InputText = memo(
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
     };
 
+    // Handle focus event
+    const handleFocus = () => {
+      setIsFocused(true);
+    };
     const checkValidation = (currentValue: string): boolean => {
       const res = true;
 
@@ -151,9 +180,33 @@ export const InputText = memo(
       return res;
     };
 
+    useEffect(() => {
+      if (inputRef.current && isFocused) {
+        inputRef.current.setSelectionRange(caretPosition, caretPosition);
+      }
+    }, [maskedValue, caretPosition, isFocused]);
+
+    useEffect(() => {
+      if (_.defaultValue && _.updateDefaultValueOnChange) {
+        if (_.mask) {
+          const initialMaskedValue = formatValue(
+            _.defaultValue,
+            maskArray,
+            tokens
+          );
+          setMaskedValue(initialMaskedValue);
+          if (inputRef.current) {
+            inputRef.current.value = initialMaskedValue;
+          }
+        } else if (inputRef.current) {
+          inputRef.current.value = _.defaultValue;
+        }
+      }
+    }, [_.defaultValue, _.updateDefaultValueOnChange, _.mask, maskArray, tokens]);
+
     const input: React.ReactNode = (
       <input
-        defaultValue={_.defaultValue}
+        defaultValue={_.mask ? maskedValue : _.defaultValue}
         id={_.id}
         ref={inputRef}
         className={`${
@@ -176,6 +229,7 @@ export const InputText = memo(
         placeholder={_?.placeholder ?? ""}
         onChange={(e) => onChange(e)}
         onBlur={(e) => onBlur(e)}
+        onFocus={handleFocus}
         disabled={_.disabled}
       />
     );
@@ -217,7 +271,9 @@ export const InputText = memo(
             {_.validationComponent ? (
               React.createElement(_.validationComponent, { errors: errors })
             ) : customized?.defaultProps?.validationComponent ? (
-              React.createElement(customized.defaultProps.validationComponent, { errors: errors })
+              React.createElement(customized.defaultProps.validationComponent, {
+                errors: errors,
+              })
             ) : (
               <></>
             )}

@@ -73,8 +73,7 @@ export type DefaultProps = {
 
 export type Text = BaseInput<string> & {
   type: "text";
-  mask?: string;
-  maskChar?: string;
+  mask?: string | MaskPattern;
   maxLength?: number;
   minLength?: number;
 };
@@ -229,4 +228,10 @@ export type Input = {
   type: Type;
   name: string;
   ref: RefObject<InputRef<unknown>>;
+};
+
+export type MaskPattern = {
+  pattern: string;
+  // placeholder?: string;
+  tokens?: Record<string, RegExp>;
 };
