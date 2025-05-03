@@ -1,26 +1,23 @@
 import { useInput } from "../lib/components/useInput";
 import { Input } from "../lib/components";
-import { useState } from "react";
 
 export default function App() {
   const { useRegister, submit } = useInput();
-  const [value, setValue] = useState(["1399/02/02","1399/02/05"])
   return (
     <div>
       <Input
         register={useRegister}
         name="this"
-        type="calendar"
-        locale="persian"
+        type="text"
+        // locale="persian"
         title="hello world"
-        maxDate={"1404/02/11"}
-        minDate={new Date()}
+        // maxDate={"1404/02/11"}
+        // minDate={new Date()}
         // defaultValue={value}
         // updateDefaultValueOnChange={false}
         // range
         required
       />
-      <div onClick={()=> setValue(["1399/02/02","1399/02/08"])}>i'm the game changer</div>
       <div
         onClick={() => {
           submit((d) => console.log(d));
@@ -29,3 +26,15 @@ export default function App() {
     </div>
   );
 }
+
+
+// import React from 'react'
+// import InputMask from './InputMask'
+
+// export default function App() {
+//   return (
+//     <div>
+//       <InputMask mask={"99 (+99)"} name='hello' guide keepCharPositions></InputMask>
+//     </div>
+//   )
+// }

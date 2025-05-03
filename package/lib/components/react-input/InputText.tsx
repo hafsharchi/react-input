@@ -32,6 +32,7 @@ import { extractRawValue } from "../../utils/ExtractRawValue";
 
 export const InputText = memo(
   forwardRef<InputRef<string>, Text>((_, ref) => {
+    // const placeholderChar = "_"; //%
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -39,9 +40,6 @@ export const InputText = memo(
     const [value, setValue] = useState<string>(
       _?.defaultValue?.toString() ?? ""
     );
-
-    const [isFocused, setIsFocused] = useState(false);
-    const [caretPosition, setCaretPosition] = useState(0);
 
     const customized: InputMasterContextProps | undefined =
       useContext(InputMasterContext);
@@ -87,20 +85,30 @@ export const InputText = memo(
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const inputValue = e.target.value;
 
+      if (e.target.value.length < value.length) {
+        const start = e.target.selectionStart;
+        const parts = [
+          e.target.value.slice(0, start ?? 0),
+          e.target.value.slice(start ?? 0),
+        ];
+        e.target.value = parts[0] + "_".repeat(value.length - e.target.value.length) + parts[1];
+        e.target.setSelectionRange(start, start);
+      }
+      setValue(e.target.value);
       // Apply masking
       if (_.mask) {
+        console.log(value);
         const newMaskedValue = formatValue(inputValue, maskArray, tokens);
         const newRawValue = extractRawValue(newMaskedValue, maskArray, tokens);
         setValue(newRawValue);
         setMaskedValue(newMaskedValue);
-
         if (inputRef.current) {
           inputRef.current.value = newMaskedValue;
         }
       }
 
-      const newCaretPosition = e?.target.selectionStart || 0;
-      setCaretPosition(newCaretPosition);
+      // const newCaretPosition = e?.target.selectionStart || 0;
+      // setCaretPosition(newCaretPosition);
 
       if (inputRef.current) {
         if (_.maxLength) {
@@ -115,8 +123,8 @@ export const InputText = memo(
 
       if (validationOn == "submit-blur-change" || !isValid)
         setIsValid(checkValidation(inputRef.current?.value ?? ""));
-
       if (_.onChange) _.onChange(inputRef.current?.value);
+      // e.target.setSelectionRange(1, 1);
     };
 
     const onBlur = (e?: React.FocusEvent<HTMLInputElement>) => {
@@ -140,9 +148,8 @@ export const InputText = memo(
     };
 
     // Handle focus event
-    const handleFocus = () => {
-      setIsFocused(true);
-    };
+    const handleFocus = () => {};
+
     const checkValidation = (currentValue: string): boolean => {
       const res = true;
 
@@ -181,12 +188,6 @@ export const InputText = memo(
     };
 
     useEffect(() => {
-      if (inputRef.current && isFocused) {
-        inputRef.current.setSelectionRange(caretPosition, caretPosition);
-      }
-    }, [maskedValue, caretPosition, isFocused]);
-
-    useEffect(() => {
       if (_.defaultValue && _.updateDefaultValueOnChange) {
         if (_.mask) {
           const initialMaskedValue = formatValue(
@@ -202,7 +203,13 @@ export const InputText = memo(
           inputRef.current.value = _.defaultValue;
         }
       }
-    }, [_.defaultValue, _.updateDefaultValueOnChange, _.mask, maskArray, tokens]);
+    }, [
+      _.defaultValue,
+      _.updateDefaultValueOnChange,
+      _.mask,
+      maskArray,
+      tokens,
+    ]);
 
     const input: React.ReactNode = (
       <input
