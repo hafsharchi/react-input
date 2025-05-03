@@ -81,7 +81,12 @@ export const Input = memo((_: InputType) => {
       return <InputInteger {...(baseInput as BaseInput<number>)} {..._} />;
 
     case "calendar":
-      return <InputDate {...(baseInput as BaseInput<CalendarValue>)} {..._} />;
+      return (
+        <InputDate
+          {...(baseInput as BaseInput<CalendarValue | CalendarValue[]>)}
+          {..._}
+        />
+      );
 
     case "select":
       return <InputSelect {...(baseInput as BaseInput<SelectValue>)} {..._} />;

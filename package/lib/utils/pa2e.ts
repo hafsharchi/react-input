@@ -1,4 +1,4 @@
-const p2e = (s: string) =>
+export const p2e = (s: string) =>
   s.replace(/[۰-۹]/g, (d: string) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(d)));
 const a2e = (s: string) =>
   s.replace(/[٠-٩]/g, (d: string) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));

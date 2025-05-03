@@ -26,11 +26,32 @@ import { Before } from "../elements/Before";
 import { Loading } from "../elements/Loading";
 import { Title } from "../elements/Title";
 import { cn } from "../../utils/cn";
+import { p2e } from "../../utils/pa2e";
 
 export const InputDate = memo(
   forwardRef<InputRef<CalendarValue>, Calendar>((_, ref) => {
     const [isValid, setIsValid] = useState<boolean>(true);
-    const [value, setValue] = useState<CalendarValue>(_?.defaultValue);
+    const convertToDateObject = (date: CalendarValue | CalendarValue[]) => {
+      if (Array.isArray(date)) {
+        return date.map(
+          (d) =>
+            new DateObject({
+              date: d,
+              calendar: _.locale === "persian" ? persian : undefined,
+              locale: _.locale === "persian" ? persian_fa : undefined,
+            })
+        );
+      } else {
+        return new DateObject({
+          date: date,
+          calendar: _.locale === "persian" ? persian : undefined,
+          locale: _.locale === "persian" ? persian_fa : undefined,
+        });
+      }
+    };
+    const [value, setValue] = useState<DateObject | DateObject[] | undefined>(
+      convertToDateObject(_.defaultValue)
+    );
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -41,51 +62,38 @@ export const InputDate = memo(
 
     useEffect(() => {
       if (inputRef.current && _.updateDefaultValueOnChange && _.defaultValue)
-        setValue(_.defaultValue);
+        setValue(convertToDateObject(_.defaultValue));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [_.defaultValue, _.updateDefaultValueOnChange]);
 
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (value) {
-          if (typeof value == "string") return value;
-          let date: Date | string = new Date(value);
-          if (_.locale == "english") {
-            date = new Intl.DateTimeFormat("en-US", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            }).format(date);
-          } else {
-            date = new Intl.DateTimeFormat("fa-IR-u-nu-latn", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            }).format(value);
-          }
-          return date;
+          return p2e(value.toString());
         }
         return "";
       },
-      updateValue: (newValue: CalendarValue) => {
-        setValue(newValue);
+      updateValue: (newValue: CalendarValue | CalendarValue[]) => {
+        setValue(convertToDateObject(newValue));
       },
       checkValidation: () => {
-        setIsValid(checkValidation(value));
-        return checkValidation(value);
+        setIsValid(checkValidation(value?.toString()));
+        return checkValidation(value?.toString());
       },
     }));
 
-    const onChange = (e?: DateObject) => {
-      setValue(e?.toString());
+    const onChange = (e: DateObject) => {
+      console.log(e);
+      setValue(e);
       setIsValid(checkValidation(e?.toString()));
     };
 
     useEffect(() => {
-      if (_.onChange) _.onChange(value);
+      if (_.onChange) _.onChange(value?.toString());
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
-    const checkValidation = (currentValue?: string): boolean => {
+    const checkValidation = (currentValue?: CalendarValue): boolean => {
       let res = true;
       if (
         !vRequired({
@@ -113,6 +121,7 @@ export const InputDate = memo(
           calendar={_?.locale == "persian" ? persian : undefined}
           locale={_?.locale == "persian" ? persian_fa : undefined}
           onOpenPickNewDate={false}
+          zIndex={_.zIndex}
           inputClass={`${cn(
             customized?.defaultProps?.className ?? "",
             _.className ?? ""
@@ -153,7 +162,7 @@ export const InputDate = memo(
             className={`${cn(
               customized?.defaultProps?.wrapperClassName ?? "",
               _.wrapperClassName ?? ""
-            )} ${value && value != "" ? "has-value" : ""} `}
+            )} ${value && value.toString() != "" ? "has-value" : ""} `}
           >
             <Before
               className={cn(
@@ -183,7 +192,9 @@ export const InputDate = memo(
             {_.validationComponent ? (
               React.createElement(_.validationComponent, { errors: errors })
             ) : customized?.defaultProps?.validationComponent ? (
-              React.createElement(customized.defaultProps.validationComponent, { errors: errors })
+              React.createElement(customized.defaultProps.validationComponent, {
+                errors: errors,
+              })
             ) : (
               <></>
             )}

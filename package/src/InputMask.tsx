@@ -276,7 +276,24 @@ const InputMask = forwardRef<InputMaskRef, InputMaskProps>((props, ref) => {
     if (onChange) {
       onChange(newRawValue, newMaskedValue);
     }
-  
+    
+    // Calculate new caret position
+    let newCaretPosition = e.target.selectionStart || 0;
+    
+    // Apply caret position logic for better UX with masking
+    if (keepCharPositions) {
+      // Adjust caret position based on mask literals
+      let literalsBefore = 0;
+      for (let i = 0; i < newCaretPosition; i++) {
+        if (maskArray[i] && !tokens[maskArray[i]]) {
+          literalsBefore++;
+        }
+      }
+      newCaretPosition += literalsBefore;
+    }
+    
+    // Save for potential use in useEffect
+    setCaretPosition(newCaretPosition);
   };
   
   // Handle blur event
@@ -310,7 +327,7 @@ const InputMask = forwardRef<InputMaskRef, InputMaskProps>((props, ref) => {
   // Set caret position after value changes
   useEffect(() => {
     if (inputRef.current && isFocused) {
-      // inputRef.current.setSelectionRange(caretPosition, caretPosition);
+      inputRef.current.setSelectionRange(caretPosition, caretPosition);
     }
   }, [maskedValue, caretPosition, isFocused]);
   

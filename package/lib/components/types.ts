@@ -108,8 +108,8 @@ export type Integer = BaseInput<number> & {
   minLength?: number;
 };
 
-export type CalendarValue = string | undefined;
-export type Calendar = BaseInput<CalendarValue> & {
+export type CalendarValue = string | undefined | Date;
+export type Calendar = BaseInput<CalendarValue | CalendarValue[]> & {
   type: "calendar";
   locale: "persian" | "english";
   range?: boolean;
@@ -122,6 +122,7 @@ export type Calendar = BaseInput<CalendarValue> & {
   class?: string;
   portal?: HTMLElement;
   editable?: boolean;
+  zIndex?: number;
 };
 
 export type Select = Omit<
