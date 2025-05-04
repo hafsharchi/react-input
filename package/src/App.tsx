@@ -13,6 +13,7 @@ export default function App() {
         title="hello world"
         // maxDate={"1404/02/11"}
         // minDate={new Date()}
+        mask={"999-999* 9959"}
         // defaultValue={value}
         // updateDefaultValueOnChange={false}
         // range

@@ -85,25 +85,28 @@ export const InputText = memo(
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const inputValue = e.target.value;
 
-      if (e.target.value.length < value.length) {
-        const start = e.target.selectionStart;
-        const parts = [
-          e.target.value.slice(0, start ?? 0),
-          e.target.value.slice(start ?? 0),
-        ];
-        e.target.value = parts[0] + "_".repeat(value.length - e.target.value.length) + parts[1];
-        e.target.setSelectionRange(start, start);
-      }
-      setValue(e.target.value);
-      // Apply masking
       if (_.mask) {
-        console.log(value);
-        const newMaskedValue = formatValue(inputValue, maskArray, tokens);
-        const newRawValue = extractRawValue(newMaskedValue, maskArray, tokens);
+        let newMaskedValue = formatValue(inputValue, maskArray, tokens);
+        const newRawValue = extractRawValue(inputValue, maskArray, tokens);
+        if (newMaskedValue.length < maskedValue.length) {
+          const start = e.target.selectionStart;
+          const parts = [
+            inputValue.slice(0, start ?? 0),
+            inputValue.slice(start ?? 0),
+          ];
+          newMaskedValue =
+            parts[0] +
+            "_".repeat(maskedValue.length - e.target.value.length) +
+            parts[1];
+        }
+
+        // newMaskedValue = formatValue(newMaskedValue, maskArray,tokens);
         setValue(newRawValue);
         setMaskedValue(newMaskedValue);
         if (inputRef.current) {
-          inputRef.current.value = newMaskedValue;
+          const start = e.target.selectionStart;
+          e.target.value = newMaskedValue;
+          e.target.setSelectionRange(start, start);
         }
       }
 
