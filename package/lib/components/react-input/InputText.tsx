@@ -83,30 +83,38 @@ export const InputText = memo(
     }));
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const inputValue = e.target.value;
+      let inputValue = e.target.value;
 
       if (_.mask) {
-        let newMaskedValue = formatValue(inputValue, maskArray, tokens);
-        const newRawValue = extractRawValue(inputValue, maskArray, tokens);
-        if (newMaskedValue.length < maskedValue.length) {
+        if (inputValue.length < maskedValue.length) {
           const start = e.target.selectionStart;
           const parts = [
             inputValue.slice(0, start ?? 0),
             inputValue.slice(start ?? 0),
           ];
-          newMaskedValue =
+          const withUnderlineValue =
             parts[0] +
-            "_".repeat(maskedValue.length - e.target.value.length) +
+            "_".repeat(maskedValue.length - inputValue.length) +
             parts[1];
+          if (_.keepCharPositions) {
+            inputValue = withUnderlineValue;
+          } else {
+            inputValue = extractRawValue(withUnderlineValue, maskArray, tokens);
+          }
+        } else if (inputValue.length > maskedValue.length) {
+          const start = e.target.selectionStart ?? 0;
+          inputValue = inputValue.slice(0, start) + inputValue.slice(start + 1);
         }
-
-        // newMaskedValue = formatValue(newMaskedValue, maskArray,tokens);
-        setValue(newRawValue);
+        
+        const newMaskedValue = formatValue(inputValue, maskArray, tokens);
+        // const newRawValue = extractRawValue(inputValue, maskArray, tokens);
+        // setValue(newRawValue);
         setMaskedValue(newMaskedValue);
         if (inputRef.current) {
           const start = e.target.selectionStart;
           e.target.value = newMaskedValue;
           e.target.setSelectionRange(start, start);
+          setValue(newMaskedValue);
         }
       }
 

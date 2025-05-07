@@ -10,7 +10,7 @@ export const extractRawValue = (
 
   for (let i = 0; i < valueChars.length; i++) {
     const char = valueChars[i];
-    // if (char !== placeholderChar) {
+    if (char !== "_") { //Todo
     let isLiteral = false;
     for (const key in tokens) {
       if (maskArray[i] === key) {
@@ -22,7 +22,7 @@ export const extractRawValue = (
     if (!isLiteral) {
       rawValue += char;
     }
-    // }
+    }
   }
 
   return rawValue;

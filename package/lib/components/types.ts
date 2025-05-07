@@ -74,6 +74,7 @@ export type DefaultProps = {
 export type Text = BaseInput<string> & {
   type: "text";
   mask?: string | MaskPattern;
+  keepCharPositions?: boolean;
   maxLength?: number;
   minLength?: number;
 };
