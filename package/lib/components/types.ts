@@ -75,6 +75,7 @@ export type Text = BaseInput<string> & {
   type: "text";
   mask?: string | MaskPattern;
   keepCharPositions?: boolean;
+  override?: boolean;
   maxLength?: number;
   minLength?: number;
 };

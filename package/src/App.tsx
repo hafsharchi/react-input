@@ -10,11 +10,12 @@ export default function App() {
         name="this"
         type="text"
         // locale="persian"
-        keepCharPositions={true}
+        // keepCharPositions={true}
         title="hello world"
         // maxDate={"1404/02/11"}
         // minDate={new Date()}
-        mask={"9959_9"}
+        mask={"999AB999"}
+        override
         // defaultValue={value}
         // updateDefaultValueOnChange={false}
         // range

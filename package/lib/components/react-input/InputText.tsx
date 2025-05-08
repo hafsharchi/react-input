@@ -86,32 +86,73 @@ export const InputText = memo(
       let inputValue = e.target.value;
 
       if (_.mask) {
+        let start = e.target.selectionStart ?? 0;
         if (inputValue.length < maskedValue.length) {
-          const start = e.target.selectionStart;
+          let backCount = 0;
+          while (maskArray[start - 1] && !tokens[maskArray[start - 1]]) {
+            backCount++;
+            start--;
+          }
           const parts = [
-            inputValue.slice(0, start ?? 0),
-            inputValue.slice(start ?? 0),
+            inputValue.slice(0, start + backCount),
+            inputValue.slice(start + backCount),
           ];
-          const withUnderlineValue =
-            parts[0] +
-            "_".repeat(maskedValue.length - inputValue.length) +
-            parts[1];
+          const count = maskedValue.length - inputValue.length;
+          const withUnderlineValue = parts[0] + "_".repeat(count) + parts[1];
+
           if (_.keepCharPositions) {
             inputValue = withUnderlineValue;
           } else {
             inputValue = extractRawValue(withUnderlineValue, maskArray, tokens);
           }
         } else if (inputValue.length > maskedValue.length) {
-          const start = e.target.selectionStart ?? 0;
-          inputValue = inputValue.slice(0, start) + inputValue.slice(start + 1);
+          // caret should not move when the user types incorrect
+          if (
+            !tokens[maskArray[start - 1]]?.test(inputValue.split("")[start - 1])
+          ) {
+            if (tokens[maskArray[start - 1]]) {
+              // if it is not changable, so why user should wait here?
+              e.target.value = maskedValue;
+              e.target.setSelectionRange(start - 1, start - 1);
+              return;
+            } else {
+              const s = e.target.selectionStart ?? 0;
+              while (maskArray[start] && !tokens[maskArray[start]]) {
+                start++;
+              }
+              if (
+                //if user pressed a valid key its better to show it's effect
+                !tokens[maskArray[start]]?.test(inputValue.split("")[s - 1])
+              ) {
+                e.target.value = maskedValue;
+                e.target.setSelectionRange(start, start);
+                return;
+              } else {
+                start++;
+              }
+            }
+          }
+          while (maskArray[start] && !tokens[maskArray[start]]) {
+            start++;
+          }
+          if (_.override) {
+            const s = e.target.selectionStart ?? 0;
+            if (maskArray[s - 1] && !tokens[maskArray[s - 1]]) {
+              const arr = inputValue.split("");
+              [arr[s - 1], arr[start]] = [arr[start], arr[s - 1]]; // Swap using destructuring
+              inputValue = arr.join("");
+              inputValue = inputValue.slice(0, s - 1) + inputValue.slice(s);
+            } else {
+              inputValue = inputValue.slice(0, s) + inputValue.slice(s + 1);
+            }
+          }
         }
-        
         const newMaskedValue = formatValue(inputValue, maskArray, tokens);
+        // if (newMaskedValue == maskedValue) start = start - 1;
         // const newRawValue = extractRawValue(inputValue, maskArray, tokens);
         // setValue(newRawValue);
         setMaskedValue(newMaskedValue);
         if (inputRef.current) {
-          const start = e.target.selectionStart;
           e.target.value = newMaskedValue;
           e.target.setSelectionRange(start, start);
           setValue(newMaskedValue);
