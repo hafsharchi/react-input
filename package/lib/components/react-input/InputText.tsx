@@ -32,7 +32,7 @@ import { extractRawValue } from "../../utils/ExtractRawValue";
 
 export const InputText = memo(
   forwardRef<InputRef<string>, Text>((_, ref) => {
-    // const placeholderChar = "_"; //%
+    const placeholderChar = _.placeholderChar ?? "_";
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -58,7 +58,13 @@ export const InputText = memo(
     const maskArray = maskText.split("");
 
     const [maskedValue, setMaskedValue] = useState(
-      formatValue(_?.defaultValue ?? "", maskArray, tokens)
+      formatValue(
+        _?.defaultValue ?? "",
+        maskArray,
+        tokens,
+        _.guide,
+        _.placeholderChar
+      )
     );
     useImperativeHandle(ref, () => ({
       getValue: () => {
@@ -87,70 +93,89 @@ export const InputText = memo(
 
       if (_.mask) {
         let start = e.target.selectionStart ?? 0;
-        if (inputValue.length < maskedValue.length) {
-          let backCount = 0;
-          while (maskArray[start - 1] && !tokens[maskArray[start - 1]]) {
-            backCount++;
-            start--;
-          }
-          const parts = [
-            inputValue.slice(0, start + backCount),
-            inputValue.slice(start + backCount),
-          ];
-          const count = maskedValue.length - inputValue.length;
-          const withUnderlineValue = parts[0] + "_".repeat(count) + parts[1];
+        if (_.guide) {
+          if (inputValue.length < maskedValue.length) {
+            let backCount = 0;
+            while (maskArray[start - 1] && !tokens[maskArray[start - 1]]) {
+              backCount++;
+              start--;
+            }
+            const parts = [
+              inputValue.slice(0, start + backCount),
+              inputValue.slice(start + backCount),
+            ];
+            const count = maskedValue.length - inputValue.length;
+            const withUnderlineValue =
+              parts[0] + placeholderChar.repeat(count) + parts[1];
 
-          if (_.keepCharPositions) {
-            inputValue = withUnderlineValue;
-          } else {
-            inputValue = extractRawValue(withUnderlineValue, maskArray, tokens);
-          }
-        } else if (inputValue.length > maskedValue.length) {
-          // caret should not move when the user types incorrect
-          if (
-            !tokens[maskArray[start - 1]]?.test(inputValue.split("")[start - 1])
-          ) {
-            if (tokens[maskArray[start - 1]]) {
-              // if it is not changable, so why user should wait here?
-              e.target.value = maskedValue;
-              e.target.setSelectionRange(start - 1, start - 1);
-              return;
+            if (_.keepCharPositions) {
+              inputValue = withUnderlineValue;
             } else {
-              const s = e.target.selectionStart ?? 0;
-              while (maskArray[start] && !tokens[maskArray[start]]) {
-                start++;
-              }
-              if (
-                //if user pressed a valid key its better to show it's effect
-                !tokens[maskArray[start]]?.test(inputValue.split("")[s - 1])
-              ) {
+              inputValue = extractRawValue(
+                withUnderlineValue,
+                maskArray,
+                tokens
+              );
+            }
+          } else if (inputValue.length > maskedValue.length) {
+            if (
+              !tokens[maskArray[start - 1]]?.test(
+                inputValue.split("")[start - 1]
+              )
+            ) {
+              if (tokens[maskArray[start - 1]]) {
+                // if it is not changable, so why user should wait here?
                 e.target.value = maskedValue;
-                e.target.setSelectionRange(start, start);
+                e.target.setSelectionRange(start - 1, start - 1);
                 return;
               } else {
-                start++;
+                const s = e.target.selectionStart ?? 0;
+                while (maskArray[start] && !tokens[maskArray[start]]) {
+                  start++;
+                }
+                if (
+                  //if user pressed a valid key its better to show it's effect
+                  !tokens[maskArray[start]]?.test(inputValue.split("")[s - 1])
+                ) {
+                  e.target.value = maskedValue;
+                  e.target.setSelectionRange(start, start);
+                  return;
+                } else {
+                  start++;
+                }
+              }
+            }
+            while (maskArray[start] && !tokens[maskArray[start]]) {
+              start++;
+            }
+            if (_.override) {
+              const s = e.target.selectionStart ?? 0;
+              if (maskArray[s - 1] && !tokens[maskArray[s - 1]]) {
+                const arr = inputValue.split("");
+                [arr[s - 1], arr[start]] = [arr[start], arr[s - 1]]; // Swap using destructuring
+                inputValue = arr.join("");
+                inputValue = inputValue.slice(0, s - 1) + inputValue.slice(s);
+              } else {
+                inputValue = inputValue.slice(0, s) + inputValue.slice(s + 1);
               }
             }
           }
-          while (maskArray[start] && !tokens[maskArray[start]]) {
-            start++;
-          }
-          if (_.override) {
-            const s = e.target.selectionStart ?? 0;
-            if (maskArray[s - 1] && !tokens[maskArray[s - 1]]) {
-              const arr = inputValue.split("");
-              [arr[s - 1], arr[start]] = [arr[start], arr[s - 1]]; // Swap using destructuring
-              inputValue = arr.join("");
-              inputValue = inputValue.slice(0, s - 1) + inputValue.slice(s);
-            } else {
-              inputValue = inputValue.slice(0, s) + inputValue.slice(s + 1);
+        } else {
+          console.log(start);
+          // guide is off
+          if (inputValue.length > maskedValue.length) {
+            while (maskArray[start] && !tokens[maskArray[start]]) {
+              inputValue += maskArray[start];
+              start++;
             }
           }
         }
-        const newMaskedValue = formatValue(inputValue, maskArray, tokens);
-        // if (newMaskedValue == maskedValue) start = start - 1;
-        // const newRawValue = extractRawValue(inputValue, maskArray, tokens);
-        // setValue(newRawValue);
+        const newMaskedValue = formatValue(
+          inputValue,
+          maskArray,
+          tokens,
+          _.guide
+        );
         setMaskedValue(newMaskedValue);
         if (inputRef.current) {
           e.target.value = newMaskedValue;
