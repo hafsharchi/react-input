@@ -11,12 +11,13 @@ export default function App() {
         type="text"
         // locale="persian"
         title="hello world"
+        // onChange={(e) => console.log(e)}
         // maxDate={"1404/02/11"}
         // minDate={new Date()}
         mask={"999AB999"}
-        guide={false}
-        // keepCharPositions={true}
-        override
+        guide={true}
+        keepCharPositions={true}
+        // override
         // defaultValue={value}
         // updateDefaultValueOnChange={false}
         // range
@@ -26,11 +27,12 @@ export default function App() {
         onClick={() => {
           submit((d) => console.log(d));
         }}
-      >i'm the submit button</div>
+      >
+        i'm the submit button
+      </div>
     </div>
   );
 }
-
 
 // import React from 'react'
 // import InputMask from './InputMask'

@@ -133,6 +133,64 @@ export const InputText = memo(
                 while (maskArray[start] && !tokens[maskArray[start]]) {
                   start++;
                 }
+
+                if (
+                  //if user pressed a valid key its better to show it's effect
+                  !tokens[maskArray[start]]?.test(inputValue.split("")[s - 1])
+                ) {
+                  e.target.value = maskedValue;
+                  e.target.setSelectionRange(start, start);
+                  return;
+                } else {
+                  start++;
+                }
+              }
+            }
+            let jump = 0;
+            while (maskArray[start] && !tokens[maskArray[start]]) {
+              start++;
+              jump++;
+            }
+            if (_.override) {
+              const s = e.target.selectionStart ?? 0;
+              if (maskArray[s - 1] && !tokens[maskArray[s - 1]]) {
+                const arr = inputValue.split("");
+                [arr[s - 1], arr[start - jump]] = [
+                  arr[start - jump],
+                  arr[s - 1],
+                ]; // Swap using destructuring
+                inputValue = arr.join("");
+                inputValue = inputValue.slice(0, s - 1) + inputValue.slice(s);
+              } else {
+                inputValue = inputValue.slice(0, s) + inputValue.slice(s + 1);
+              }
+            } else if (_.keepCharPositions) {
+              // preventing user from writing on places which has written before
+              let s = e.target.selectionStart ?? 0;
+              while (!tokens[maskArray[s-1]]) s++;
+              if (tokens[maskArray[s - 1]]?.test(inputValue.split("")[s])) {
+                e.target.value = maskedValue;
+                e.target.setSelectionRange(s - 1, s - 1);
+                return;
+              }
+            }
+          }
+        } else {
+          if (inputValue.length > maskedValue.length) {
+            while (maskArray[start] && !tokens[maskArray[start]]) {
+              inputValue += maskArray[start];
+              start++;
+            }
+            if (
+              !tokens[maskArray[start - 1]]?.test(
+                inputValue.split("")[start - 1]
+              )
+            ) {
+              {
+                const s = e.target.selectionStart ?? 0;
+                while (maskArray[start] && !tokens[maskArray[start]]) {
+                  start++;
+                }
                 if (
                   //if user pressed a valid key its better to show it's effect
                   !tokens[maskArray[start]]?.test(inputValue.split("")[s - 1])
@@ -148,28 +206,9 @@ export const InputText = memo(
             while (maskArray[start] && !tokens[maskArray[start]]) {
               start++;
             }
-            if (_.override) {
-              const s = e.target.selectionStart ?? 0;
-              if (maskArray[s - 1] && !tokens[maskArray[s - 1]]) {
-                const arr = inputValue.split("");
-                [arr[s - 1], arr[start]] = [arr[start], arr[s - 1]]; // Swap using destructuring
-                inputValue = arr.join("");
-                inputValue = inputValue.slice(0, s - 1) + inputValue.slice(s);
-              } else {
-                inputValue = inputValue.slice(0, s) + inputValue.slice(s + 1);
-              }
-            }
-          }
-        } else {
-          console.log(start);
-          // guide is off
-          if (inputValue.length > maskedValue.length) {
-            while (maskArray[start] && !tokens[maskArray[start]]) {
-              inputValue += maskArray[start];
-              start++;
-            }
           }
         }
+        console.log("I scaped");
         const newMaskedValue = formatValue(
           inputValue,
           maskArray,
