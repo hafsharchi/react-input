@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, {
   forwardRef,
   memo,
@@ -19,8 +20,8 @@ import {
   OptionType,
 } from "../types";
 import { vRequired } from "../../utils";
-import ReactSelect, { 
-  GroupBase, 
+import ReactSelect, {
+  GroupBase,
   SelectInstance,
   SingleValue,
   MultiValue,
@@ -38,7 +39,8 @@ export const InputSelect = memo(
     const [value, setValue] = React.useState<SelectValue>(_?.defaultValue);
     const [inputValue, setInputValue] = React.useState<string>();
     const [isValid, setIsValid] = useState<boolean>(true);
-    const inputRef = useRef<SelectInstance<OptionType, boolean, GroupBase<OptionType>>>(null);
+    const inputRef =
+      useRef<SelectInstance<OptionType, boolean, GroupBase<OptionType>>>(null);
 
     const [errors, setErrors] = useState<Array<string>>([]);
 
@@ -67,7 +69,8 @@ export const InputSelect = memo(
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (value) {
-          if (_.multiple && Array.isArray(value) && value.length <= 0) return undefined;
+          if (_.multiple && Array.isArray(value) && value.length <= 0)
+            return undefined;
           return value;
         }
         return undefined;
@@ -103,7 +106,7 @@ export const InputSelect = memo(
           setIsValid(checkValidation(value));
         if (_.onChange) _.onChange(value);
       }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     const onBlur = (e?: React.FocusEvent<HTMLDivElement>) => {
@@ -146,6 +149,14 @@ export const InputSelect = memo(
     // Destructure only what we need
     const {
       onInputChange,
+      components,
+      menuPortalTarget,
+      classNamePrefix,
+      className,
+      onChange: changeHandler,
+      unstyled,
+      noOptionsMessage,
+      onBlur: blurHandler,
       ...rest
     } = _;
 
@@ -238,7 +249,9 @@ export const InputSelect = memo(
             {_.validationComponent ? (
               React.createElement(_.validationComponent, { errors: errors })
             ) : customized?.defaultProps?.validationComponent ? (
-              React.createElement(customized.defaultProps.validationComponent, { errors: errors })
+              React.createElement(customized.defaultProps.validationComponent, {
+                errors: errors,
+              })
             ) : (
               <></>
             )}

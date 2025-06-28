@@ -28,7 +28,7 @@ import { After } from "../elements/After";
 import { renderComponent } from "../../utils/RenderComponent";
 import { cn } from "../../utils/cn";
 import { formatValue } from "../../utils/FormatValue";
-import { extractRawValue } from "../../utils/ExtractRawValue";
+import { handleMask } from "../../utils/HandleMask";
 
 export const InputText = memo(
   forwardRef<InputRef<string>, Text>((_, ref) => {
@@ -89,138 +89,21 @@ export const InputText = memo(
     }));
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      let inputValue = e.target.value;
-
       if (_.mask) {
-        let start = e.target.selectionStart ?? 0;
-        if (_.guide) {
-          if (inputValue.length < maskedValue.length) {
-            let backCount = 0;
-            while (maskArray[start - 1] && !tokens[maskArray[start - 1]]) {
-              backCount++;
-              start--;
-            }
-            const parts = [
-              inputValue.slice(0, start + backCount),
-              inputValue.slice(start + backCount),
-            ];
-            const count = maskedValue.length - inputValue.length;
-            const withUnderlineValue =
-              parts[0] + placeholderChar.repeat(count) + parts[1];
-
-            if (_.keepCharPositions) {
-              inputValue = withUnderlineValue;
-            } else {
-              inputValue = extractRawValue(
-                withUnderlineValue,
-                maskArray,
-                tokens
-              );
-            }
-          } else if (inputValue.length > maskedValue.length) {
-            if (
-              !tokens[maskArray[start - 1]]?.test(
-                inputValue.split("")[start - 1]
-              )
-            ) {
-              if (tokens[maskArray[start - 1]]) {
-                // if it is not changable, so why user should wait here?
-                e.target.value = maskedValue;
-                e.target.setSelectionRange(start - 1, start - 1);
-                return;
-              } else {
-                const s = e.target.selectionStart ?? 0;
-                while (maskArray[start] && !tokens[maskArray[start]]) {
-                  start++;
-                }
-
-                if (
-                  //if user pressed a valid key its better to show it's effect
-                  !tokens[maskArray[start]]?.test(inputValue.split("")[s - 1])
-                ) {
-                  e.target.value = maskedValue;
-                  e.target.setSelectionRange(start, start);
-                  return;
-                } else {
-                  start++;
-                }
-              }
-            }
-            let jump = 0;
-            while (maskArray[start] && !tokens[maskArray[start]]) {
-              start++;
-              jump++;
-            }
-            if (_.override) {
-              const s = e.target.selectionStart ?? 0;
-              if (maskArray[s - 1] && !tokens[maskArray[s - 1]]) {
-                const arr = inputValue.split("");
-                [arr[s - 1], arr[start - jump]] = [
-                  arr[start - jump],
-                  arr[s - 1],
-                ]; // Swap using destructuring
-                inputValue = arr.join("");
-                inputValue = inputValue.slice(0, s - 1) + inputValue.slice(s);
-              } else {
-                inputValue = inputValue.slice(0, s) + inputValue.slice(s + 1);
-              }
-            } else if (_.keepCharPositions) {
-              // preventing user from writing on places which has written before
-              let s = e.target.selectionStart ?? 0;
-              while (!tokens[maskArray[s-1]]) s++;
-              if (tokens[maskArray[s - 1]]?.test(inputValue.split("")[s])) {
-                e.target.value = maskedValue;
-                e.target.setSelectionRange(s - 1, s - 1);
-                return;
-              }
-            }
-          }
-        } else {
-          if (inputValue.length > maskedValue.length) {
-            while (maskArray[start] && !tokens[maskArray[start]]) {
-              inputValue += maskArray[start];
-              start++;
-            }
-            if (
-              !tokens[maskArray[start - 1]]?.test(
-                inputValue.split("")[start - 1]
-              )
-            ) {
-              {
-                const s = e.target.selectionStart ?? 0;
-                while (maskArray[start] && !tokens[maskArray[start]]) {
-                  start++;
-                }
-                if (
-                  //if user pressed a valid key its better to show it's effect
-                  !tokens[maskArray[start]]?.test(inputValue.split("")[s - 1])
-                ) {
-                  e.target.value = maskedValue;
-                  e.target.setSelectionRange(start, start);
-                  return;
-                } else {
-                  start++;
-                }
-              }
-            }
-            while (maskArray[start] && !tokens[maskArray[start]]) {
-              start++;
-            }
-          }
-        }
-        console.log("I scaped");
-        const newMaskedValue = formatValue(
-          inputValue,
-          maskArray,
-          tokens,
-          _.guide
-        );
-        setMaskedValue(newMaskedValue);
-        if (inputRef.current) {
-          e.target.value = newMaskedValue;
-          e.target.setSelectionRange(start, start);
-          setValue(newMaskedValue);
-        }
+        handleMask({
+          inputValue: e.target.value,
+          event: e,
+          guide: _.guide,
+          prevValue: value,
+          maskPattern: maskArray,
+          maskTokens: tokens,
+          placeholderChar: placeholderChar,
+          currentMaskedValue: maskedValue,
+          updateMaskedValue: setMaskedValue,
+          keepCharPositions: _.keepCharPositions,
+          updateValue: setValue,
+          overwrite: _.overwrite,
+        });
       }
 
       // const newCaretPosition = e?.target.selectionStart || 0;

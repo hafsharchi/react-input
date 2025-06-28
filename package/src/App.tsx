@@ -1,10 +1,35 @@
-import { useInput } from "../lib/components/useInput";
 import { Input } from "../lib/components";
+import { useInput } from "../lib/components/useInput";
 
 export default function App() {
   const { useRegister, submit } = useInput();
   return (
     <div>
+      {/* <ReactSelect
+        options={[
+          { value: "d", label: "fjskldj" },
+          { value: "dsad", label: "fjdasdasskldj" },
+        ]}
+        onChange={() => {
+          console.log("dsjflk");
+        }}
+      ></ReactSelect> */}
+      {/* <Input
+        register={useRegister}
+        name="ff"
+        type="text"
+      
+        // locale="persian"
+        title="hello world"
+        // onChange={(e) => console.log(e)}
+        // maxDate={"1404/02/11"}
+        // minDate={new Date()}
+        // override
+        // defaultValue={value}
+        // updateDefaultValueOnChange={false}
+        // range
+        // required
+      /> */}
       <Input
         register={useRegister}
         name="this"
@@ -14,10 +39,10 @@ export default function App() {
         // onChange={(e) => console.log(e)}
         // maxDate={"1404/02/11"}
         // minDate={new Date()}
-        mask={"999AB999"}
+        mask={"999A9B9"}
         guide={true}
-        keepCharPositions={true}
-        // override
+        // keepCharPositions={true}
+        // overwrite
         // defaultValue={value}
         // updateDefaultValueOnChange={false}
         // range
