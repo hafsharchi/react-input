@@ -79,7 +79,12 @@ export const handleMask = ({
         inputValue = withPlaceholder;
       } else {
         // Remove mask characters from the value
-        inputValue = extractRawValue(withPlaceholder, maskPattern, maskTokens);
+        inputValue = extractRawValue(
+          withPlaceholder,
+          maskPattern,
+          maskTokens,
+          placeholderChar
+        );
       }
 
       // Handle insertion (typing)
@@ -229,7 +234,8 @@ export const handleMask = ({
     inputValue,
     maskPattern,
     maskTokens,
-    guide
+    guide,
+    placeholderChar
   );
   updateMaskedValue(newMaskedValue);
 

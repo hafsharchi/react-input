@@ -7,34 +7,35 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { InputMasterContext } from "../../contexts/InputMasterContext";
+import { vRequired } from "../../utils";
+import { cn } from "../../utils/cn";
+import { formatValue } from "../../utils/FormatValue";
+import { handleMask } from "../../utils/HandleMask";
+import { renderComponent } from "../../utils/RenderComponent";
+import { vCustomValidation } from "../../utils/vCustomValidation";
+import { vMaxLength } from "../../utils/vMaxLength";
+import { vMinLength } from "../../utils/vMinLength";
+import { After } from "../elements/After";
+import { Before } from "../elements/Before";
+import { Loading } from "../elements/Loading";
+import { Title } from "../elements/Title";
+import { Wrapper } from "../elements/Wrapper";
 import {
   ComponentDescriptor,
   CustomValidation,
   InputMasterContextProps,
-  Text,
   InputRef,
   MaskPattern,
+  Text,
 } from "../types";
-import { vMaxLength } from "../../utils/vMaxLength";
-import { vMinLength } from "../../utils/vMinLength";
-import { InputMasterContext } from "../../contexts/InputMasterContext";
-import { vCustomValidation } from "../../utils/vCustomValidation";
-import { vRequired } from "../../utils";
-import { Title } from "../elements/Title";
-import { Wrapper } from "../elements/Wrapper";
-import { Loading } from "../elements/Loading";
-import { Before } from "../elements/Before";
-import { After } from "../elements/After";
-import { renderComponent } from "../../utils/RenderComponent";
-import { cn } from "../../utils/cn";
-import { formatValue } from "../../utils/FormatValue";
-import { handleMask } from "../../utils/HandleMask";
 
 export const InputText = memo(
   forwardRef<InputRef<string>, Text>((_, ref) => {
     const placeholderChar = _.placeholderChar ?? "_";
     const [isValid, setIsValid] = useState<boolean>(true);
     const inputRef = useRef<HTMLInputElement>(null);
+    const [isFocused, setIsFocused] = useState(false);
 
     const [errors, setErrors] = useState<Array<string>>([]);
     const [value, setValue] = useState<string>(
@@ -63,7 +64,7 @@ export const InputText = memo(
         maskArray,
         tokens,
         _.guide,
-        _.placeholderChar
+        placeholderChar
       )
     );
     useImperativeHandle(ref, () => ({
@@ -128,7 +129,7 @@ export const InputText = memo(
 
     const onBlur = (e?: React.FocusEvent<HTMLInputElement>) => {
       if (_.onBlur) _.onBlur(e);
-
+      setIsFocused(false);
       if (_.maxLength && inputRef.current) {
         vMaxLength({
           ref: inputRef as React.RefObject<
@@ -147,7 +148,9 @@ export const InputText = memo(
     };
 
     // Handle focus event
-    const handleFocus = () => {};
+    const handleFocus = () => {
+      setIsFocused(true);
+    };
 
     const checkValidation = (currentValue: string): boolean => {
       const res = true;
@@ -192,7 +195,9 @@ export const InputText = memo(
           const initialMaskedValue = formatValue(
             _.defaultValue,
             maskArray,
-            tokens
+            tokens,
+            _.guide,
+            placeholderChar
           );
           setMaskedValue(initialMaskedValue);
           if (inputRef.current) {
@@ -206,6 +211,8 @@ export const InputText = memo(
       _.defaultValue,
       _.updateDefaultValueOnChange,
       _.mask,
+      _.guide,
+      placeholderChar,
       maskArray,
       tokens,
     ]);
@@ -235,6 +242,21 @@ export const InputText = memo(
         placeholder={_?.placeholder ?? ""}
         onChange={(e) => onChange(e)}
         onBlur={(e) => onBlur(e)}
+        onMouseDown={(e) => {
+          if (!isFocused) {
+            const firstPlaceHolderPosition: number =
+              inputRef?.current?.value.indexOf(placeholderChar) ?? 0;
+            e.preventDefault();
+            inputRef?.current?.focus();
+            inputRef?.current?.setSelectionRange(
+              firstPlaceHolderPosition,
+              firstPlaceHolderPosition
+            );
+          }
+        }}
+        onClick={() => {
+          setIsFocused(true);
+        }}
         onFocus={handleFocus}
         disabled={_.disabled}
       />

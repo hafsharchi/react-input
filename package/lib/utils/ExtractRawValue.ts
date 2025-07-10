@@ -1,7 +1,8 @@
 export const extractRawValue = (
   maskedValue: string,
   maskArray: string[],
-  tokens: Record<string, RegExp>
+  tokens: Record<string, RegExp>,
+  placeholderChar: string = "_"
 ): string => {
   if (!maskedValue) return "";
 
@@ -10,18 +11,18 @@ export const extractRawValue = (
 
   for (let i = 0; i < valueChars.length; i++) {
     const char = valueChars[i];
-    if (char !== "_") { //Todo
-    let isLiteral = false;
-    for (const key in tokens) {
-      if (maskArray[i] === key) {
-        isLiteral = false;
-        break;
+    if (char !== placeholderChar) {
+      let isLiteral = false;
+      for (const key in tokens) {
+        if (maskArray[i] === key) {
+          isLiteral = false;
+          break;
+        }
+        isLiteral = true;
       }
-      isLiteral = true;
-    }
-    if (!isLiteral) {
-      rawValue += char;
-    }
+      if (!isLiteral) {
+        rawValue += char;
+      }
     }
   }
 

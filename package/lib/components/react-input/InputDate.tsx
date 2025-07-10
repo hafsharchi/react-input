@@ -83,7 +83,6 @@ export const InputDate = memo(
     }));
 
     const onChange = (e: DateObject) => {
-      console.log(e);
       setValue(e);
       setIsValid(checkValidation(e?.toString()));
     };
