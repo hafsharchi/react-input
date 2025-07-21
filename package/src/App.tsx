@@ -39,10 +39,10 @@ export default function App() {
         // onChange={(e) => console.log(e)}
         // maxDate={"1404/02/11"}
         // minDate={new Date()}
-        mask={"9999 9999 9999 9999"}
-        placeholderChar="-"
+        mask={{pattern:"9$%$#9",tokens:{"A":/\d/,"9":/[A-Za-z]/}}}
+        // placeholderChar="-"
         guide={true}
-        keepCharPositions={true}
+        // keepCharPositions={true}
         // overwrite
         // defaultValue={value}
         // updateDefaultValueOnChange={false}

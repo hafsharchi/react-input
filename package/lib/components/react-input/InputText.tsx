@@ -38,9 +38,6 @@ export const InputText = memo(
     const [isFocused, setIsFocused] = useState(false);
 
     const [errors, setErrors] = useState<Array<string>>([]);
-    const [value, setValue] = useState<string>(
-      _?.defaultValue?.toString() ?? ""
-    );
 
     const customized: InputMasterContextProps | undefined =
       useContext(InputMasterContext);
@@ -70,7 +67,7 @@ export const InputText = memo(
     useImperativeHandle(ref, () => ({
       getValue: () => {
         if (inputRef.current) {
-          return inputRef.current?.value;
+          return inputRef.current.value.replaceAll(placeholderChar, "");
         }
         return "";
       },
@@ -95,14 +92,12 @@ export const InputText = memo(
           inputValue: e.target.value,
           event: e,
           guide: _.guide,
-          prevValue: value,
           maskPattern: maskArray,
           maskTokens: tokens,
           placeholderChar: placeholderChar,
           currentMaskedValue: maskedValue,
           updateMaskedValue: setMaskedValue,
           keepCharPositions: _.keepCharPositions,
-          updateValue: setValue,
           overwrite: _.overwrite,
         });
       }
@@ -350,7 +345,7 @@ export const InputText = memo(
       _.loading,
       _.loadingObject ?? customized?.defaultProps?.loadingObject,
       errors,
-      Boolean(value)
+      Boolean(maskedValue)
     );
   })
 );

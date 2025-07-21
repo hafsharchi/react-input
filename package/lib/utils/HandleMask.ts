@@ -6,7 +6,7 @@ import { formatValue } from "./FormatValue";
 // inputValue: the value currently in the input
 // event: the React change event
 // guide: whether to show mask guide characters
-// prevValue: the previous value before the change
+// currentMaskedValue: the previous value before the change
 // maskPattern: the array representing the mask
 // maskTokens: the token definitions for mask characters
 // placeholderChar: the character used for empty mask slots
@@ -19,14 +19,12 @@ type HandleMaskType = {
   inputValue: string;
   event: React.ChangeEvent<HTMLInputElement>;
   guide?: boolean;
-  prevValue: string;
   maskPattern: string[];
   maskTokens: Record<string, RegExp>;
   placeholderChar: string;
   currentMaskedValue: string;
   updateMaskedValue: (value: string) => void;
   keepCharPositions?: boolean;
-  updateValue: (value: string) => void;
   overwrite?: boolean;
 };
 
@@ -36,14 +34,12 @@ export const handleMask = ({
   inputValue,
   event,
   guide = false,
-  prevValue,
   maskPattern,
   maskTokens,
   placeholderChar,
   currentMaskedValue,
   updateMaskedValue,
   keepCharPositions = false,
-  updateValue,
   overwrite = false,
 }: HandleMaskType) => {
   const inputElement = event.target;
@@ -52,7 +48,7 @@ export const handleMask = ({
   // If guide mode is enabled, handle both deletion and insertion with mask guidance
   if (guide) {
     // Handle deletion (backspace)
-    if (inputValue.length < prevValue.length) {
+    if (inputValue.length < currentMaskedValue.length) {
       let backspaceCount = 0;
       // Move cursor back over non-token mask characters
       while (
@@ -70,7 +66,7 @@ export const handleMask = ({
       ];
 
       // Calculate how many characters were deleted
-      const diffCount = prevValue.length - inputValue.length;
+      const diffCount = currentMaskedValue.length - inputValue.length;
       // Insert placeholder characters for deleted positions
       const withPlaceholder =
         parts[0] + placeholderChar.repeat(diffCount) + parts[1];
@@ -88,7 +84,7 @@ export const handleMask = ({
       }
 
       // Handle insertion (typing)
-    } else if (inputValue.length > prevValue.length) {
+    } else if (inputValue.length > currentMaskedValue.length) {
       // If the new character doesn't match the mask token, handle accordingly
       if (
         !maskTokens[maskPattern[cursorPosition - 1]]?.test(
@@ -179,7 +175,10 @@ export const handleMask = ({
     }
   } else {
     // Guide mode off: no need to handle deletion differently
-    if (inputValue.length > prevValue.length) {
+    console.log(inputValue);
+    console.log(currentMaskedValue);
+    console.log("+++");
+    if (inputValue.length > currentMaskedValue.length) {
       // If the new character doesn't match the mask token, handle accordingly
       if (
         !maskTokens[maskPattern[cursorPosition - 1]]?.test(
@@ -195,23 +194,32 @@ export const handleMask = ({
           );
           return;
         } else {
+          let jumpedOverChars: string = "";
           // Skip over non-token mask characters
           const selection = inputElement.selectionStart ?? 0;
+          if (
+            maskPattern[cursorPosition - 1] &&
+            !maskTokens[maskPattern[cursorPosition - 1]]
+          ) {
+            jumpedOverChars += maskPattern[cursorPosition - 1];
+          }
           while (
             maskPattern[cursorPosition] &&
             !maskTokens[maskPattern[cursorPosition]]
           ) {
+            jumpedOverChars += maskPattern[cursorPosition];
             cursorPosition++;
           }
 
-          // If still not matching, revert and set cursor
+          console.log(inputElement.value.split("")[selection - 1]);
           if (
             !maskTokens[maskPattern[cursorPosition]]?.test(
-              inputValue.split("")[selection - 1]
+              inputElement.value.split("")[selection - 1]
             )
           ) {
-            inputElement.value = currentMaskedValue;
+            inputElement.value = currentMaskedValue + jumpedOverChars;
             inputElement.setSelectionRange(cursorPosition, cursorPosition);
+            updateMaskedValue(currentMaskedValue + jumpedOverChars);
             return;
           } else {
             cursorPosition++;
@@ -237,10 +245,10 @@ export const handleMask = ({
     guide,
     placeholderChar
   );
+
   updateMaskedValue(newMaskedValue);
 
   // Update the input element and cursor position
   inputElement.value = newMaskedValue;
   inputElement.setSelectionRange(cursorPosition, cursorPosition);
-  updateValue(newMaskedValue);
 };

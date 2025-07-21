@@ -1,6 +1,6 @@
 export const handleNegative = (value: string) => {
-  let spittedValue = value.split("-");
-  let minusCount = spittedValue.length - 1;
+  const spittedValue = value.split("-");
+  const minusCount = spittedValue.length - 1;
   if (minusCount == 2) {
     return spittedValue.join().replaceAll(/,/g, "");
   } else if (minusCount == 1) {
